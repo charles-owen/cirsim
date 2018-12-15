@@ -1,0 +1,189 @@
+<figure class="center noshadow"><img src="img/alu.png" alt="ALU" width="116" height="160"></figure>
+<p>The ALU 16 component is a simple 16-bit Arithmetic Logic Unit.</p>
+<p>Inputs A and B are the bus inputs and are the values that the arithemetic operations
+are performed on. O is the bus output result. Bus input C determines the operation that is performed. See the table
+below for the value values of C. Cin is the carry input for carry-based operations.
+CPSR is the output for a current program status register. It is not a register value
+and output values are only valid as long as the ALU is configured for the appropriate
+computation.</p>
+<p>The bits of the CPSR are:</p>
+<table class="tiny">
+	<tr><th>Bit</th><th></th><th>Name</th><th>Description</th></tr>
+	<tr><td>0</td><td>N</td><td>Negative</td><td>True when the high-order bit of O is true (negative).</td></tr>
+	<tr><td>1</td><td>Z</td><td>Zero</td><td>True when O is a zero.</td></tr>
+	<tr><td>2</td><td>C</td><td>Carry</td><td>True when there is a carry out of an add or subtract.</td></tr>
+	<tr><td>3</td><td>V</td><td>Overflow</td><td>True when there is an overflow in a signed operation.</td></tr>
+</table>
+
+<p>The values of C and their ALU operations are:</p>
+<table class="tiny">
+	<tr>
+		<th>C</th><th>Thumb instruction</th><th>ARM equivalent</th><th>Action</th>
+		<th>ALU</th>
+	</tr>
+	<tr>
+		<td>000000</td>
+		<td>and Rd,Rs</td>
+		<td>ands Rd,Rd,Rs</td>
+		<td>Rd &#8592; Rd &amp; Rs</td>
+		<td>A &amp; B</td>
+	</tr>
+	<tr>
+		<td>000001</td>
+		<td>eor Rd,Rs</td>
+		<td>eors Rd,Rd,Rs</td>
+		<td>Rd &#8592; Rd ^ Rs</td>
+		<td>A ^ B</td>
+	</tr>
+	<tr>
+		<td>000010</td>
+		<td>lsl Rd,Rs</td>
+		<td>lsl Rd,Rd,Rs</td>
+		<td>Rd &#8592; Rd &lt;&lt; Rs</td>
+		<td>A &lt;&lt; B</td>
+	</tr>
+	<tr>
+		<td>000011</td>
+		<td>lsr Rd,Rs</td>
+		<td>lsr Rd,Rd,Rs</td>
+		<td>Rd &#8592; Rd &gt;&gt; Rs</td>
+		<td>A &gt;&gt; B</td>
+	</tr>
+	<tr>
+		<td>000100</td>
+		<td>asr Rd,Rs</td>
+		<td>adcs Rd,Rd,Rs</td>
+		<td>Rd &#8592; Rd asr Rs</td>
+		<td>A asr B</td>
+	</tr>
+	<tr>
+		<td>000101</td>
+		<td>adc Rd,Rs</td>
+		<td>adcs Rd,Rd,Rs</td>
+		<td>Rd&#8592;Rd+Rs+Cin</td>
+		<td>A+B+Cin</td>
+	</tr>
+	<tr>
+		<td>000110</td>
+		<td>sbc Rd,Rs</td>
+		<td>sbcs Rd,Rd,Rs</td>
+		<td>Rd&#8592;Rd-Rs-~Cin</td>
+		<td>A-B-~Cin</td>
+	</tr>
+	<tr>
+		<td>000111</td>
+		<td>ror Rd,Rs</td>
+		<td>ror Rd,Rd,Rs</td>
+		<td>Rd &#8592; Rd ror Rs</td>
+		<td>A ror B</td>
+	</tr>
+	<tr>
+		<td>001000</td>
+		<td>tst Rd,Rs</td>
+		<td>tst Rd,Rs</td>
+		<td>Rd &amp; Rs</td>
+		<td>A &amp; B</td>
+	</tr>
+	<tr>
+		<td>001001</td>
+		<td>neg Rd,Rs</td>
+		<td>rsbs Rd,Rs,#0</td>
+		<td>Rd &#8592; -Rs</td>
+		<td>-A</td>
+	</tr>
+	<tr>
+		<td>001010</td>
+		<td>cmp Rd,Rs</td>
+		<td>cmp Rd,Rs</td>
+		<td>Rd-Rs</td>
+		<td>A - B</td>
+	</tr>
+	<tr>
+		<td>001011</td>
+		<td>cmn Rd,Rs</td>
+		<td>cmn Rd,Rs</td>
+		<td>Rd+Rs</td>
+		<td>A + B</td>
+	</tr>
+	<tr>
+		<td>001100</td>
+		<td>orr Rd,Rs</td>
+		<td>orrs Rd,Rd,Rs</td>
+		<td>Rd &#8592; Rd | Rs</td>
+		<td>A | B</td>
+	</tr>
+	<tr>
+		<td>001101</td>
+		<td>mul Rd,Rs</td>
+		<td>muls Rd,Rd,Rs</td>
+		<td>Rd &#8592; Rd * Rs</td>
+		<td>A * B</td>
+	</tr>
+	<tr>
+		<td>001110</td>
+		<td>bic Rd,Rs</td>
+		<td>bics Rd,Rd,Rs</td>
+		<td>Rd &#8592; Rd &amp; ~Rs</td>
+		<td>A &amp; ~B</td>
+	</tr>
+	<tr>
+		<td>001111</td>
+		<td>mvn Rd,Rs</td>
+		<td>mvns Rd,Rs</td>
+		<td>Rd &#8592; ~Rs</td>
+		<td>~A</td>
+	</tr>
+	<tr>
+		<td>010000</td>
+		<td>add Rd,Rs,Rn</td>
+		<td>add Rd,Rs,Rn</td>
+		<td>Rd &#8592; Rd + Rn</td>
+		<td>A + B</td>
+	</tr>
+	<tr>
+		<td>010001</td>
+		<td>sub Rd,Rs,Rn</td>
+		<td>sub Rd,Rs,Rn</td>
+		<td>Rd &#8592; Rd - Rn</td>
+		<td>A - B</td>
+	</tr>
+	<tr>
+		<td>010010</td>
+		<td>see note 1</td>
+		<td>*none*</td>
+		<td>Rd&#8592;(Rd*Rn)>>16</td>
+		<td>(A*B)>>16</td>
+	</tr>
+	<tr>
+		<td>100000</td>
+		<td>mov Rd,#imm</td>
+		<td>mov Rd,#imm</td>
+		<td>Rd &#8592;imm</td>
+		<td>B</td>
+	</tr>
+	<tr>
+		<td>100001</td>
+		<td>cmp Rd,#imm</td>
+		<td>cmp Rd,#imm</td>
+		<td>Rd - imm</td>
+		<td>A - B</td>
+	</tr>
+	<tr>
+		<td>100010</td>
+		<td>add Rd,#imm</td>
+		<td>add&nbsp;Rd,Rd,#imm</td>
+		<td>Rd &#8592; Rd + imm</td>
+		<td>A + B</td>
+	</tr>
+	<tr>
+		<td>100011</td>
+		<td>sub Rd,#imm</td>
+		<td>sub&nbsp;Rd,Rd,#imm</td>
+		<td>Rd &#8592; Rd - imm</td>
+		<td>A - B</td>
+	</tr>
+</table>
+
+<p>Note 1: The command 010010 is an unsigned multiply that returns the high 16 bits of a
+32-bit result. It has no equivalent in the ARM instruction set, since
+ARM include multiply instructions that produce 64-bit results.</p>

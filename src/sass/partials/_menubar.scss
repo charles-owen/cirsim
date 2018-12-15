@@ -1,0 +1,127 @@
+div.cirsim nav.menubar {
+  font-family: $menu-font;
+  font-size: $menu-font-size;
+  position: relative;
+  z-index: 100;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  background-color: $menu-background;
+  border-bottom: thin solid #808080;
+
+  li:hover {
+    background: $menu-focus;
+  }
+
+  li {
+    user-select: none;
+    cursor: pointer;
+    a:link, li a:visited {
+      color: $menu-color;
+    }
+  }
+
+  //
+  // Top level menu
+  //
+  > ul {
+    list-style-type: none;
+    margin: 0;
+    border: 0;
+    padding: 0;
+
+    img.check {
+      vertical-align: baseline;
+      width: 19px;
+      height: 16px;
+      content: url("../../img/menu-check.png");
+    }
+
+    > li {
+      display: inline-block;
+      margin: 0;
+      border: 0;
+      padding: 0.25em 2em 0.25em 0.5em;
+      position: relative;
+
+      a {
+        text-decoration: none;
+      }
+    }
+
+    //
+    // Drop-down menu
+    //
+    ul {
+      visibility: hidden;
+      opacity: 0;
+      transform: translateY(-2em);
+      z-index: -1;
+      transition: all 0.2s ease-in-out 0s, visibility 0s linear 0.2s, z-index 0s linear 0.01s;
+
+      list-style-type: none;
+      // display: none;
+      position: absolute;
+      overflow: hidden;
+      left: 0;
+      top: 100%;
+      margin: 1px 0 0 0;
+      background-color: $menu-background;
+      padding: 0;
+      border: 1px solid $menu-border-color;
+      border-top-width: 0;
+
+      > li {
+        padding: 0 5px;
+        overflow: hidden;
+
+        a {
+          display: inline-block;
+          width: 8em;
+          padding-top: 5px;
+          padding-bottom: 5px;
+        }
+      }
+
+      > li.menu-disabled {
+        a {
+          opacity: 0.3;
+        }
+      }
+    }
+
+    ul.menu-open {
+      visibility: visible;
+      opacity: 1;
+      z-index: 100;
+      transform: translateY(0%);
+      transition-delay: 0s, 0s, 0.2s;
+    }
+
+    ul.edit-menu a {
+      width: 6em;
+    }
+
+    ul.option-menu a {
+      width: 11em;
+    }
+
+    ul.file-menu a {
+      width: 6em;
+    }
+
+    ul.help-menu a {
+      width: 7.5em;
+    }
+
+    .ul-state-active {
+      color: red;
+    }
+
+    li.menu-divider {
+      height: 1px;
+      border: 0 solid $menu-divider-color;
+      border-top-width: 1px;
+    }
+  }
+}

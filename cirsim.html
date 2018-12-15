@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang=en-US>
+<head>
+  <title>Cirsim Circuit Simulator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+
+//   <script type="text/javascript" src="dist/cirsim.js"></script></body>
+  <script src="https://unpkg.com/cirsim/dist/cirsim.min.js"></script>
+
+</head>
+<body>
+<div id="cirsim"></div>
+
+<script>
+var cirsim = new Cirsim('#cirsim', {
+    display: 'window',
+    components: 'all'
+});
+cirsim.start();
+</script>
+</body>
+</html>
+

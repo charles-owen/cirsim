@@ -1,0 +1,11 @@
+<p>The Registers component is a simple 16-bit register file. Ae and Be choose which register is routed to
+	the A and B outputs. ALU is the input from the ALU. ALUe chooses which register to write.
+	A register will only be written if W (write enable) is high.</p><p>R is a reset input and is optional.
+	The R input (reset) sets all registers to zero.</p>
+<p>The register file latches in the ALU result on the clock <em>leading edge</em> and sets the
+	register on the clock trailing edge.</p>
+
+<figure class="noshadow"><img src="img/registers16.png" alt="Use of the Bus Selector" width="423" height="220"></figure>
+
+<p>During operation, the contents of the registers are displayed and the current configurations of
+Ae, Be, ALUe, and W are indicated by lines the connect ALU to a register and registers to A and B.</p>

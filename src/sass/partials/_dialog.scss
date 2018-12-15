@@ -1,0 +1,213 @@
+div.cirsim {
+
+  div.dialog-content {
+    position: relative;
+    padding: 0.5em;
+    font-size: 0.95em;
+
+    input {
+      padding: 3px;
+      box-sizing: border-box;
+      font-size: 1.1em;
+    }
+
+    h2 {
+      margin: 0.75em 0;
+    }
+
+    form {
+      position: relative;
+      height: 100%;
+    }
+
+    .large {
+      font-size: 1.2em;
+    }
+
+    fieldset {
+      position: relative;
+      border: 0;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    p.error {
+      margin: 1em 0 0 0;
+      text-align: center;
+      color: red;
+      font-size: 0.9em;
+      font-style: italic;
+    }
+
+    // Standard controls with label on top
+    div.control {
+      position: relative;
+      margin: 0 0 1em 0;
+
+      label {
+        display: block;
+        font-style: italic;
+        margin: 0.2em 0 0.1em 0;
+      }
+
+      input {
+        display: block;
+      }
+
+      input[type=text], input[type=file] {
+        width: 100%;
+      }
+
+      input[type=radio] {
+        display: inline-block;
+      }
+
+      input[type=range] {
+        width: 100%;
+      }
+
+      p.selector {
+        text-align: center;
+      }
+
+      select {
+        width: 6em;
+      }
+
+      select.files {
+        width: 100%;
+      }
+
+      div.notice {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        top: 45%;
+        text-align: center;
+        font-style: italic;
+        color: saddlebrown;
+      }
+
+      textarea {
+        width: 100%;
+      }
+    }
+
+    // Controls with label to the left
+    div.control1 {
+      margin: 0 0 1em 0;
+
+      label {
+        display: inline-block;
+        font-style: italic;
+        padding-right: 0.5em;
+      }
+
+      select {
+        width: 6em;
+      }
+
+      input.number {
+        width: 2em;
+        text-align: center;
+      }
+
+      input.compname {
+        width: 4em;
+      }
+
+      input.tabname {
+        width: 6em;
+      }
+    }
+
+    div.center {
+      text-align: center;
+    }
+
+    div.indent {
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+
+    h1 {
+      margin: 0 0 0.5em 0;
+    }
+
+    p {
+      color: $secondary-text;
+    }
+
+    .gap {
+      margin-top: 1em;
+    }
+  }
+
+
+  &.about {
+    width: 400px;
+    text-align: center;
+
+    img {
+      width: 171px;
+      height: 75px;
+    }
+
+    div.dialog-content {
+      padding: 1em;
+    }
+  }
+
+  &.help {
+    width: 450px;
+    height: 600px;
+  }
+
+  &.component {
+
+    a.helper {
+      display: block;
+      position: absolute;
+      right: 0.5em;
+      top: 0.5em;
+      float: right;
+      color: $secondary-text;
+      font-style: italic;
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: 0.85em;
+      padding: 0;
+    }
+  }
+
+  .cirsim-error {
+    color: red;
+  }
+}
+
+
+
+div.cirsim-dialog {
+ // position: relative;
+  padding: 1em;
+  font-size: 0.95em;
+
+
+
+
+
+
+}
+
+.ui-dialog-buttonset {
+  button {
+    width: 6em;
+  }
+}
+
+.ui-dialog .ui-dialog-buttonpane {
+  padding: 0;
+}

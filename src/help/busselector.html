@@ -1,0 +1,9 @@
+
+<p>A bus selector chooses some subset of bits in a bus as a new bus. This is useful
+	for selecting fields from a value. For example, the biased exponent in a
+	half-float value is contained in bits 10 to 14. If you drag in a Bus Selector
+	component and double-click, you can set the bit range from 10 to 14 and
+	it will extract the exponent into it's own bus:</p>
+<figure class="noshadow"><img src="img/extractedexponent.png" alt="Use of the Bus Selector" width="477" height="56"></figure>
+<p>That would be equivalent to expanding the bus to single bits, selecting the desired bits, and making them back into a bus:</p>
+<figure class="noshadow"><img src="img/expandequivalent.png"></figure>

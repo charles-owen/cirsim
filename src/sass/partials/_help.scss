@@ -1,0 +1,87 @@
+.cirsim-dialog-titlebar {
+  position: absolute;
+  top: 50%;
+  width: 20px;
+  margin: -10px 0 0 0;
+  padding: 1px;
+  height: 20px;
+}
+
+.cirsim-home {
+  right: calc(0.6em + 20px);
+}
+
+.cirsim-back {
+  right: calc(0.9em + 40px);
+
+}
+
+.cirsim-help {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  padding: 0.5em;
+
+  p:first-child {
+    margin-top: 0;
+  }
+
+  figure {
+    text-align: center;
+    overflow-x: auto;
+    margin: 1em 0;
+  }
+}
+
+.cirsim .help-div {
+  padding: 0;
+  border-left: 1px solid $window-borders;
+  border-right: 1px solid $window-borders;
+
+  background-color: white;
+
+
+  div.header {
+    box-sizing: border-box;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    background-color: $primary;
+    color: black;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    z-index: 20;
+    height: $docked-help-titlebar-size;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+
+    h1 {
+      flex-grow: 1;
+      margin: 0;
+      padding: 4px 4px 0 10px;
+      font-family: "Trebuchet MS", Helvetica, sans-serif;
+      font-size: 16px;
+      line-height: 16px;
+      user-select: none;
+    }
+
+    button {
+      box-size: border-box;
+      flex: 0 0 $docked-help-titlebar-size;
+      width: $docked-help-titlebar-size;
+      height: $docked-help-titlebar-size;
+      padding: 0;
+      margin: 0;
+      border: 0;
+      background: none;
+      outline: none;
+    }
+
+    button:hover {
+      background-color: #e81123;
+      cursor: pointer;
+    }
+  }
+}

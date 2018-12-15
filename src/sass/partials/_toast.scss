@@ -1,0 +1,33 @@
+div.cirsim
+{
+  $toast-transition-time: 0.4s;
+
+  div.toast {
+    position: absolute;
+    bottom: 0;
+
+    visibility: hidden;
+    transform: translateY(2.3em);
+    z-index: 400;
+    transition: all $toast-transition-time ease-in-out 0s, visibility 0s linear $toast-transition-time, z-index 0s linear 0.01s;
+
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: $toast-font-size;
+    left: calc(50% - #{$toast-width}/2);
+    width: $toast-width;
+    background-color: $toast-background;
+    color: $toast-text;
+    text-align: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 0.5em;
+  }
+
+  div.toast.toast-active {
+    visibility: visible;
+    transform: translateY(0%);
+    transition-delay: 0s, 0s, $toast-transition-time;
+    z-index: 400;
+
+  }
+}

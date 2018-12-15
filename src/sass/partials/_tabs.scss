@@ -1,0 +1,85 @@
+$tab-corner-radius: 5px;
+
+div.cirsim {
+  div.tabs {
+    position: absolute;
+    left: 83px;
+    top: 0;
+    bottom: 0;
+    right: 0;
+
+    padding: 0;
+    background: $tabs-background;
+    border: 0;
+
+    >ul {
+      margin: 0;
+      padding: 3px 0 0 2px;
+      background: transparent;
+      border: 0;
+      list-style: none;
+
+
+      >li {
+        position: relative;
+        display: inline-block;
+        padding: 0.25em 1em 0.45em 1em;
+        min-width: 5em;
+        text-align: center;
+        cursor: pointer;
+        background: $tab-background;
+        border: 1px solid black;
+        border-bottom: none;
+        border-radius: $tab-corner-radius $tab-corner-radius 0 0;
+        font-size: 0.8em;
+        margin: 1px 3px -1px 0;
+        white-space: nowrap;
+        z-index: 18;
+
+        a {
+          font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+          text-decoration: none;
+          color: $tab-text;
+          outline: 0;
+        }
+      }
+
+      >li.selected {
+        background: $tab-selected-background;
+        z-index: 22;
+
+        a {
+          color: $tab-selected-text;
+        }
+      }
+    }
+
+    div.tab {
+      position: absolute;
+      display: none;
+      left: 0;
+      top: 29px;
+      right: 0;
+      bottom: 0;
+      z-index: 20;
+      overflow: auto;
+
+      canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 500px;
+        height: 500px;
+        cursor: pointer;
+      }
+    }
+
+    div.tab.selected {
+      display: block;
+      background: white;
+      border-top: 1px solid black;
+    }
+
+  }
+
+}

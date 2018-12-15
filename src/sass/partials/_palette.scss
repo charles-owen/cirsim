@@ -1,0 +1,97 @@
+div.cirsim div.palette {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  box-sizing: border-box;
+  width: 83px;
+  background: white;
+  border-right: 1px solid black;
+  padding: 1em 5px;
+  z-index: 5;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  cursor: pointer;
+
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  div.item {
+    position: relative;
+    min-height: 60px;
+    border-bottom: thin solid #dddddd;
+    align-items: center;
+    display: flex;
+
+    div.box {
+      vertical-align: middle;
+
+      margin: 0;
+      padding: 0;
+      -moz-box-shadow: none;
+      -webkit-box-shadow: none;
+      box-shadow: none;
+
+
+      img {
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        border: 0;
+        margin: 0;
+      }
+
+      div.desc {
+        display: block;
+        font-style: normal;
+        font-weight: bold;
+        padding: 0;
+        margin: 0;
+        text-align: center;
+        font-size: 0.9em;
+      }
+
+      div.long {
+        font-size: 0.65em;
+      }
+
+    }
+  }
+
+  figure {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+
+    margin: 0;
+    padding: 0;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-bottom: thin solid #dddddd;
+
+    img {
+      -moz-box-shadow: none;
+      -webkit-box-shadow: none;
+      box-shadow: none;
+      border: 0;
+      margin: 0;
+    }
+
+    figcaption {
+      font-style: normal;
+      font-weight: bold;
+      padding: 0;
+      margin: 0;
+      text-align: center;
+    }
+
+    figcaption.long {
+      font-size: 0.65em;
+    }
+  }
+}
+

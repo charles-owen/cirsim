@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="shortcut icon" href="../img/favicon.ico" />
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+  <style>
+    div {
+      box-sizing: border-box;
+    }
+  </style>
+  <title><%= htmlWebpackPlugin.options.title %></title>
+</head>
+<body>
+<style>
+  #cirsim {
+    width: 100%;
+    margin: 1em 0;
+  }
+</style>
+<div id="cirsim" class="cirsim-window"></div>
+
+<script>
+//    var cirsim = new Cirsim('#cirsim', {
+//        components: 'all',
+//        load: '{"grid":8,"snap":true,"circuits":[{"name":"main","width":1920,"height":1080,"components":[],"connections":[]},{"name":"second","width":1920,"height":1080,"components":[],"connections":[]}]}',
+//
+//        // '{"grid":8,"snap":true,"circuits":[{"name":"main","width":1920,"height":1080,"components":[{"id":"c1001","x":336,"y":248,"name":"S2","type":"DFFsr"},{"id":"c1002","x":336,"y":400,"name":"S1","type":"DFFsr"},{"id":"c1003","x":336,"y":560,"name":"S0","type":"DFFsr"},{"id":"c1004","x":208,"y":672,"name":"RESET","type":"Button"},{"id":"c1005","x":136,"y":280,"name":"CLK","type":"Button"},{"id":"c1006","x":416,"y":248,"name":"L2","type":"LED","color":"blue"},{"id":"c1007","x":416,"y":560,"name":"L0","type":"LED","color":"blue"},{"id":"c1008","x":416,"y":392,"name":"L1","type":"LED","color":"blue"},{"id":"c1009","x":888,"y":584,"name":null,"type":"Or4"},{"id":"c1010","x":768,"y":496,"name":null,"type":"And3"},{"id":"c1011","x":768,"y":552,"name":null,"type":"And3"},{"id":"c1012","x":768,"y":608,"name":null,"type":"And3"},{"id":"c1013","x":768,"y":664,"name":null,"type":"And3"},{"id":"c1014","x":272,"y":80,"name":"UP","type":"InPin","value":true},{"id":"c1015","x":416,"y":80,"name":null,"type":"Inverter"},{"id":"c1016","x":768,"y":136,"name":null,"type":"And4"},{"id":"c1017","x":768,"y":200,"name":null,"type":"And4"},{"id":"c1018","x":768,"y":264,"name":null,"type":"And3"},{"id":"c1019","x":768,"y":320,"name":null,"type":"And3"},{"id":"c1020","x":768,"y":376,"name":null,"type":"And3"},{"id":"c1021","x":888,"y":160,"name":null,"type":"Or4"},{"id":"c1022","x":1000,"y":176,"name":null,"type":"Or"},{"id":"c1023","x":312,"y":192,"name":null,"type":"Zero"},{"id":"c1024","x":312,"y":344,"name":null,"type":"Zero"},{"id":"c1025","x":312,"y":504,"name":null,"type":"Zero"},{"id":"c1026","x":136,"y":240,"name":null,"type":"Text","text":"CLK","size":32},{"id":"c1027","x":208,"y":632,"name":null,"type":"Text","text":"RESET","size":28}],"connections":[{"from":"c1001","out":0,"to":"c1006","in":0,"bends":[]},{"from":"c1001","out":0,"to":"c1018","in":1,"bends":[{"x":472,"y":216},{"x":472,"y":248},{"x":656,"y":248},{"x":656,"y":320},{"x":656,"y":264}]},{"from":"c1001","out":0,"to":"c1019","in":1,"bends":[{"x":472,"y":216},{"x":472,"y":248},{"x":656,"y":248},{"x":656,"y":320},{"x":656,"y":320}]},{"from":"c1001","out":0,"to":"c1020","in":0,"bends":[{"x":472,"y":216},{"x":472,"y":248},{"x":656,"y":248},{"x":656,"y":320},{"x":656,"y":360}]},{"from":"c1001","out":1,"to":"c1016","in":1,"bends":[{"x":472,"y":280},{"x":472,"y":264},{"x":640,"y":264},{"x":640,"y":128}]},{"from":"c1001","out":1,"to":"c1017","in":1,"bends":[{"x":472,"y":280},{"x":472,"y":264},{"x":640,"y":264},{"x":640,"y":128},{"x":640,"y":192}]},{"from":"c1002","out":0,"to":"c1008","in":0,"bends":[]},{"from":"c1002","out":0,"to":"c1011","in":2,"bends":[{"x":464,"y":368},{"x":464,"y":416},{"x":600,"y":416},{"x":600,"y":568}]},{"from":"c1002","out":0,"to":"c1012","in":2,"bends":[{"x":464,"y":368},{"x":464,"y":416},{"x":600,"y":416},{"x":600,"y":624}]},{"from":"c1002","out":0,"to":"c1017","in":2,"bends":[{"x":464,"y":368},{"x":464,"y":416},{"x":600,"y":416},{"x":600,"y":208}]},{"from":"c1002","out":0,"to":"c1019","in":2,"bends":[{"x":464,"y":368},{"x":464,"y":416},{"x":600,"y":416},{"x":600,"y":336}]},{"from":"c1002","out":1,"to":"c1010","in":2,"bends":[{"x":584,"y":432},{"x":584,"y":512}]},{"from":"c1002","out":1,"to":"c1013","in":2,"bends":[{"x":584,"y":432},{"x":584,"y":680}]},{"from":"c1002","out":1,"to":"c1016","in":2,"bends":[{"x":584,"y":432},{"x":584,"y":144}]},{"from":"c1002","out":1,"to":"c1020","in":1,"bends":[{"x":584,"y":432},{"x":584,"y":376}]},{"from":"c1003","out":0,"to":"c1007","in":0,"bends":[]},{"from":"c1003","out":0,"to":"c1012","in":1,"bends":[{"x":536,"y":528},{"x":536,"y":608}]},{"from":"c1003","out":0,"to":"c1013","in":1,"bends":[{"x":536,"y":528},{"x":536,"y":664}]},{"from":"c1003","out":0,"to":"c1017","in":3,"bends":[{"x":536,"y":528},{"x":536,"y":224}]},{"from":"c1003","out":0,"to":"c1020","in":2,"bends":[{"x":536,"y":528},{"x":536,"y":392}]},{"from":"c1003","out":1,"to":"c1003","in":0,"bends":[{"x":464,"y":592},{"x":464,"y":552},{"x":464,"y":488},{"x":272,"y":488},{"x":272,"y":528}]},{"from":"c1003","out":1,"to":"c1010","in":1,"bends":[{"x":464,"y":592},{"x":464,"y":552},{"x":520,"y":552},{"x":520,"y":496}]},{"from":"c1003","out":1,"to":"c1011","in":1,"bends":[{"x":464,"y":592},{"x":464,"y":552},{"x":520,"y":552}]},{"from":"c1003","out":1,"to":"c1016","in":3,"bends":[{"x":464,"y":592},{"x":464,"y":552},{"x":520,"y":552},{"x":520,"y":280},{"x":520,"y":160}]},{"from":"c1003","out":1,"to":"c1018","in":2,"bends":[{"x":464,"y":592},{"x":464,"y":552},{"x":520,"y":552},{"x":520,"y":280}]},{"from":"c1004","out":0,"to":"c1003","in":3,"bends":[{"x":336,"y":672}]},{"from":"c1004","out":0,"to":"c1002","in":3,"bends":[{"x":256,"y":456}]},{"from":"c1004","out":0,"to":"c1001","in":3,"bends":[{"x":256,"y":304}]},{"from":"c1005","out":0,"to":"c1001","in":1,"bends":[]},{"from":"c1005","out":0,"to":"c1002","in":1,"bends":[{"x":184,"y":432}]},{"from":"c1005","out":0,"to":"c1003","in":1,"bends":[{"x":184,"y":592}]},{"from":"c1009","out":0,"to":"c1002","in":0,"bends":[{"x":936,"y":712},{"x":160,"y":712},{"x":160,"y":368}]},{"from":"c1010","out":0,"to":"c1009","in":0,"bends":[{"x":840,"y":496}]},{"from":"c1011","out":0,"to":"c1009","in":1,"bends":[{"x":816,"y":576}]},{"from":"c1012","out":0,"to":"c1009","in":2,"bends":[{"x":816,"y":592}]},{"from":"c1013","out":0,"to":"c1009","in":3,"bends":[{"x":840,"y":664}]},{"from":"c1014","out":0,"to":"c1015","in":0,"bends":[]},{"from":"c1014","out":0,"to":"c1011","in":0,"bends":[{"x":320,"y":120},{"x":448,"y":120},{"x":448,"y":96},{"x":704,"y":96},{"x":704,"y":536}]},{"from":"c1014","out":0,"to":"c1013","in":0,"bends":[{"x":320,"y":120},{"x":448,"y":120},{"x":448,"y":96},{"x":704,"y":96},{"x":704,"y":648}]},{"from":"c1014","out":0,"to":"c1017","in":0,"bends":[{"x":320,"y":120},{"x":448,"y":120},{"x":448,"y":96},{"x":704,"y":96},{"x":704,"y":176}]},{"from":"c1014","out":0,"to":"c1018","in":0,"bends":[{"x":320,"y":120},{"x":448,"y":120},{"x":448,"y":96},{"x":704,"y":96},{"x":704,"y":248}]},{"from":"c1015","out":0,"to":"c1010","in":0,"bends":[{"x":688,"y":80},{"x":688,"y":112},{"x":688,"y":112},{"x":688,"y":480}]},{"from":"c1015","out":0,"to":"c1012","in":0,"bends":[{"x":688,"y":80},{"x":688,"y":592}]},{"from":"c1015","out":0,"to":"c1016","in":0,"bends":[{"x":688,"y":80},{"x":688,"y":112}]},{"from":"c1015","out":0,"to":"c1019","in":0,"bends":[{"x":688,"y":80},{"x":688,"y":304}]},{"from":"c1016","out":0,"to":"c1021","in":0,"bends":[]},{"from":"c1017","out":0,"to":"c1021","in":1,"bends":[{"x":816,"y":152}]},{"from":"c1018","out":0,"to":"c1021","in":2,"bends":[{"x":832,"y":264},{"x":832,"y":168}]},{"from":"c1019","out":0,"to":"c1021","in":3,"bends":[{"x":840,"y":320}]},{"from":"c1020","out":0,"to":"c1022","in":1,"bends":[{"x":920,"y":376},{"x":920,"y":192}]},{"from":"c1021","out":0,"to":"c1022","in":0,"bends":[]},{"from":"c1022","out":0,"to":"c1001","in":0,"bends":[{"x":1048,"y":48},{"x":224,"y":48},{"x":224,"y":216}]},{"from":"c1023","out":0,"to":"c1001","in":2,"bends":[]},{"from":"c1024","out":0,"to":"c1002","in":2,"bends":[]},{"from":"c1025","out":0,"to":"c1003","in":2,"bends":[]}]}]}',
+//
+//
+//        //'{"grid":8,"snap":true,"circuits":[{"name":"main","width":1920,"height":1080,"components":[{"id":"c1001","x":88,"y":56,"name":"A","type":"InPin","value":true},{"id":"c1002","x":88,"y":96,"name":"B","type":"InPin","value":true},{"id":"c1003","x":88,"y":128,"name":"C","type":"InPin","value":true},{"id":"c1004","x":480,"y":96,"name":"O","type":"OutPin"},{"id":"c1005","x":352,"y":96,"name":null,"type":"Or"},{"id":"c1006","x":216,"y":112,"name":null,"type":"And"}],"connections":[{"from":"c1001","out":0,"to":"c1005","in":0,"bends":[{"x":304,"y":56}]},{"from":"c1002","out":0,"to":"c1006","in":0,"bends":[]},{"from":"c1003","out":0,"to":"c1006","in":1,"bends":[]},{"from":"c1005","out":0,"to":"c1004","in":0,"bends":[]},{"from":"c1006","out":0,"to":"c1005","in":1,"bends":[]}]}]}',
+//        testTime: 100,
+//        api: '../api-demo/'
+//    });
+
+    let cirsim = new Cirsim('#cirsim', {
+        display: 'window',
+        components: 'all'
+    });
+    cirsim.start();
+
+    var tst = [
+        [0, 0, 0, 0],
+        [0, 0, 1, 0],
+        [0, 1, 0, 0],
+        [0, 1, 1, 1],
+        [1, 0, 0, 1],
+        [1, 0, 1, 1],
+        [1, 1, 0, 1],
+        [1, 1, 1, 1]
+    ];
+
+    var test = {
+        'tag': 'test',
+        'name': "Test",
+        'input': ['A', 'B', 'C'],
+        'output': ['O'],
+        'test': tst
+    }
+
+    test = JSON.stringify(test);
+    test = btoa(test);
+
+    //cirsim.addTest(test);
+    cirsim.start();
+</script>
+<style>
+  body {
+    margin: 20px 0;
+  }
+</style>
+</body>
+
+</html>
