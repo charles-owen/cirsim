@@ -16,7 +16,7 @@ export const HelpPresenter = function(main, owner) {
 
     this.present = function(url) {
         if(url === '') {
-            url = 'help/index.html';
+            url = 'cirsim/help/index.html';
         }
 
         url = main.cirsim.root + '/' + url;
@@ -73,8 +73,8 @@ export const HelpPresenter = function(main, owner) {
         }
 
         let root = main.cirsim.root;
-        html = html.replace(/src="img\//g, 'src="' + root + '/help/img/');
-        html = html.replace(/href="/g, 'href="' + root + '/help/');
+        html = html.replace(/src="img\//g, 'src="' + root + '/cirsim/help/img/');
+        html = html.replace(/href="/g, 'href="' + root + '/cirsim/help/');
 
 		// Install a click handler for every link so they stay in this page
 		// rather than navigating to the link.

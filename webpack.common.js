@@ -39,10 +39,6 @@ module.exports = {
             template: 'src/html/nowindow.html',
             inject: 'head'
         }),
-        /*  new HtmlWebpackIncludeAssetsPlugin({
-            assets: ['https://code.jquery.com/jquery-3.3.1.slim.min.js'],
-            append: false
-        }), */
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.ProvidePlugin({
@@ -54,17 +50,17 @@ module.exports = {
         new CopyWebpackPlugin([
             {
                 from: 'src/img/*.png',
-                to: 'img',
+                to: 'cirsim/img',
                 flatten: true
             },
             {
                 from: 'src/img/*.ico',
-                to: 'img',
+                to: 'cirsim/img',
                 flatten: true
             },
             {
                 from: 'src/help',
-                to: 'help',
+                to: 'cirsim/help',
                 flatten: false
             }
         ])
