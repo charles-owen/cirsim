@@ -9,7 +9,8 @@
     "build:dev": "npx webpack --config webpack.dev.js",
     "build:prod": "npx webpack --config webpack.prod.js",
     "test": "karma start karma.conf.js",
-    "serve": "webpack-dev-server  --config webpack.dev.js --open"
+    "serve": "webpack-dev-server  --config webpack.dev.js --open",
+    "build:docs": "documentation build src/Cirsim/**/*.js --sort-order alpha -f html -o doc/js"
   },
   "keywords": [
     "Education",

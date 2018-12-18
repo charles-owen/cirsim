@@ -1,5 +1,7 @@
+
+import Sanitize from './Utility/Sanitize';
+
 /**
- * @file
  * Support for values that can be passed around in Cirsim.
  *
  * Mainly used in support of devices that display bus values
@@ -11,12 +13,11 @@
  *  binary
  *  hexadecimal
  *  16-bit Half-Float values.
+ *  @param init Initial value
+ *  @param type Value.AUTO, Value.BINARY, Value.HEX, or Value.FLOAT16
+ *  @constructor
  */
-
-import Sanitize from './Utility/Sanitize.js';
-
-
-let Value = function(init, type) {
+export const Value = function(init, type) {
     // Default is undefined
     this.value = undefined;
     this.type = type !== undefined ? type : Value.AUTO;

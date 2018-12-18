@@ -1,10 +1,7 @@
-/**
- * A single circuit (one tab in the model)
- */
 
-import CircuitRef from './Component/CircuitRef.js';
-import Connection from './Connection.js';
-import Sanitize from './Utility/Sanitize.js';
+import {CircuitRef} from './Component/CircuitRef';
+import {Connection} from './Connection';
+import {Sanitize} from './Utility/Sanitize';
 
 /**
  * Construct a circuit

@@ -1,11 +1,14 @@
-/**
- * Component: Simple 4-bit ALU
- */
+
 
 import Component from '../Component.js';
 import ComponentPropertiesDlg from '../Dlg/ComponentPropertiesDlg.js';
 
-var Alu4 = function(name) {
+/**
+ * Component: Simple 4-bit ALU
+ * @param name Component name
+ * @constructor
+ */
+export const Alu4 = function(name) {
     Component.call(this, name);
 
     this.height = 16 * 8;
@@ -218,5 +221,3 @@ Alu4.prototype.properties = function (main) {
     var dlg = new ComponentPropertiesDlg(this, main);
     dlg.open();
 };
-
-export default Alu4;

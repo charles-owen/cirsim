@@ -1,10 +1,10 @@
 
 import Zero from './Zero';
-import One from './One';
-import Or from './Or';
-import Or3 from './Or3';
-import Or4 from './Or4';
-import Nor from './Nor';
+import {One} from './One';
+import {Or} from './Or';
+import {Or3} from './Or3';
+import {Or4} from './Or4';
+import {Nor} from './Nor';
 import And from './And';
 import And3 from './And3';
 import And4 from './And4';
@@ -14,7 +14,7 @@ import OutPin from './OutPin';
 import {Clock} from './Clock';
 import {Inverter} from './Inverter';
 import LED from './LED';
-import Xor from './Xor'
+import {Xor} from './Xor'
 import InPinBus from './InPinBus';
 import OutPinBus from './OutPinBus';
 import BusConstant from './BusConstant';
@@ -36,7 +36,7 @@ import DLatch from './DLatch';
 import SRLatch from './SRLatch';
 import Letters16 from './Letters16';
 import Register from './Register';
-import Alu4 from './Alu4';
+import {Alu4} from './Alu4';
 import Registers16 from './Registers16';
 import Pad from './Pad';
 import LEDBar from './LEDBar';

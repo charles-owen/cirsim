@@ -6,15 +6,15 @@
  * circuits to be switched out due to an undo or load.
  */
 
-import Circuit from './Circuit.js';
-import Circuits from './Circuits.js'
+import Circuit from './Circuit';
+import Circuits from './Circuits'
 
 /**
  * Construct a model
  * @param main The Cirsim object
  * @constructor
  */
-var Model = function(main) {
+export const Model = function(main) {
     this.main = main;
 
     this.circuits = new Circuits(this);
@@ -92,4 +92,3 @@ Model.prototype.replaceCircuit = function(circuit) {
     this.circuits.replaceCircuit(circuit);
 }
 
-export default Model;

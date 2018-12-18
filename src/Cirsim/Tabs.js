@@ -4,39 +4,31 @@ import {Tools} from './DOM/Tools';
 
 /**
  * Manages the tabs in the model
- * @param div The div to add the tabs to
- * @param model The model we are viewing
+ * @param main Main object
  * @constructor
  */
-var Tabs = function(main) {
-    var that = this;
-
-    // The currently active view/tab
-    var active = -1;
-    this.active = active;
-
-    // The work div we put the tabs into
-    var work = null;
-
-    // The model
-    var model = null;
+export const Tabs = function(main) {
+    /// The currently active view/tab
+    this.active = -1;
 
     // The collection of tabs
     var tabs = [];
 
-    // The tabs div
-    let tabsDiv = null;
+    //
+    // The structure: <div class="tabs"><ul></ul><div class="panes"></div></div>
+    // div.tabs - Enclosure for all tabs content
+    // ul - The tabs we select from
+    // div.panes - The panes with the tab contents
+    //
 
-    // The ul inside tabsDiv
-    let ul = null;
+    let tabsDiv = null, ul = null, panesDiv = null;
 
-    // The panes div
-    let panesDiv = null;
-
-    this.create = function(_work) {
-        work = _work;
-
-        // Create: '<div class="tabs"><ul></ul><div class="panes"></div></div>'
+	/**
+     * Create the tabs system
+	 * @param div The div we put the tabs into
+	 */
+	this.create = (div) => {
+        // Create: <div class="tabs"><ul></ul><div class="panes"></div></div>
         tabsDiv = Tools.createClassedDiv('tabs');
         ul = document.createElement('ul');
         tabsDiv.appendChild(ul);
@@ -44,9 +36,7 @@ var Tabs = function(main) {
         panesDiv = Tools.createClassedDiv('panes');
         tabsDiv.appendChild(panesDiv);
 
-        work.appendChild(tabsDiv);
-
-        // work.append('<div class="tabs"><ul></ul><div class="panes"></div></div>');
+        div.appendChild(tabsDiv);
 
         // Clear the tabs collection
         tabs = [];
@@ -63,7 +53,7 @@ var Tabs = function(main) {
         }
 
         // What is the current circuit?
-        let current = active >= 0 ? tabs[active].circuit : null;
+        let current = this.active >= 0 ? tabs[this.active].circuit : null;
         let collection = main.model.circuits.getCircuits();
 
         // Div containing the panes
@@ -77,22 +67,18 @@ var Tabs = function(main) {
 
         collection.forEach((circuit) => {
             let li = document.createElement('li');
-            li.innerHTML = `<a>${circuit.getName()}</a>`;
+            let a = document.createElement('a');
+            li.appendChild(a);
+            a.innerText = circuit.getName();
             li.addEventListener('click', (event) => {
 	            event.preventDefault();
 	            selectLi(li);
             });
 
-            //let li = $(`<li><a>${circuit.getName()}</a></li>`);
-            li.click((event) => {
-	            event.preventDefault();
-	            selectLi(li);
-            });
-
-            // li.find('a').click((event) => {
-            //     event.preventDefault();
-            //     selectLi(li);
-            // });
+	        a.addEventListener('click', (event) => {
+		        event.preventDefault();
+		        selectLi(li);
+	        });
 
             ul.appendChild(li);
 
@@ -117,6 +103,7 @@ var Tabs = function(main) {
             }
 
             panesDiv.appendChild(pane);
+            view.tabnum = tabsNew.length;
             tabsNew.push({li: li, pane: pane, circuit: circuit, view: view});
         });
 
@@ -147,10 +134,10 @@ var Tabs = function(main) {
 
             if(!any) {
                 // Current has been deleted
-                if(active >= tabs.length) {
-                    this.selectTab(active-1);
+                if(this.active >= tabs.length) {
+                    this.selectTab(this.active-1);
                 } else {
-                    this.selectTab(active);
+                    this.selectTab(this.active);
                 }
             }
         }
@@ -183,16 +170,16 @@ var Tabs = function(main) {
         return false;
     }
 
-    function selectLi(li) {
+    const selectLi = (li) => {
         for(let i=0; i<tabs.length; i++) {
             if(tabs[i].li === li) {
-                that.selectTab(i);
+                this.selectTab(i);
             }
         }
     }
 
-    this.selectTab = function(num, force) {
-        if(force !== true && num === active) {
+    this.selectTab = (num, force) => {
+        if(force !== true && num === this.active) {
             return;
         }
 
@@ -206,9 +193,8 @@ var Tabs = function(main) {
            // tab.pane.removeClass('selected');
         });
 
-        active = num;
-        this.active = active;
-        let tab = tabs[active];
+        this.active = num;
+        let tab = tabs[this.active];
 
         Tools.addClass(tab.li, 'selected');
         Tools.addClass(tab.pane, 'selected');
@@ -222,21 +208,21 @@ var Tabs = function(main) {
     }
 
     // Return the current View object
-    this.currentView = function() {
-        if(active < 0) {
+    this.currentView = () => {
+        if(this.active < 0) {
             return null;
         }
 
-        return tabs[active].view;
+        return tabs[this.active].view;
     };
 
     // Return the current Circuit object
-    this.currentCircuit = function() {
-        if(active < 0) {
+    this.currentCircuit = () => {
+        if(this.active < 0) {
             return null;
         }
 
-        return tabs[active].circuit;
+        return tabs[this.active].circuit;
     }
 
     // Implement undo for the tabs
@@ -247,9 +233,9 @@ var Tabs = function(main) {
     }
 
     this.destroy = function() {
-        active = -1;
-        this.active = active;
-        work.find(".tabs").remove();
+        this.active = -1;
+        tabsDiv.parentNode.removeChild(tabsDiv);
+        tabsDiv = null;
         tabs = [];
     };
 
@@ -284,12 +270,12 @@ var Tabs = function(main) {
      * Delete the active tab
      * @param index
      */
-    this.delActive = function(index) {
-        if(active < 0) {
+    this.delActive = (index) => {
+        if(this.active < 0) {
             return;
         }
 
-        main.model.deleteCircuitByIndex(active);
+        main.model.deleteCircuitByIndex(this.active);
         this.sync();
     }
 
@@ -300,6 +286,3 @@ var Tabs = function(main) {
     }
 
 };
-
-
-export default Tabs;

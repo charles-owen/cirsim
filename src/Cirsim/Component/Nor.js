@@ -1,11 +1,10 @@
+
+import {Or} from './Or';
+
 /**
  * Component: NOR gate
  */
-
-import Component from '../Component.js';
-import Or from './Or.js';
-
-var Nor = function(name) {
+export const Nor = function(name) {
     Or.call(this, name);
 
     // Replace the regular output with an inverse output
@@ -34,5 +33,3 @@ Nor.prototype.clone = function() {
     copy.copyFrom(this);
     return copy;
 };
-
-export default Nor;

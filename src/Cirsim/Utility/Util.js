@@ -1,9 +1,8 @@
 /**
- * @file
  * Utility functions
+ * @constructor
  */
-
-var Util = function() {
+export const Util = function() {
 }
 
 /**
@@ -19,6 +18,22 @@ Util.toHex = function(d, len) {
     }
 
     return hex;
+}
+
+/**
+ * Test if a string is in an array
+ * @param needle String item to look for
+ * @param haystack Array of strings
+ * @return true if in array
+ */
+Util.inArray = function(needle, haystack) {
+	for(let i=0; i<haystack.length; i++) {
+		if(haystack[i].toLowerCase() === needle.toLowerCase()) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 export default Util;

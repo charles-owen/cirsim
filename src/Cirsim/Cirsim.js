@@ -1,9 +1,3 @@
-/**
- * @file
- * The Cirsim object.
- * Creates Main objects for each element we are installing Cirsim in.
- */
-
 import $ from 'jquery';
 import {Main} from './Main';
 import Options from './Options';

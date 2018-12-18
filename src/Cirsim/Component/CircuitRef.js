@@ -1,10 +1,12 @@
+
+import {Component} from '../Component';
+
 /**
  * Component: Circuit Reference
+ * @param name Component name
+ * @constructor
  */
-
-import Component from '../Component.js';
-
-var CircuitRef = function(name) {
+export const CircuitRef = function(name) {
     Component.call(this, name);
 
     this.height = 160;
@@ -284,5 +286,3 @@ CircuitRef.prototype.draw = function(context, view) {
 
     this.drawIO(context, view);
 };
-
-export default CircuitRef;

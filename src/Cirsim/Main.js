@@ -3,14 +3,14 @@ import Resizer from 'resizer-cl';
 
 import {Menu} from './Menu';
 import {Palette} from './Palette';
-import Model from './Model';
+import {Model} from './Model';
 import Circuit from './Circuit';
-import Tabs from './Tabs';
+import {Tabs} from './Tabs';
 import ExportDlg from './Dlg/ExportDlg';
 import ImportDlg from './Dlg/ImportDlg';
-import Test from './Test';
+import {Test} from './Test';
 import {Toast} from './Graphics/Toast';
-import FileSaveDialog from './Dlg/FileSaveDialog';
+import {FileSaveDialog} from './Dlg/FileSaveDialog';
 import FileOpenDialog from './Dlg/FileOpenDialog';
 import SaveDialog from './Dlg/SaveDialog';
 import OpenDialog from './Dlg/OpenDialog';
@@ -40,20 +40,19 @@ export const Main = function(cirsim, element, tests) {
         this.test.addTest(test);
     })
 
-    this.addTest= function(test) {
-        this.test.addTest(test);
-    }
 
     this.filename = null;
 
-    var el = element !== null ? $(element) : null;
-    var options = cirsim.options;
+    let options = cirsim.options;
 
     /// The active editing model
     let model = null;
 
     /// References to other model components
-    let menu=null, work=null, palette=null, tabs=null;
+    let menu=null, palette=null, tabs=null;
+
+    /// div.overlay
+    let divOverlay = null, divWork=null;
 
     this.initialize = function() {
         if(options.display !== 'none') {
@@ -119,9 +118,6 @@ export const Main = function(cirsim, element, tests) {
             this.divMain = Tools.createClassedDiv('main');
             this.element.appendChild(this.divMain);
 
-            // jQuery version
-	        let main = $(this.divMain);
-
 	        this.help = new HelpDiv(this);
 
             tabs = new Tabs(this);
@@ -132,30 +128,31 @@ export const Main = function(cirsim, element, tests) {
             //
             menu = new Menu(this);
             this.menu = menu;
-            //menu.create();
 
             //
             // Working area
+            // <div class="work"></div>
             //
-            //work = $('<div class="work"></div>');
-            work = Tools.createClassedDiv('work');
-            main.append(work);
+            divWork = Tools.createClassedDiv('work');
+            this.divMain.appendChild(divWork);
 
             //
             // And the palette
             //
-            palette = new Palette(this, work);
+            palette = new Palette(this, divWork);
             this.palette = palette;
 
             //
             // And add the tabs
             //
-            tabs.create(work);
+            tabs.create(divWork);
 
-            //
-            // And the overlay
-            //
-            main.append('<div class="cirsim-overlay"></div>');
+	        //
+	        // And the overlay
+	        // <div class="cirsim-overlay"></div>
+	        //
+	        divOverlay = Tools.createClassedDiv('cirsim-overlay');
+	        this.divMain.appendChild(divOverlay);
 
             this.toast = new Toast(this);
             this.toast.create(this.divMain);
@@ -180,8 +177,8 @@ export const Main = function(cirsim, element, tests) {
             // And the overlay
             // <div class="cirsim-overlay"></div>
             //
-            const divOverlap = Tools.createClassedDiv('cirsim-overlay');
-            element.appendChild(divOverlap);
+            divOverlay = Tools.createClassedDiv('cirsim-overlay');
+            element.appendChild(divOverlay);
 
             this.toast = new Toast(this);
             this.toast.create(this.element);
@@ -203,6 +200,11 @@ export const Main = function(cirsim, element, tests) {
         }
 
     }
+
+
+	this.addTest= function(test) {
+		this.test.addTest(test);
+	}
 
 
     this.currentView = function() {
@@ -242,9 +244,9 @@ export const Main = function(cirsim, element, tests) {
      */
     this.modal = function(modal) {
         if(modal) {
-            el.find('.cirsim-overlay').css('display', 'block');
+            divOverlay.style.display = 'block';
         } else {
-            el.find('.cirsim-overlay').css('display', 'none');
+            divOverlay.style.display = 'none';
         }
     }
 
@@ -276,7 +278,6 @@ export const Main = function(cirsim, element, tests) {
 
         dlg.open((name) => {
             this.filename = name;
-            console.log('filename set to ' + name);
         });
     }
 
@@ -321,7 +322,7 @@ export const Main = function(cirsim, element, tests) {
      */
     this.reload = function() {
         tabs.destroy();
-        tabs.create(work, model);
+        tabs.create(divWork, model);
     }
 
     var dockedHelp = false;

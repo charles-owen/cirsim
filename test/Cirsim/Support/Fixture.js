@@ -1,9 +1,9 @@
-import Circuits from '../../../src/Cirsim/Circuits.js';
-import Circuit from '../../../src/Cirsim/Circuit.js';
-import InPin from '../../../src/Cirsim/Component/InPin.js';
-import OutPin from '../../../src/Cirsim/Component/OutPin.js';
-import InPinBus from '../../../src/Cirsim/Component/InPinBus.js';
-import OutPinBus from '../../../src/Cirsim/Component/OutPinBus.js';
+import Circuits from '../../../src/Cirsim/Circuits';
+import Circuit from '../../../src/Cirsim/Circuit';
+import InPin from '../../../src/Cirsim/Component/InPin';
+import OutPin from '../../../src/Cirsim/Component/OutPin';
+import InPinBus from '../../../src/Cirsim/Component/InPinBus';
+import OutPinBus from '../../../src/Cirsim/Component/OutPinBus';
 
 
 /**

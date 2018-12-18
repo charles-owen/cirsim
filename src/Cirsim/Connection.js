@@ -1,13 +1,10 @@
+
+import Selectable from './Selectable';
+import Bend from './Bend';
+import {Vector} from './Utility/Vector';
+
 /**
  * Connections from an In to an Out
- */
-
-import Selectable from './Selectable.js';
-import Bend from './Bend.js';
-import Vector from './Utility/Vector.js';
-
-/**
- * Create a new connection
  * @param from From (Out)
  * @param to To (In)
  * @param noset If true, do not call .set on the to device.
@@ -16,7 +13,7 @@ import Vector from './Utility/Vector.js';
  * copy without causing a new simulation event.
  * @constructor
  */
-var Connection = function(from, to, noset) {
+export const Connection = function(from, to, noset) {
     Selectable.call(this);
 
     this.touchRange = 8;

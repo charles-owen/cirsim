@@ -1,11 +1,13 @@
+
+import {Component} from '../Component';
+import {Or} from './Or';
+
 /**
  * Component: 3-input OR gate
+ * @param name Component name
+ * @constructor
  */
-
-import Component from '../Component.js';
-import Or from './Or.js';
-
-var Or3 = function(name) {
+export const Or3 = function(name) {
     Component.call(this, name);
 
     this.height = 50;
@@ -82,7 +84,3 @@ Or3.prototype.draw = function(context, view) {
     this.drawName(context, -2, 5);
     this.drawIO(context, view);
 };
-
-export default Or3;
-
-

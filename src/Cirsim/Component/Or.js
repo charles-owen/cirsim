@@ -1,12 +1,13 @@
+
+import {Component} from '../Component';
+import {CanvasHelper} from '../Graphics/CanvasHelper';
+
 /**
  * Component: OR gate
+ * @param name Component name
+ * @constructor
  */
-
-import Component from '../Component.js';
-import CanvasHelper from '../Graphics/CanvasHelper.js';
-
-
-var Or = function(name) {
+export const Or = function(name) {
     Component.call(this, name);
 
     this.height = 50;
@@ -118,6 +119,3 @@ Or.path = function(context, x, y, width, height) {
     context.lineTo(leftX, topY);
 
 }
-
-
-export default Or;

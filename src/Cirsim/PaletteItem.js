@@ -30,7 +30,7 @@ export const PaletteItem = function(palette, obj, circuit) {
     if(obj.label.length > 7) {
         Tools.addClass(desc, 'long');
     }
-    desc.innerText = obj.label;
+    desc.innerText = circuit !== undefined ? circuit.name : obj.label;
     box.appendChild(desc);
 
 	this.element = element;

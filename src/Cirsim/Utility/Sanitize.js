@@ -1,8 +1,3 @@
-/**
- * @file
- * Basic Sanitize operations to protect from XSS.
- */
-
 import DOMPurify from 'dompurify';
 
 /**
@@ -14,7 +9,7 @@ import DOMPurify from 'dompurify';
  *
  * @constructor
  */
-var Sanitize = function() {
+export const Sanitize = function() {
 }
 
 Sanitize.sanitize = function(text) {

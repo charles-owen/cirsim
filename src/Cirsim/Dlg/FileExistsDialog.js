@@ -1,14 +1,18 @@
+
+import {Dialog} from './Dialog';
+
 /**
- * @file
  * File system file exists dialog box
+ * @param filename The filename that exists
+ * @constructor
  */
-
-import Dialog from './Dialog.js';
-
-var FileExistsDialog = function(filename) {
+export const FileExistsDialog = function(filename) {
     Dialog.call(this);
 
-
+	/**
+	 * Open the dialog box
+	 * @param done Callback that is called with the true/false depending on ok/cancel button press
+	 */
     this.open = function(done) {
         this.done = done;
 
@@ -28,13 +32,13 @@ var FileExistsDialog = function(filename) {
         this.done(true);
     }
 
-    this.cancel = function() {
-        //this.close();
+	/**
+	 * Call back on the press of the Cancel button
+	 */
+	this.cancel = function() {
         this.done(false);
     }
 }
 
 FileExistsDialog.prototype = Object.create(Dialog.prototype);
 FileExistsDialog.prototype.constructor = FileExistsDialog;
-
-export default FileExistsDialog;

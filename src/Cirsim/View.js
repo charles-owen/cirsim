@@ -15,6 +15,9 @@ export const View = function(main, canvas, circuit) {
 
     this.element = canvas;
 
+    /// The tab number for this view
+    this.tabnum = -1;
+
     canvas.addEventListener('dragover', (event) => {
         event.preventDefault();
     });

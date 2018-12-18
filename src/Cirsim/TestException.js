@@ -1,11 +1,10 @@
 /**
- * @file
  * Exceptions thrown by testing
+ * @param msg The exception message
+ * @constructor
  */
-
-var TestException = function(msg) {
+export const TestException = function(msg) {
     this.msg = msg;
-
 }
 
 export default TestException;

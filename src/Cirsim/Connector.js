@@ -1,15 +1,12 @@
-/**
- * @file
- * Base object for a component connection.
- * Both In and Out are derived from Connector
- */
 
-import Util from './Utility/Util.js';
-import Vector from './Utility/Vector.js';
+import {Util} from './Utility/Util';
+import {Vector} from './Utility/Vector';
 
 
 /**
  * Base object for connectors (In or Out)
+ *
+ * Both In and Out are derived from Connector
  * @param component Component this connector is for
  * @param x Relative x on the component
  * @param y Relative y on the component
@@ -18,7 +15,7 @@ import Vector from './Utility/Vector.js';
  * @param inv True (optional) if connector has a circle (inverse)
  * @constructor
  */
-var Connector = function(component, x, y, len, name, inv) {
+export const Connector = function(component, x, y, len, name, inv) {
     this.component = component;
     this.x = x;
     this.y = y;

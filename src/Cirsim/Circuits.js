@@ -1,12 +1,15 @@
+
+import Simulation from './Simulation';
+import Circuit from './Circuit';
+import {Sanitize} from './Utility/Sanitize';
+
 /**
  * A collection of circuit objects
+ * @param model The model we are a member of
+ * @param simulation The simulation object that simulates operation of the circuits
+ * @constructor
  */
-
-import Simulation from './Simulation.js';
-import Circuit from './Circuit.js';
-import Sanitize from './Utility/Sanitize.js';
-
-var Circuits = function(model, simulation) {
+export const Circuits = function(model, simulation) {
     this.model = model;
     this.circuits = [];
     this.grid = 8;

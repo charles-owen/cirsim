@@ -1,14 +1,15 @@
-/**
- * @file
- * Base object for general-purpose dialog boxes where the
- * functionality is assumed to be implemented in a derived object.
- */
 
-import Unique from '../Utility/Unique.js';
+import {Unique} from '../Utility/Unique';
 import DOMPurify from 'dompurify';
 import DialogCL from 'dialog-cl';
 import {Tools} from '../DOM/Tools';
 
+/**
+ * Base object for general-purpose dialog boxes where the
+ * functionality is assumed to be implemented in a derived object.
+ * @param classes Classes to add to the dialog box
+ * @constructor
+ */
 export const Dialog = function(classes) {
     this.classes = classes !== undefined ? 'cirsim ' + classes : 'cirsim';
     this.buttonOk = "Ok";
@@ -17,11 +18,19 @@ export const Dialog = function(classes) {
     this.titleBarButtons = null;
 }
 
+/**
+ * Set the dialog box contents
+ * @param html HTML for the body
+ * @param title Title for the title bar
+ */
 Dialog.prototype.contents = function( html, title) {
     this.html = html;
     this.title = title;
 }
 
+/**
+ * Open the dialog box
+ */
 Dialog.prototype.open = function() {
     let form = document.createElement('form');
     let div = Tools.createClassedDiv('dialog-content');

@@ -1,18 +1,14 @@
-/**
- * @file
- * Object for management of testing
- */
 
-import Value from './Value.js';
-import MessageDialog from './Dlg/MessageDialog.js';
-import TestException from './TestException.js';
+import {Value} from './Value';
+import MessageDialog from './Dlg/MessageDialog';
+import TestException from './TestException';
 import Promise from 'es6-promise';
 
 /**
  * Constructor
  * @param main The Test object
  */
-var Test = function(main) {
+export const Test = function(main) {
     var that = this;
 
     /// The main object
@@ -403,7 +399,4 @@ var Test = function(main) {
     }
 
 }
-
-export default Test;
-
 

@@ -1,10 +1,13 @@
-/**
- * @file
- * The Edit menu
- */
+
 
 import {Component} from '../Component';
 
+/**
+ * The Edit menu
+ * @param menu Menu object
+ * @param main Main object
+ * @constructor
+ */
 export const EditMenu = function(menu, main) {
 
     this.html = function() {

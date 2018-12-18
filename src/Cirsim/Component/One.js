@@ -1,11 +1,13 @@
-/**
- * Component: One (fixed true) gate
- */
 
-import Component from '../Component.js';
+import {Component} from '../Component';
 import {PaletteImage} from '../Graphics/PaletteImage';
 
-var One = function(name) {
+/**
+ * Component: One (fixed true) gate
+ * @param name Name assigned to this component
+ * @constructor
+ */
+export const One = function(name) {
     Component.call(this, name);
 
     this.height = 16;
@@ -76,5 +78,3 @@ One.paletteImage = function() {
     pi.drawText("1", 0, 5, "14px Times");
     return pi;
 }
-
-export default One;

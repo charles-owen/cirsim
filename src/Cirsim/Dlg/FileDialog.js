@@ -1,12 +1,11 @@
+
+import {Dialog} from './Dialog';
+import {JsonAPI} from '../Api/JsonAPI';
+import {FileExistsDialog} from './FileExistsDialog';
+
 /**
- * @file
- * Base class for both FileSaveDialog and FileSaveDialog
+ * Base object for both FileSaveDialog and FileSaveDialog
  */
-
-import Dialog from './Dialog.js';
-import JsonAPI from '../Api/JsonAPI.js';
-import FileExistsDialog from './FileExistsDialog.js';
-
 var FileDialog = function(open, options, toast) {
     Dialog.call(this);
 
@@ -159,7 +158,6 @@ var FileDialog = function(open, options, toast) {
 
 FileDialog.prototype = Object.create(Dialog.prototype);
 FileDialog.prototype.constructor = FileDialog;
-
 
 export default FileDialog;
 

@@ -3,15 +3,11 @@
  *
  * Points are represented with x,y properties:
  * var p = {x: 23, y: -7.3};
- */
-
-/**
- * Vector object
  * @param x
  * @param y
  * @constructor
  */
-function Vector(x, y) {
+export const Vector = function(x, y) {
     this.x = x;
     this.y = y;
 }

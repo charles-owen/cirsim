@@ -1,12 +1,16 @@
-/**
- * @file
- * File system save dialog box
- */
 
 import FileDialog from './FileDialog.js';
 import JsonAPI from '../Api/JsonAPI.js';
 
-var FileSaveDialog = function(data, type, options, toast) {
+/**
+ * File system save dialog box
+ * @param data Data to save
+ * @param type Data mime type
+ * @param options The Cirsim options object
+ * @param toast The Toast object
+ * @constructor
+ */
+export const FileSaveDialog = function(data, type, options, toast) {
     FileDialog.call(this, false, options, toast);
 
     var save = options.getAPI('save');
@@ -26,7 +30,6 @@ var FileSaveDialog = function(data, type, options, toast) {
                 if(!toast.jsonErrors(json)) {
                     this.close();
                     callback(name);
-                    return;
                 }
             },
             error: (xhr, status, error) => {
@@ -41,6 +44,3 @@ var FileSaveDialog = function(data, type, options, toast) {
 
 FileSaveDialog.prototype = Object.create(FileDialog.prototype);
 FileSaveDialog.prototype.constructor = FileSaveDialog;
-
-export default FileSaveDialog;
-

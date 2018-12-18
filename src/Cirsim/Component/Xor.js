@@ -1,11 +1,13 @@
+
+import {Component} from '../Component';
+import {Or} from './Or';
+
 /**
  * Component: XOR gate
+ * @param name Component name
+ * @constructor
  */
-
-import Component from '../Component.js';
-import Or from './Or.js';
-
-var Xor = function(name) {
+export const Xor = function(name) {
     Component.call(this, name);
 
     this.height = 50;
@@ -87,5 +89,3 @@ Xor.prototype.draw = function(context, view) {
     this.drawName(context, -2, 5);
     this.drawIO(context, view);
 };
-
-export default Xor;
