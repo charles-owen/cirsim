@@ -170,7 +170,7 @@ export const Main = function(cirsim, element, tests) {
             div.appendChild(canvas);
 
             let circuit = model.circuits.getCircuit('main');
-            let view = new View(this, div.find('canvas'), circuit, 0);
+            let view = new View(this, canvas, circuit, 0);
             model.getSimulation().setView(view);
 
             //

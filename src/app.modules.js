@@ -5,4 +5,5 @@ import './polyfills/all.js';
 import Cirsim from './Cirsim/Cirsim.js';
 import './cirsim.scss';
 
+export {Cirsim};
 export {Cirsim as default};
