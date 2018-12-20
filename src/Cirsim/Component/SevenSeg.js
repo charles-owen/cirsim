@@ -1,12 +1,11 @@
+import {Component} from '../Component';
+import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
+import {Vector} from '../Utility/Vector';
+
 /**
  * Component: SevenSeg Seven Segment display
  */
-
-import Component from '../Component.js';
-import ComponentPropertiesDlg from '../Dlg/ComponentPropertiesDlg.js';
-import Vector from '../Utility/Vector.js';
-
-var SevenSeg = function(name) {
+export const SevenSeg = function(name) {
     Component.call(this, name);
 
     this.height = 150;
@@ -239,10 +238,8 @@ SevenSeg.prototype.properties = function(main) {
     dlg.extra(html, function() {
         return null;
     }, function() {
-        that.color = $('#' + id).val();
+        that.color = document.getElementById(id).value;
     });
 
     dlg.open();
 };
-
-export default SevenSeg;

@@ -2,10 +2,10 @@
  * Component: 3-input AND gate
  */
 
-import Component from '../Component.js';
-import And from './And.js';
+import {Component} from '../Component';
+import {And} from './And';
 
-var And3 = function(name) {
+export const And3 = function(name) {
     Component.call(this, name);
 
     this.height = 50;
@@ -111,5 +111,3 @@ And3.paletteImage = function() {
 
     return paletteImage;
 }
-
-export default And3;

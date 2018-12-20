@@ -41,7 +41,7 @@ FmBus.description = '<h2>To Bus</h2><p>Converts a bus input into single bit ' +
  * @param state
  */
 FmBus.prototype.compute = function(state) {
-    if($.isArray(state[0])) {
+    if(Array.isArray(state[0])) {
         for(var i=0; i<this.size && i<state[0].length; i++) {
             this.outs[i].set(state[0][i]);
         }
@@ -155,13 +155,13 @@ FmBus.prototype.properties = function(main) {
         '"></div>';
 
     dlg.extra(html, function() {
-        var size = parseInt($('#' + id).val());
+        var size = parseInt(document.getElementById(id).value);
         if(isNaN(size) || size < 2 || size > 16) {
             return "Size must be an integer from 2 to 16";
         }
         return null;
     }, function() {
-        that.size = parseInt($('#' + id).val());
+        that.size = parseInt(document.getElementById(id).value);
         that.ensureIO();
         that.pending();
     });

@@ -55,7 +55,7 @@ Letters16.order = 500;
  * @param state
  */
 Letters16.prototype.compute = function(state) {
-    if($.isArray(state[0])) {
+    if(Array.isArray(state[0])) {
         var v = state[0];
         if(v[0] === undefined || v[1] === undefined || v[2] === undefined || v[3] === undefined) {
             this.value = undefined;

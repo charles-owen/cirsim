@@ -1,6 +1,4 @@
 div.cirsim nav.menubar {
-  font-family: $menu-font;
-  font-size: $menu-font-size;
   position: relative;
   z-index: 100;
   margin: 0;
@@ -8,6 +6,7 @@ div.cirsim nav.menubar {
   padding: 0;
   background-color: $menu-background;
   border-bottom: thin solid #808080;
+  font-size: $menu-font-size;
 
   li:hover {
     background: $menu-focus;
@@ -16,8 +15,12 @@ div.cirsim nav.menubar {
   li {
     user-select: none;
     cursor: pointer;
-    a:link, li a:visited {
+
+    a, a:link, a:visited {
+      font-family: $menu-font;
+      font-size: $menu-font-size;
       color: $menu-color;
+      text-decoration: none;
     }
   }
 
@@ -44,7 +47,10 @@ div.cirsim nav.menubar {
       padding: 0.25em 2em 0.25em 0.5em;
       position: relative;
 
-      a {
+      a, a:link, a:visited {
+        font-family: $menu-font;
+        font-size: $menu-font-size;
+        color: $menu-color;
         text-decoration: none;
       }
     }

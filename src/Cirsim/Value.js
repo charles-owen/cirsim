@@ -260,10 +260,10 @@ Value.prototype.dialogContent = function(dlg, value) {
         if(value) {
             // Save off the type so we can change it temporarily
             let saveType = this.type;
-            this.type = parseInt($('input[name="' + selectId + '"]:checked').val());
+            this.type = parseInt(document.querySelector('input[name="' + selectId + '"]:checked').value); // $().val());
 
             // Test the input string
-            let valstr = $('#' + valueId).val();
+            let valstr = document.getElementById(valueId).value; //  $('#' + valueId).val();
             let val = this.setAsString(valstr, true);
 
             // Restore the type
@@ -279,9 +279,9 @@ Value.prototype.dialogContent = function(dlg, value) {
 
     let accept = () => {
         // Accept function
-        this.type = parseInt($('input[name="' + selectId + '"]:checked').val());
+        this.type = parseInt(document.querySelector('input[name="' + selectId + '"]:checked').value); // parseInt($('input[name="' + selectId + '"]:checked').val());
         if(value) {
-            let valstr = $('#' + valueId).val();
+	        let valstr = document.getElementById(valueId).value; //  $('#' + valueId).val();
             this.setAsString(valstr, false);
         }
     }
@@ -437,7 +437,7 @@ Value.prototype.setAsHex = function(str, parseonly) {
  */
 Value.prototype.getAsBinary = function() {
     function toValueString(v) {
-        if($.isArray(v)) {
+        if(Array.isArray(v)) {
             var str = '';
             v.forEach(function(v1) {
                 str = toValueString(v1) + str;

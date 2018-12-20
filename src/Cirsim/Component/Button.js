@@ -1,19 +1,19 @@
+import {Component} from '../Component';
+import {Screw} from '../Graphics/Screw';
+import {Vector} from '../Utility/Vector';
+import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
+
 /**
  * Component: Button than can be pressed by the user
+ * @param name Component name
+ * @constructor
  */
-
-import Component from '../Component.js';
-import Screw from '../Graphics/Screw.js';
-import Vector from '../Utility/Vector.js';
-import ComponentPropertiesDlg from '../Dlg/ComponentPropertiesDlg.js';
-
-
-var Button = function(name) {
+export const Button = function(name) {
     Component.call(this, name);
 
+    // Size
     this.height = 50;
-    this.width = this.height;
-
+    this.width = 50;
     this.buttonSize = 40;
 
     this.value = false;
@@ -109,7 +109,7 @@ Button.prototype.draw = function(context, view) {
             break;
     }
     // The button
-    var r = 16;
+    let r = 16;
     if(this.value) {
         var grd = context.createRadialGradient(this.x, this.y, 1, this.x, this.y, r);
         grd.addColorStop(0, color[0]);
@@ -157,8 +157,7 @@ Button.prototype.touch = function(x, y) {
         return null;
     }
 
-    var touched = Component.prototype.touch.call(this, x, y);
-    return touched;
+    return Component.prototype.touch.call(this, x, y);
 };
 
 Button.prototype.mouseUp = function() {
@@ -175,7 +174,7 @@ Button.prototype.set = function(value) {
 };
 
 Button.prototype.setAsString = function(value) {
-    var v = value == 1;
+    var v = +value === 1;
     this.set(v);
 }
 
@@ -191,7 +190,7 @@ Button.prototype.properties = function(main) {
 
     var colors = ['green', 'blue'];
     var html = '<div class="control1 center"><label for="' + id + '">Color: </label><select id="' + id + '">';
-    colors.forEach(function(color) {
+    colors.forEach((color) => {
         if(color === that.color) {
             html += '<option selected>' + color + '</option>';
         } else {
@@ -201,13 +200,11 @@ Button.prototype.properties = function(main) {
     });
     html += '</select></div>';
 
-    dlg.extra(html, function() {
+    dlg.extra(html, () => {
         return null;
-    }, function() {
-        that.color = $('#' + id).val();
+    }, () => {
+        this.color = document.getElementById(id).value;
     });
 
     dlg.open();
 };
-
-export default Button;

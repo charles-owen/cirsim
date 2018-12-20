@@ -11,8 +11,8 @@ export const ComponentPropertiesDlg = function(component, main) {
 
     this.resize = 'both';
 
-    // A unique ID for the input control
-    var id = Unique.uniqueName();
+    // A unique ID for the component name input control
+    var nameId = null;
 
     var extraHTML = '';
     var extraCreate = function() {};
@@ -53,8 +53,9 @@ export const ComponentPropertiesDlg = function(component, main) {
         var dlg = '';
 
         if(component.prefix !== null) {
-            dlg += '<div class="control1 center gap"><label for="' + id + '">Name: </label>' +
-                '<input type="text" name="' + id + '" id="' + id + '" value="' + name + '" spellcheck="false" class="compname text ui-widget-content ui-corner-all">' +
+            nameId = Unique.uniqueName();
+            dlg += '<div class="control1 center gap"><label for="' + nameId + '">Name: </label>' +
+                '<input type="text" name="' + nameId + '" id="' + nameId + '" value="' + name + '" spellcheck="false" class="compname text ui-widget-content ui-corner-all">' +
                 '</div>';
         }
 
@@ -65,7 +66,10 @@ export const ComponentPropertiesDlg = function(component, main) {
         Dialog.prototype.open.call(this);
 
         extraCreate();
-        document.getElementById(id).select();
+
+        if(nameId !== null) {
+	        document.getElementById(nameId).select();
+        }
 
         const helper = this.element.querySelector('a.helper');
         if(helper !== null) {
@@ -83,7 +87,7 @@ export const ComponentPropertiesDlg = function(component, main) {
 	    let name = '';
 
         if(component.prefix !== null) {
-        	const nameElement = document.getElementById(id);
+        	const nameElement = document.getElementById(nameId);
         	name = nameElement.value.replace(/^\s+|\s+$/gm,'');
 
             if(name.length !== 0) {

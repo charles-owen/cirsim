@@ -1,13 +1,15 @@
+
+import {Component} from '../Component';
+import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
+
 /**
  * Component: BusSelector
  * A Bus Selector chooses some range of signals from an input
  * bus to output as a subset bus.
+ * @param name Component name
+ * @constructor
  */
-import Component from '../Component.js';
-import ComponentPropertiesDlg from '../Dlg/ComponentPropertiesDlg.js';
-import Value from '../Value.js';
-
-var BusSelector = function(name) {
+export const BusSelector = function(name) {
     Component.call(this, name);
 
     this.height = 16;
@@ -150,13 +152,9 @@ BusSelector.prototype.ensureIO = function() {
 }
 
 BusSelector.prototype.properties = function(main) {
-    var that = this;
-
     var dlg = new ComponentPropertiesDlg(this, main);
     var fmId = dlg.uniqueId();
     var toId = dlg.uniqueId();
-    var fmSel = '#' + fmId;
-    var toSel = '#' + toId;
 
     var html = `<div class="control1 center gap">
 <input class="number" type="text" name="${fmId}" id="${fmId}" value="${this.from}" spellcheck="false" onfocus="this.select()"> 
@@ -169,36 +167,34 @@ BusSelector.prototype.properties = function(main) {
         '<input type="text" name="selector-to" value="' + this.to +
         '" spellcheck="false"></p>'; */
 
-    dlg.extra(html, function() {
-        var fromstr = $(fmSel).val();
-        var tostr = $(toSel).val();
-        var from = parseInt(fromstr);
-        var to = parseInt(tostr);
+    dlg.extra(html, () => {
+        let fromStr = document.getElementById(fmId).value;
+        let toStr = document.getElementById(toId).value;
+        var from = parseInt(fromStr);
+        var to = parseInt(toStr);
         if(isNaN(from) || from < 0 || from > 32) {
-            $(fmSel).select();
+	        document.getElementById(fmId).select();
             return "Invalid from value";
         }
         if(isNaN(to) || to < 0 || to > 32) {
-            $(toSel).select();
+	        document.getElementById(toId).select();
             return "Invalid to value";
         }
 
         if(from > to) {
-            $(fmSel).select();
+	        document.getElementById(fmId).select();
             return "Invalid values, <em>from</em> must be less than or equal to <em>to</em>."
         }
 
         return null;
-    }, function() {
-        var fromstr = $(fmSel).val();
-        var tostr = $(toSel).val();
-        that.from = parseInt(fromstr);
-        that.to = parseInt(tostr);
-        that.ensureIO();
-        that.pending();
+    }, () => {
+	    let fromstr = document.getElementById(fmId).value;
+	    let tostr = document.getElementById(toId).value;
+	    this.from = parseInt(fromstr);
+        this.to = parseInt(tostr);
+        this.ensureIO();
+        this.pending();
     });
 
     dlg.open();
 };
-
-export default BusSelector;

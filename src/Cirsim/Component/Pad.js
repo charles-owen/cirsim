@@ -1,17 +1,16 @@
+import {Component} from '../Component';
+import {Button} from '../Graphics/Button';
+import {CanvasHelper} from '../Graphics/CanvasHelper';
+import {Value} from '../Value';
+import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
+
 /**
  * Component: Pad
  * Configurable keypad for button presses
+ * @param name Component name
+ * @constructor
  */
-
-import Component from '../Component.js';
-import Button from '../Graphics/Button.js';
-import CanvasHelper from '../Graphics/CanvasHelper.js';
-import Value from '../Value.js';
-import Sanitize from '../Utility/Sanitize.js';
-import ComponentPropertiesDlg from '../Dlg/ComponentPropertiesDlg.js';
-
-
-var Pad = function(name) {
+export const Pad = function(name) {
     Component.call(this, name);
 
     this.height = 150;
@@ -239,7 +238,7 @@ Pad.prototype.setType = function(pad) {
  * @param state
  */
 Pad.prototype.compute = function(state) {
-    if($.isArray(state[0])) {
+    if(Array.isArray(state[0])) {
         var v = state[0];
         if(v[0] === undefined || v[1] === undefined || v[2] === undefined || v[3] === undefined) {
             this.value = undefined;
@@ -415,11 +414,8 @@ Pad.prototype.properties = function(main) {
     dlg.extra(html, () => {
         return null;
     }, () => {
-        this.setType($(`input[name=${id}]:checked`).val());
+        this.setType(document.querySelector(`input[name=${id}]:checked`).value);  // $(`input[name=${id}]:checked`).val());
     });
 
     dlg.open();
 };
-
-
-export default Pad;

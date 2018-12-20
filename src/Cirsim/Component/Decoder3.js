@@ -36,7 +36,7 @@ Decoder3.order = 309;
  * @param state
  */
 Decoder3.prototype.compute = function(state) {
-    if($.isArray(state[0])) {
+    if(Array.isArray(state[0])) {
         var c = (state[0][0] ? 1 : 0) + (state[0][1] ? 2 : 0) +(state[0][2] ? 4 : 0);
         for(var i=0; i<this.size; i++) {
             this.outs[i].set(i == c);

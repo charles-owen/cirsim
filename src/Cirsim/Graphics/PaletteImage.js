@@ -19,7 +19,7 @@ export const PaletteImage = function(width, height) {
     this.element = document.createElement('canvas');
     this.element.style.width = '60px';
     this.element.style.height = canvasHeight + 'px';
-    this.element.style.backgroundColor = 'white';
+    this.element.style.backgroundColor = 'transparent';
 
     this.canvas = this.element;
     this.canvas.height = this.height;
@@ -49,7 +49,8 @@ PaletteImage.prototype.box = function(wid, hit) {
     this.context.lineTo(rightX, botY);
     this.context.lineTo(leftX, botY);
     this.context.lineTo(leftX, topY);
-    this.context.stroke();
+
+    this.fillStroke();
 }
 
 /**
@@ -136,4 +137,19 @@ PaletteImage.prototype.drawText = function (text, x, y, font) {
     context.textAlign = "center";
     context.fillText(text, x+this.width/2, y+this.height/2);
     context.stroke();
+}
+
+/**
+ * Fill a path and then stroke it.
+ * @param fillStyle Optional fill style to use. Uses white if not supplied.
+ */
+PaletteImage.prototype.fillStroke = function(fillStyle) {
+    if(fillStyle === undefined) {
+        fillStyle = 'white';
+    }
+
+	const fs = this.context.fillStyle;
+	this.context.fillStyle = fillStyle;
+	this.context.fill();
+	this.context.fillStyle = fs;
 }

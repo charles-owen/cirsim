@@ -1,9 +1,9 @@
 /**
  * Component: NAND gate
  */
-import And from './And.js';
+import {And} from './And';
 
-var Nand = function(name) {
+export const Nand = function(name) {
     And.call(this, name);
 
     // Replace the regular output with an inverse output
@@ -47,5 +47,3 @@ Nand.paletteImage = function() {
 
     return paletteImage;
 }
-
-export default Nand;

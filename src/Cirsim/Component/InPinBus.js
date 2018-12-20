@@ -1,14 +1,14 @@
+import {Component} from '../Component';
+import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
+import {Value} from '../Value';
+import {Sanitize} from '../Utility/Sanitize';
+
 /**
  * Component: InPinBus gate
  * An input pin for Bus inputs
+ * @constructor
  */
-
-import Component from '../Component.js';
-import ComponentPropertiesDlg from '../Dlg/ComponentPropertiesDlg.js';
-import Value from '../Value.js';
-import Sanitize from '../Utility/Sanitize.js';
-
-var InPinBus = function(name) {
+export const InPinBus = function(name) {
     Component.call(this, name);
 
     this.height = 16;
@@ -170,7 +170,7 @@ InPinBus.prototype.properties = function(main) {
     dlg.extra(html, content.validate, () => {
         content.accept();
 
-        this.setNarrow($('#' + id).prop('checked'));
+        this.setNarrow(document.getElementById(id).checked);
         this.compute(null);
     });
 
@@ -183,6 +183,3 @@ InPinBus.prototype.setNarrow = function(narrow) {
     this.width = narrow ? 48 : 96;
     this.outs[0].x = this.width/2;
 }
-
-
-export default InPinBus;

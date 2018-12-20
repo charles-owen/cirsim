@@ -99,8 +99,8 @@ Tools.isElement = function(val) {
 Tools.offset = function(element) {
 	const rect = element.getBoundingClientRect();
 	return {
-	    left: rect.left + element.scrollLeft,
-        top: rect.top + element.scrollTop
+	    left: rect.left + element.scrollLeft + window.pageXOffset,
+        top: rect.top + element.scrollTop + window.pageYOffset
     }
 }
 

@@ -1,11 +1,11 @@
+import {Component} from '../Component';
+import {And} from './And';
+
 /**
  * Component: 4-input AND gate
+ * @constructor
  */
-
-import Component from '../Component.js';
-import And from './And.js';
-
-var And4 = function(name) {
+export const And4 = function(name) {
     Component.call(this, name);
 
     this.height = 50;
@@ -51,6 +51,7 @@ And4.prototype.compute = function(state) {
 /**
  * Clone this component object.
  * @returns {And4}
+ * @memberof And4
  */
 And4.prototype.clone = function() {
     var copy = new And4();
@@ -117,6 +118,3 @@ And4.paletteImage = function() {
 
     return paletteImage;
 }
-
-
-export default And4;

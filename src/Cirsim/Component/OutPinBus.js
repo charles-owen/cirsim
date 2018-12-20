@@ -1,13 +1,12 @@
+import {Component} from '../Component';
+import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
+import {Value} from '../Value';
+import {Sanitize} from '../Utility/Sanitize';
+
 /**
  * Component: OutPinBus gate
  */
-
-import Component from '../Component.js';
-import ComponentPropertiesDlg from '../Dlg/ComponentPropertiesDlg.js';
-import Value from '../Value.js';
-import Sanitize from '../Utility/Sanitize.js';
-
-var OutPinBus = function(name) {
+export const OutPinBus = function(name) {
     Component.call(this, name);
 
     this.value = new Value();
@@ -150,7 +149,7 @@ OutPinBus.prototype.properties = function(main) {
     dlg.extra(html, content.validate, () => {
         content.accept();
 
-        this.setNarrow($('#' + id).prop('checked'));
+	    this.setNarrow(document.getElementById(id).checked);
     });
 
     dlg.open();

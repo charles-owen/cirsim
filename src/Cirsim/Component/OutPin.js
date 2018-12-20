@@ -1,10 +1,12 @@
-/**
- * Component: OutPin gate
- */
-import Component from '../Component.js';
-import Led from '../Graphics/Led.js'
+import {Component} from '../Component';
+import {Led} from '../Graphics/Led'
 
-var OutPin = function(name) {
+/**
+ * Component: OutPin output pin
+ * @param name Component name
+ * @constructor
+ */
+export const OutPin = function(name) {
     Component.call(this, name);
 
     this.height = 16;
@@ -125,5 +127,3 @@ OutPin.prototype.outlinePath = function(context) {
     context.lineTo(leftX + this.height/2, topY);
     context.lineTo(leftX, this.y);
 };
-
-export default OutPin;

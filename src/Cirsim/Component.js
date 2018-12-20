@@ -2,12 +2,12 @@
  * Base object for a component in a circuit
  */
 
-import Selectable from './Selectable.js';
-import In from './In.js';
-import Out from './Out.js';
-import OutInv from './OutInv.js';
-import Connection from './Connection.js';
-import ComponentPropertiesDlg from './Dlg/ComponentPropertiesDlg.js';
+import Selectable from './Selectable';
+import In from './In';
+import Out from './Out';
+import OutInv from './OutInv';
+import Connection from './Connection';
+import {ComponentPropertiesDlg} from './Dlg/ComponentPropertiesDlg';
 import DOMPurify from 'dompurify';
 
 export const Component = function (name) {

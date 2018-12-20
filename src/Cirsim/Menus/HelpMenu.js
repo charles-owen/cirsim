@@ -21,7 +21,7 @@ export const HelpMenu = function(menu, main) {
     }
 
     this.componentHelp = function(helper) {
-        helper = 'help/' + helper + '.html';
+        helper = 'cirsim/help/' + helper + '.html';
         if(!main.isHelpDocked()) {
             var dlg = new HelpDialog(main);
             dlg.open(helper);

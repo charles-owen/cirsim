@@ -1,12 +1,15 @@
+
+import {Component} from '../Component';
+import {Led} from '../Graphics/Led'
+import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
+import {Sanitize} from '../Utility/Sanitize';
+
 /**
  * Component: LED
+ * @param name Component name
+ * @constructor
  */
-import Component from '../Component.js';
-import Led from '../Graphics/Led.js'
-import ComponentPropertiesDlg from '../Dlg/ComponentPropertiesDlg.js';
-import Sanitize from '../Utility/Sanitize.js';
-
-var LED = function(name) {
+export const LED = function(name) {
     Component.call(this, name);
 
     this.height = 32;
@@ -156,11 +159,8 @@ LED.prototype.properties = function(main) {
     dlg.extra(html, () => {
         return null;
     }, () => {
-        this.color = Sanitize.sanitize($('#' + colorId).val());
+        this.color = Sanitize.sanitize(document.getElementById(colorId).value); // $('#' + colorId).val());
     });
 
     dlg.open();
 };
-
-export default LED;
-

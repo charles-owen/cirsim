@@ -41,7 +41,7 @@ Or3.offsetY = 30;         ///< Lower offset to right arcs
 Or3.type = "Or3";            ///< Name to use in files
 Or3.label = "OR";           ///< Label for the palette
 Or3.desc = "OR gate";       ///< Description for the palette
-Or3.img = "or3.png";         ///< Image to use for the palette
+//Or3.img = "or3.png";         ///< Image to use for the palette
 Or3.order = 15.3;               ///< Order of presentation in the palette
 Or3.description = '<h2>OR Gate</h2><p>The output of a three-input OR ' +
     'gate is <em>true</em> if any of of the' +
@@ -84,3 +84,16 @@ Or3.prototype.draw = function(context, view) {
     this.drawName(context, -2, 5);
     this.drawIO(context, view);
 };
+
+/**
+ * Create a PaletteImage object for an Or gate
+ */
+Or3.paletteImage = function() {
+
+	var paletteImage = Or.paletteImageBase();
+	paletteImage.io(Or.leftX, -16, 'w');
+	paletteImage.io(Or.leftX, 0, 'w');
+	paletteImage.io(Or.leftX, +16, 'w');
+
+	return paletteImage;
+}

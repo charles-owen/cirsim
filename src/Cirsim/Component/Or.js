@@ -1,6 +1,8 @@
 
 import {Component} from '../Component';
 import {CanvasHelper} from '../Graphics/CanvasHelper';
+import {PaletteImage} from "../Graphics/PaletteImage";
+import {And} from "./And";
 
 /**
  * Component: OR gate
@@ -38,7 +40,7 @@ Or.offsetY = 30;         ///< Lower offset to right arcs
 Or.type = "Or";            ///< Name to use in files
 Or.label = "OR";           ///< Label for the palette
 Or.desc = "OR gate";       ///< Description for the palette
-Or.img = "or.png";         ///< Image to use for the palette
+// Or.img = "or.png";         ///< Image to use for the palette
 Or.order = 15;               ///< Order of presentation in the palette
 Or.description = `<h2>OR Gate</h2><p>The output of an OR gate is <em>true</em> 
 if either or both inputs are true. Otherwise, it is false.</p>`;
@@ -85,8 +87,6 @@ Or.prototype.draw = function(context, view) {
 Or.draw = function(context, x, y, width, height) {
     Or.path(context, x, y, width, height);
     CanvasHelper.fillWith(context);
-
-    Or.path(context, x, y, width, height);
     context.stroke();
 }
 
@@ -111,11 +111,72 @@ Or.path = function(context, x, y, width, height) {
     // Bottom
     context.lineTo(x, botY);
     context.arc(x, y -offsetY, r, Math.PI/2, a, true);
-    // context.moveTo(x, botY);
-    //
 
     // Top
     context.arc(x, y + offsetY, r,-a, -Math.PI/2, true);
     context.lineTo(leftX, topY);
-
 }
+
+/**
+ * Create a PaletteImage object for an Or gate
+ * This is the base shape without input/outputs
+ * so we can use this code for 3-4 inputs and NOR
+ */
+Or.paletteImageBase = function() {
+	var paletteImage = new PaletteImage(120, 70);
+
+	var context = paletteImage.context;
+	context.lineWidth = 1.5;
+
+	var x = paletteImage.width / 2;
+	var y = paletteImage.height / 2;
+	var width = 0.5 * paletteImage.width;
+	var height = 0.65 * paletteImage.height;
+
+	var leftX = x - width/2 - 0.5;
+	var rightX = x + width/2 + 0.5;
+	var topY = Math.round(y - height/2) - 0.5;
+	var botY = Math.round(y + height/2) + 0.5;
+
+	context.beginPath();
+
+	// Left side
+	var offsetX = Or.offsetX;
+	var a = Math.atan2(height/2, offsetX);
+	var r = offsetX / Math.cos(a);
+	context.arc(leftX - offsetX, y, r, -a, a);
+
+	var offsetY = ((width/2)*(width/2) - (height/2)*(height/2)) / height;
+	r = height/2 + offsetY;
+	a = Math.atan2(offsetY, width/2);
+
+	this.leftX = leftX - paletteImage.width/2 + 3;
+	this.rightX = rightX - paletteImage.width/2
+
+
+	// Bottom
+	context.lineTo(x, botY);
+	context.arc(x, y -offsetY, r, Math.PI/2, a, true);
+
+	// Top
+	context.arc(x, y + offsetY, r,-a, -Math.PI/2, true);
+	context.lineTo(leftX, topY);
+
+	paletteImage.fillStroke();
+
+	paletteImage.io(this.rightX, 0, 'e');
+	return paletteImage;
+}
+
+/**
+ * Create a PaletteImage object for an Or gate
+ */
+Or.paletteImage = function() {
+
+	var paletteImage = Or.paletteImageBase();
+	paletteImage.io(this.leftX, -16, 'w');
+	paletteImage.io(this.leftX, +16, 'w');
+
+	return paletteImage;
+}
+

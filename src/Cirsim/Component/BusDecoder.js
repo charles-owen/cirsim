@@ -1,11 +1,14 @@
-/**
- * Component: General purpose BUS decoder
- */
-import Component from '../Component.js';
+
+import {Component} from '../Component';
 import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
 import {PaletteImage} from '../Graphics/PaletteImage';
 
-var BusDecoder = function(name) {
+/**
+ * Component: General purpose BUS decoder
+ * @param name Component name
+ * @constructor
+ */
+export const BusDecoder = function(name) {
     Component.call(this, name);
 
     this.height = 100;
@@ -50,7 +53,7 @@ BusDecoder.prototype.setSize = function(size) {
  * @param state
  */
 BusDecoder.prototype.compute = function(state) {
-    if($.isArray(state[0])) {
+    if(Array.isArray(state[0])) {
         let c = 0;
         let pow = 1;
         for(let i=0; i<state[0].length; i++) {
@@ -180,22 +183,19 @@ BusDecoder.prototype.save = function() {
 };
 
 BusDecoder.prototype.properties = function(main) {
-    var that = this;
-
     var dlg = new ComponentPropertiesDlg(this, main);
     var id = dlg.uniqueId();
-    var selId = '#' + id;
     var html = `<div class="control1 center"><label for="${id}">Size (bits): </label>
 <input class="number" type="text" name="${id}" id="${id}" value="${this.size}"></div>`;
 
     dlg.extra(html, function() {
-        var size = parseInt($(selId).val());
+        var size = parseInt(document.getElementById(id).value);
         if(isNaN(size) || size < 2 || size > 4) {
             return "Size must be an integer from 2 to 4";
         }
         return null;
-    }, function() {
-        that.setSize(parseInt($(selId).val()));
+    }, () => {
+        this.setSize(document.getElementById(id).value);
     });
 
     dlg.open();
@@ -216,5 +216,4 @@ BusDecoder.paletteImage = function() {
     return pi;
 }
 
-export default BusDecoder;
 

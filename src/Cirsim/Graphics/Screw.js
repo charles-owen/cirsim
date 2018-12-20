@@ -1,9 +1,10 @@
 /**
  * Simple drawing of a screw head
+ * @constructor
  */
-
-var Screw = function() {
+export const Screw = function() {
 };
+
 
 Screw.draw = function(context, x, y, radius, angle) {
     var saveFillStyle = context.fillStyle;
@@ -29,5 +30,3 @@ Screw.draw = function(context, x, y, radius, angle) {
     context.fillStyle = saveFillStyle;
     context.lineWidth = 1;
 };
-
-export default Screw;

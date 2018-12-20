@@ -1,21 +1,23 @@
+
+import {Component} from '../Component';
+import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
+import {Sanitize} from '../Utility/Sanitize';
+import {CanvasHelper} from '../Graphics/CanvasHelper';
+
 /**
  * Component: Text (labelling) gate
+ * @param name Component name
+ * @constructor
  */
-
-import Component from '../Component.js';
-import ComponentPropertiesDlg from '../Dlg/ComponentPropertiesDlg.js';
-import Sanitize from '../Utility/Sanitize.js';
-import CanvasHelper from '../Graphics/CanvasHelper.js';
-
-let Text = function(name) {
+export const Text = function(name) {
     Component.call(this, name);
 
-    this.height = 16;
-    this.width = 32;
-
-    this.text = "Text";
     this.size = 22;
+    this.text = "Text";
     this.color = 'black';
+
+    this.height = this.size;
+    this.width = this.size * 2;
 };
 
 Text.prototype = Object.create(Component.prototype);
@@ -87,18 +89,18 @@ Text.prototype.draw = function(context, view) {
         context.fillText(text, this.x-1, this.y + 5);
     }
 
+    // Size the size to make selection easier
+    this.height = this.size;
+    this.width = context.measureText(text).width;
+
     this.drawIO(context, view);
 };
 
 Text.prototype.properties = function(main) {
     let dlg = new ComponentPropertiesDlg(this, main);
     var idText = dlg.uniqueId();
-    var selText = '#' + idText;
     var idSize = dlg.uniqueId();
-    var selSize = '#' + idSize;
     let idColor = dlg.uniqueId();
-    let selColor = '#' + idColor;
-
 
     let html =`<div class="control">
 <label for="${idText}">Text: </label>
@@ -122,7 +124,7 @@ Text.prototype.properties = function(main) {
     html += '</select></div>';
 
     dlg.extra(html, function() {
-        var size = parseInt($(selSize).val());
+        var size = parseInt(document.getElementById(idSize).value);
         if(isNaN(size) || size < 10 || size > 55) {
             return "Size must be an integer between 10 and 55";
         }
@@ -131,20 +133,20 @@ Text.prototype.properties = function(main) {
         // Convert all HTML entities so we can't possibly
         // have executable code here.
         //
-        let text = Sanitize.htmlentities($(selText).val());
+        let text = Sanitize.htmlentities(document.getElementById(idText).value);
         if(text.length < 1) {
             return "Text cannot be empty";
         }
 
         return null;
     }, () => {
-        this.text = Sanitize.htmlentities($(selText).val());
-        this.size = parseInt($(selSize).val());
-        this.color = Sanitize.sanitize($(selColor).val());
+        this.text = Sanitize.htmlentities(document.getElementById(idText).value);
+        this.size = parseInt(document.getElementById(idSize).value);
+        this.color = Sanitize.sanitize(document.getElementById(idColor).value);
     });
 
     dlg.open();
-    $(selText).select();
+	document.getElementById(idText).select();
 };
 
 
@@ -164,6 +166,7 @@ Text.prototype.save = function() {
     if(this.color !== 'black') {
         obj.color = this.color;
     }
+
     return obj;
 };
 
@@ -180,5 +183,3 @@ Text.prototype.load = function(obj) {
 
     Component.prototype.load.call(this, obj);
 };
-
-export default Text;

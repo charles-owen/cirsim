@@ -10,17 +10,48 @@ export const DragAndDrop = function(main) {
 
 	const initialize = () => {
 		main.element.addEventListener('mousemove', (event) => {
-			mouseMove(event);
+			if(event.which === 0) {
+				mouseUp(event.pageX, event.pageY);
+				return;
+			}
+
+			mouseMove(event.pageX, event.pageY);
+		});
+
+		main.element.addEventListener('touchmove', (event) => {
+			let touch = event.changedTouches[0];
+			mouseMove(touch.pageX, touch.pageY);
 		});
 
 		main.element.addEventListener('mouseup', (event) => {
-			mouseUp(event);
-		})
+			mouseUp(event.pageX, event.pageY);
+		});
+
+		main.element.addEventListener('touchend', (event) => {
+			let touch = event.changedTouches[0];
+			mouseUp(touch.pageX, touch.pageY);
+		});
+
+		main.element.addEventListener('touchcancel', (event) => {
+			let touch = event.changedTouches[0];
+			mouseUp(touch.pageX, touch.pageY);
+		});
 	}
 
 	this.draggable = (paletteItem) => {
 		paletteItem.element.addEventListener('mousedown', (event) => {
+			event.preventDefault();
 			click(paletteItem);
+
+			mouseMove(event.pageX, event.pageY);
+		});
+
+		paletteItem.element.addEventListener('touchstart', (event) => {
+			event.preventDefault();
+			click(paletteItem);
+
+			let touch = event.changedTouches[0];
+			mouseMove(touch.pageX, touch.pageY);
 		});
 	}
 
@@ -45,23 +76,23 @@ export const DragAndDrop = function(main) {
 
 		dragItem = paletteItem;
 		dragElement = clone;
-
-		mouseMove(event);
 	}
 
-	const mouseMove = (event) => {
-		if(event.which === 0) {
-			mouseUp(event);
-			return;
-		}
-
+	const mouseMove = (x, y) => {
 		if(dragElement !== null) {
-			dragElement.style.left = (event.clientX - main.element.offsetLeft - dragElement.clientWidth / 2) + 'px';
-			dragElement.style.top = (event.clientY - main.element.offsetTop - dragElement.clientHeight / 2) + 'px';
+			const rect = main.element.getBoundingClientRect();
+			const mainX = rect.left + main.element.scrollLeft + window.pageXOffset;
+			const mainY = rect.top  + main.element.scrollTop + window.pageYOffset;
+
+			dragElement.style.left = (x - mainX - dragElement.clientWidth / 2) + 'px';
+			dragElement.style.top = (y - mainY - dragElement.clientHeight / 2) + 'px';
+			return true;
 		}
+
+		return false;
 	}
 
-	const mouseUp = (event) => {
+	const mouseUp = (x, y) => {
 		if(dragElement !== null) {
 			for(const view of dropViews) {
 				//
@@ -76,14 +107,14 @@ export const DragAndDrop = function(main) {
 				// Determine x,y in the canvas
 				//
 				const rect = viewElement.getBoundingClientRect();
-				const viewX = rect.left + viewElement.scrollLeft;
-				const viewY = rect.top + viewElement.scrollTop;
+				const viewX = rect.left + viewElement.scrollLeft + window.pageXOffset;
+				const viewY = rect.top + viewElement.scrollTop + window.pageYOffset;
 
-				if(event.pageX >= viewX &&
-					event.pageY >= viewY &&
-					event.pageX < rect.right &&
-					event.pageY < rect.bottom) {
-					view.callback(dragItem, event.pageX - rect.left, event.pageY - rect.top);
+				if(x >= viewX &&
+					y >= viewY &&
+					x < rect.right &&
+					y < rect.bottom) {
+					view.callback(dragItem, x - viewX, y - viewY);
 					break;
 				}
 			}

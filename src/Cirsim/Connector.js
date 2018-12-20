@@ -54,7 +54,7 @@ Connector.prototype.get = function() {
 
 Connector.prototype.getAsString = function() {
     function toValueString(v) {
-        if($.isArray(v)) {
+        if(Array.isArray(v)) {
             var str = '';
             v.forEach(function(v1) {
                 str = toValueString(v1) + str;

@@ -2,11 +2,11 @@
  * Component: AND gate
  */
 
-import Component from '../Component';
+import {Component} from '../Component';
 import {PaletteImage} from '../Graphics/PaletteImage';
-import CanvasHelper from '../Graphics/CanvasHelper';
+import {CanvasHelper} from '../Graphics/CanvasHelper';
 
-var And = function(name) {
+export const And = function(name) {
     Component.call(this, name);
 
     this.height = 50;
@@ -107,7 +107,6 @@ And.path = function(context, x, y, width, height) {
  */
 And.paletteImageBase = function() {
     var paletteImage = new PaletteImage(120, 70);
-    var size = 0.7;
 
     var context = paletteImage.context;
     context.lineWidth = 1.5;
@@ -140,8 +139,8 @@ And.paletteImageBase = function() {
 
     // Bottom
     context.lineTo(leftX, botY);
-    context.stroke();
 
+    paletteImage.fillStroke();
 
     paletteImage.io(this.rightX, 0, 'e');
 
@@ -159,5 +158,3 @@ And.paletteImage = function() {
 
     return paletteImage;
 }
-
-export default And;

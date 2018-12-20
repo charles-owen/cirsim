@@ -1,8 +1,4 @@
-/**
- * Buttons we can draw and utilize on a canvas.
- */
-
-import CanvasHelper from './CanvasHelper.js';
+import {CanvasHelper} from './CanvasHelper';
 
 /**
  * Construct a display button
@@ -12,7 +8,7 @@ import CanvasHelper from './CanvasHelper.js';
  * @param y Center of the button
  * @constructor
  */
-let Button = function(label, value, x, y, size) {
+export const Button = function(label, value, x, y, size) {
 
     this.label = label;
     this.value = value;
@@ -27,7 +23,6 @@ let Button = function(label, value, x, y, size) {
 
 Button.prototype.touch = function(x, y) {
     const size = this.size;
-   // console.log('' + x + '/' + y + ' ' + this.x + '/' + this.y);
 
     if(x > this.x - size/2 && x < this.x + size/2 &&
         y > this.y - size/2 && y < this.y + size/2) {
@@ -93,6 +88,3 @@ Button.prototype.draw = function(context, x, y) {
     context.fillStyle = saveFillStyle;
     context.strokeStyle = saveStrokeStyle;
 }
-
-
-export default Button;

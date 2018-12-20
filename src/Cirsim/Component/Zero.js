@@ -1,11 +1,10 @@
-/**
- * Component: Zero (fixed true) gate
- */
-
-import Component from '../Component.js';
+import {Component} from '../Component';
 import {PaletteImage} from '../Graphics/PaletteImage';
 
-var Zero = function(name) {
+/**
+ * Component: Zero (fixed false) gate
+ */
+export const Zero = function(name) {
     Component.call(this, name);
 
     this.height = 16;
@@ -76,5 +75,3 @@ Zero.paletteImage = function() {
     pi.drawText("0", 0, 5, "14px Times");
     return pi;
 }
-
-export default Zero;

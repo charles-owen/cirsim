@@ -1,6 +1,7 @@
 
 import {Component} from '../Component';
 import {Or} from './Or';
+import {Or3} from "./Or3";
 
 /**
  * Component: OR gate
@@ -42,7 +43,7 @@ Or4.offsetY = 30;         ///< Lower offset to right arcs
 Or4.type = "Or4";            ///< Name to use in files
 Or4.label = "OR";           ///< Label for the palette
 Or4.desc = "OR gate";       ///< Description for the palette
-Or4.img = "or4.png";         ///< Image to use for the palette
+//Or4.img = "or4.png";         ///< Image to use for the palette
 Or4.order = 15.5;               ///< Order of presentation in the palette
 Or4.description = '<h2>OR Gate</h2><p>The output of a four-input OR ' +
     'gate is <em>true</em> if any of of the' +
@@ -85,3 +86,18 @@ Or4.prototype.draw = function(context, view) {
     this.drawName(context, -2, 5);
     this.drawIO(context, view);
 };
+
+
+/**
+ * Create a PaletteImage object for an Or gate
+ */
+Or4.paletteImage = function() {
+
+	var paletteImage = Or.paletteImageBase();
+	paletteImage.io(Or.leftX, -16, 'w');
+	paletteImage.io(Or.leftX, -5.5, 'w');
+	paletteImage.io(Or.leftX, +5.5, 'w');
+	paletteImage.io(Or.leftX, +16, 'w');
+
+	return paletteImage;
+}

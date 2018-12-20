@@ -1,9 +1,11 @@
+import {Component} from '../Component';
+
 /**
  * Component: D Flip-Flop with Set and Reset
+ * @param name Component name
+ * @constructor
  */
-import Component from '../Component.js';
-
-var DFFsr = function(name) {
+export const DFFsr = function(name) {
     Component.call(this, name);
 
     this.height = 90;
@@ -78,11 +80,10 @@ DFFsr.prototype.compute = function(state) {
 /**
  * Clone this component object.
  * @returns {DFFsr}
+ * @memberof DFFsr
  */
 DFFsr.prototype.clone = function() {
     var copy = new DFFsr();
     copy.copyFrom(this);
     return copy;
 };
-
-export default DFFsr;

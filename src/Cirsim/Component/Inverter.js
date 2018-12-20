@@ -98,7 +98,8 @@ Inverter.paletteImage = function() {
 	let size = 0.7;
 
     Inverter.path(paletteImage.context, 60, 35, 40, 50);
-    paletteImage.context.stroke();
+    paletteImage.fillStroke();
+   // paletteImage.context.stroke();
 
     paletteImage.io(-20, 0, 'w');
 

@@ -1,12 +1,15 @@
+
+import {Component} from '../Component';
+import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
+import {Value} from '../Value';
+
 /**
  * Component: BusConstant gate
  * A constant bus value component.
+ * @param name Component name
+ * @constructor
  */
-import Component from '../Component.js';
-import ComponentPropertiesDlg from '../Dlg/ComponentPropertiesDlg.js';
-import Value from '../Value.js';
-
-var BusConstant = function(name) {
+export const BusConstant = function(name) {
     Component.call(this, name);
 
     this.height = 16;
@@ -140,4 +143,3 @@ BusConstant.prototype.properties = function(main) {
     dlg.open();
 };
 
-export default BusConstant;

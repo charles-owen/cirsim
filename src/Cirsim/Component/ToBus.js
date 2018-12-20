@@ -141,13 +141,13 @@ ToBus.prototype.properties = function(main) {
         '"></div>';
 
     dlg.extra(html, function() {
-        var size = parseInt($('#' + id).val());
+        var size = parseInt(document.getElementById(id).value);
         if(isNaN(size) || size < 2 || size > 16) {
             return "Size must be an integer from 2 to 16";
         }
         return null;
     }, function() {
-        that.size = parseInt($('#' + id).val());
+        that.size = parseInt(document.getElementById(id).value);
         that.ensureIO();
         that.pending();
     });

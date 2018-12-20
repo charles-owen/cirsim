@@ -1,10 +1,13 @@
+
+import {Component} from '../Component';
+import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
+
 /**
  * Component: Bus OR gate
+ * @param name Component name
+ * @constructor
  */
-import Component from '../Component.js';
-import ComponentPropertiesDlg from '../Dlg/ComponentPropertiesDlg.js';
-
-var BusOr = function(name) {
+export const BusOr = function(name) {
     Component.call(this, name);
 
     this.height = 50;
@@ -37,7 +40,7 @@ BusOr.order = 107;
 BusOr.prototype.compute = function(state) {
     var result = [];
     state.forEach(function(s) {
-        if($.isArray(s)) {
+        if(Array.isArray(s)) {
             for(var i=0; i<s.length; i++) {
                 var v = s[i];
                 if(result.length > i) {
@@ -187,26 +190,21 @@ BusOr.prototype.draw = function(context, view) {
 };
 
 BusOr.prototype.properties = function(main) {
-    var that = this;
-
     var dlg = new ComponentPropertiesDlg(this, main);
     var id = dlg.uniqueId();
-    var selId = '#' + id;
     var html = `<div class="control1 center"><label for="${id}">Size: </label>
 <input class="number" type="text" name="${id}" id="${id}" value="${this.size}"></div>`;
 
-    dlg.extra(html, function() {
-        var size = parseInt($(selId).val());
+    dlg.extra(html, () => {
+        let size = parseInt(document.getElementById(id).value);
         if(isNaN(size) || size < 2 || size > 16) {
             return "Size must be an integer from 2 to 16";
         }
         return null;
-    }, function() {
-        that.size = parseInt($(selId).val());
-        that.ensureIO();
+    }, () => {
+        this.size = parseInt(document.getElementById(id).value);
+        this.ensureIO();
     });
 
     dlg.open();
 };
-
-export default BusOr;

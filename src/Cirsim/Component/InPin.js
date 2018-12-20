@@ -1,12 +1,14 @@
+
+import {Component} from '../Component';
+import {Led} from '../Graphics/Led'
+import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
+
 /**
  * Component: InPin gate
+ * @param name Component name
+ * @constructor
  */
-
-import Component from '../Component.js';
-import Led from '../Graphics/Led.js'
-import ComponentPropertiesDlg from '../Dlg/ComponentPropertiesDlg.js';
-
-var InPin = function(name) {
+export const InPin = function(name) {
     Component.call(this, name);
 
     this.height = 16;
@@ -124,7 +126,7 @@ InPin.prototype.set = function(value) {
 };
 
 InPin.prototype.setAsString = function(value) {
-    var v = value == 1;
+    var v = +value === 1;
     this.set(v);
 }
 
@@ -165,10 +167,8 @@ InPin.prototype.properties = function(main) {
     dlg.extra(html, () => {
         return null;
     }, () => {
-        this.set($('#' + id + ':checked').val() === "1");
+        this.set(document.querySelector('#' + id + ':checked').value === "1");
     });
 
     dlg.open();
 };
-
-export default InPin;

@@ -1,10 +1,9 @@
+import {Vector} from '../Utility/Vector';
+
 /**
  * Object that simulates an LED
  */
-
-import Vector from '../Utility/Vector.js';
-
-var Led = function(x, y, param1, param2) {
+export const Led = function(x, y, param1, param2) {
     this.x = x;
     this.y = y;
     this.color = "undefined";
