@@ -1,8 +1,8 @@
-import $ from 'jquery';
 import {Main} from './Main';
 import Options from './Options';
 import Components from './Components';
 import All from './Component/All';
+import {Ready} from './Utility/Ready';
 
 /**
  * Create an instance of Cirsim
@@ -73,7 +73,7 @@ var Cirsim = function(sel, options) {
             return this.startNow();
         }
 
-        $().ready(function() {
+        Ready.go(function() {
             that.startNow();
         });
     }
@@ -83,12 +83,19 @@ var Cirsim = function(sel, options) {
      */
     this.startNow = function() {
         if(sel !== null) {
-            $(sel).each(function(index, element) {
-                let main = new Main(that, element, tests);
-                mains.push(main);
-            });
+            if(sel instanceof Element) {
+	            const main = new Main(that, sel, tests);
+	            mains.push(main);
+            } else {
+                const elements = document.querySelectorAll(sel);
+                for(let i=0; i<elements.length; i++) {
+                    const element = elements[i];
+	                const main = new Main(that, element, tests);
+	                mains.push(main);
+                }
+            }
 
-            if(mains.length == 1) {
+            if(mains.length === 1) {
                 return mains[0];
             }
         } else {

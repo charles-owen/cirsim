@@ -1,7 +1,4 @@
 div.cirsim {
-  // Normalizations
-  line-height: normal;
-  font-size: 1rem;
 
   .cirsim-overlay {
     position: absolute;
@@ -15,7 +12,11 @@ div.cirsim {
     display: none;
   }
 
-  .main {
+  div.main {
+    // Normalizations
+    line-height: normal;
+    font-size: 1rem;
+
     position: absolute;
     top: 0;
     left: 0;
@@ -24,7 +25,11 @@ div.cirsim {
     overflow: hidden;
   }
 
-  .help-div {
+  div.help-div {
+    // Normalizations
+    line-height: normal;
+    font-size: 1rem;
+
     display: none;
   }
 
