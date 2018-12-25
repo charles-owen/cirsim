@@ -1,4 +1,3 @@
-
 import {Dialog} from './Dialog';
 import {JsonAPI} from '../Api/JsonAPI';
 import {FileExistsDialog} from './FileExistsDialog';

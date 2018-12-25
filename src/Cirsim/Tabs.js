@@ -160,7 +160,7 @@ export const Tabs = function(main) {
                 return true;
             }
 
-            let tabName = tabs[i].li.find('a').text();
+            let tabName = tabs[i].li.querySelector('a').textContent;
             if(tabName !== collection[i].getName()) {
                 // If a circuit has been renamed
                 return true;

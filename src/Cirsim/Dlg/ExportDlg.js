@@ -1,13 +1,14 @@
-/**
- * File export dialog box
- */
-
 import Dialog from './Dialog.js';
 import '../Vendor/Blob.js';
 import Unique from '../Utility/Unique.js';
 import saveAs from '../Vendor/FileSaver.js';
 
-var ExportDlg = function(model) {
+/**
+ * File export dialog box
+ * @param model Model object for the currently active model
+ * @constructor
+ */
+export const ExportDlg = function(model) {
     Dialog.call(this);
 
     // A unique ID for the input control

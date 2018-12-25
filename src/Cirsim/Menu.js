@@ -57,10 +57,11 @@ export const Menu = function(main) {
         //
         // Add any tests as top-level menu options
         //
-        for(var i=0; i<main.test.tests.length; i++) {
-            var test = main.test.tests[i];
-            html += '<li><a class="cirsim-test-' + i + '">' + test.name + '</a></li>';
-        }
+	    let i=0;
+	    for(const test of main.test.tests) {
+		    html += '<li><a class="cirsim-test-' + i + '">' + test.name + '</a></li>';
+		    i++;
+	    }
 
         ul.innerHTML = html;
 
@@ -99,23 +100,22 @@ export const Menu = function(main) {
             }
         }
 
-
-
         //
         // Install test function handlers
         //
+	    i = 0;
+	    for(const test of main.test.tests) {
+		    let cls = ".cirsim-test-" + i;
+		    this.click(cls, (event) => {
+		    	event.preventDefault();
 
-        // TODO: Restore test menu options
-        // for(var i=0; i<main.test.tests.length; i++) {
-        //     var test = main.test.tests[i];
-        //     var cls = "cirsim-test-" + i;
-        //     el.find("." + cls).click(function(event) {
-        //         event.preventDefault();
-        //         main.test.runTestDlg(test.tag);
-        //     });
-        // }
+			    main.test.runTestDlg(test.tag);
+		    });
 
-        // Active all of the menus
+		    i++;
+	    }
+
+        // Activate all of the menus
         fileMenu.activate();
         editMenu.activate();
         tabsMenu.activate();

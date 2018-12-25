@@ -12,7 +12,16 @@ Ajax.do = function(obj) {
 	request.onload = function() {
 		if (request.status >= 200 && request.status < 400) {
 			// Success!
-			obj.success(request.responseText);
+			if(obj.dataType === 'json') {
+				try {
+					obj.success(JSON.parse(request.responseText));
+				} catch(ex) {
+					console.log(request.responseText);
+				}
+
+			} else {
+				obj.success(request.responseText);
+			}
 		} else {
 			// We reached our target server, but it returned an error
 			obj.error(request.xhr, request.statusText, 'invalid URL');
@@ -24,5 +33,21 @@ Ajax.do = function(obj) {
 		obj.error(request.xhr, request.statusText, 'server not found');
 	};
 
-	request.send();
+	if(obj.method === 'POST') {
+		if(obj.contentType === 'application/json') {
+			request.setRequestHeader('Content-Type', 'application/json');
+			request.send(JSON.stringify(obj.data));
+		} else {
+			request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+
+			let formData = [];
+			for(let key in obj.data) {
+				formData.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj.data[key]));
+			}
+
+			request.send(formData.join('&'));
+		}
+	} else {
+		request.send();
+	}
 }

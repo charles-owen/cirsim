@@ -38,6 +38,10 @@ export const Palette = function(main, work) {
 			    if(palette !== null) {
 				    components = components.concat(palette);
 			    } else {
+			    	if(component.toLowerCase() === 'not') {
+			    		component = 'Inverter';
+				    }
+				    
 				    components.push(component);
 			    }
 		    });
@@ -55,7 +59,7 @@ export const Palette = function(main, work) {
         // Only some components get added to the pallet...
         // A component is added if it is in the current
         // list of components or main.options.always
-        var name = obj.type;
+        let name = obj.type;
         if(!Util.inArray(name, components) &&
                 !Util.inArray(name, main.options.always)) {
             return;

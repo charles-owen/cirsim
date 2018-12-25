@@ -76,7 +76,7 @@ export const Toast = function(main) {
 	this.jsonErrors = function(jsonApi) {
         if(jsonApi.errors() !== null) {
             jsonApi.errors().forEach((error)=>{
-                this.message('Server Error: ' + error.detail);
+                this.message('Server Error: ' + error.title, 5000);
             })
 
             return true;

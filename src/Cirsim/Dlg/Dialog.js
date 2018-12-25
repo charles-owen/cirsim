@@ -1,4 +1,3 @@
-
 import {Unique} from '../Utility/Unique';
 import DOMPurify from 'dompurify';
 import DialogCL from 'dialog-cl';

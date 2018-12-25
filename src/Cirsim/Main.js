@@ -1,4 +1,3 @@
-
 import Resizer from 'resizer-cl';
 
 import {Menu} from './Menu';
@@ -12,12 +11,14 @@ import {Test} from './Test';
 import {Toast} from './Graphics/Toast';
 import {FileSaveDialog} from './Dlg/FileSaveDialog';
 import FileOpenDialog from './Dlg/FileOpenDialog';
-import SaveDialog from './Dlg/SaveDialog';
+import {SaveDialog} from './Dlg/SaveDialog';
 import OpenDialog from './Dlg/OpenDialog';
 import {View} from './View';
 import {HelpDiv} from './Graphics/HelpDiv';
 import {DragAndDrop} from './UI/DragAndDrop';
 import {Tools} from './DOM/Tools';
+import {Ajax} from './Utility/Ajax';
+import {JsonAPI} from "./Api/JsonAPI";
 
 /**
  * Actual instance of Cirsim for a single element.
@@ -36,10 +37,16 @@ export const Main = function(cirsim, element, tests) {
     /// div.main
     this.divMain = null;
 
-    tests.forEach((test) => {
-        this.test.addTest(test);
-    })
+    //
+    // Tests can come from add_test or from options
+    //
+	for(const test of tests) {
+		this.test.addTest(test);
+	}
 
+    for(const test of this.options.tests) {
+	    this.test.addTest(test);
+    }
 
     this.filename = null;
 
@@ -259,12 +266,55 @@ export const Main = function(cirsim, element, tests) {
         });
     }
 
-    this.save = function() {
+	/**
+	 * Save the model to the server.
+	 * @param singleOnly If true, we only save if the single-file save option
+	 * @param silent If true, do not display a toast on successful single-file save
+	 */
+	this.save = (singleOnly, silent) => {
+        let that = this;
+
+        const api = this.options.getAPI('save');
+        if(api.name !== undefined) {
+	        const json = model.toJSON();
+	        let data = Object.assign({cmd: "save",
+		        name: api.name,
+		        data: json,
+		        type: 'application/json'
+	        }, api.extra);
+
+	        Ajax.do({
+		        url: api.url,
+		        data: data,
+		        method: "POST",
+		        dataType: 'json',
+		        contentType: api.contentType,
+		        success: (data) => {
+			        var json = new JsonAPI(data);
+			        if(!this.toast.jsonErrors(json)) {
+				        if(silent !== true) {
+				        	this.toast.message('Successfully saved to server');
+				        }
+			        }
+		        },
+		        error: (xhr, status, error) => {
+			        console.log(xhr.responseText);
+			        this.toast.message('Unable to communicate with server: ' + error);
+		        }
+	        });
+
+	        return;
+        }
+
+        if(singleOnly === true) {
+        	return;
+        }
+
         if(this.filename === null) {
             this.saveAs();
         } else {
-            var json = model.toJSON();
-            var dlg = new SaveDialog(json, "application/json", this.filename, this.options, this.toast);
+            const json = model.toJSON();
+            const dlg = new SaveDialog(json, "application/json", this.filename, this.options, this.toast);
             dlg.open();
         }
     }
@@ -281,20 +331,6 @@ export const Main = function(cirsim, element, tests) {
         });
     }
 
-    // this.saveSingle = function() {
-    //     // Don't save if not for current user
-    //     if(this.userid !== null) {
-    //         return;
-    //     }
-    //
-    //     if(this.singleSave === null) {
-    //         return;
-    //     }
-    //
-    //     var json = model.toJSON();
-    //     var dlg = new Cirsim.SaveSingleDialog(json, this.singleSave);
-    //     dlg.open();
-    // }
 
     this.export = function() {
         var dlg = new ExportDlg(model);

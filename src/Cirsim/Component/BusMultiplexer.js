@@ -1,12 +1,12 @@
+import {Component} from '../Component';
+import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
+
 /**
  * Component: n-to-1 Bus multiplexer
+ * @param name Component name
+ * @constructor
  */
-
-import Component from '../Component.js';
-import ComponentPropertiesDlg from '../Dlg/ComponentPropertiesDlg.js';
-
-
-var BusMultiplexer = function(name) {
+export const BusMultiplexer = function(name) {
     Component.call(this, name);
 
     this.height = 80;
@@ -32,7 +32,7 @@ BusMultiplexer.prototype.prefix = null;
 BusMultiplexer.prototype.indent = 10;
 
 BusMultiplexer.type = "Multiplexer";            ///< Name to use in files
-BusMultiplexer.label = "Multiplexer";           ///< Label for the palette
+BusMultiplexer.label = "Bus Multiplexer";           ///< Label for the palette
 BusMultiplexer.desc = "Bus Multiplexer";       ///< Description for the palette
 BusMultiplexer.img = "multiplexer.png";         ///< Image to use for the palette
 BusMultiplexer.description = `<h2>Multiplexer</h2><p>Multiplexes two or more input buses to a single output bus.</p>
@@ -192,24 +192,20 @@ BusMultiplexer.prototype.properties = function(main) {
 
     var dlg = new ComponentPropertiesDlg(this, main);
     var id = dlg.uniqueId();
-    var sel = '#' + id;
     var html = `<div class="control1 center gap"><label for="${id}">Number of inputs: </label>
 <input class="number" type="text" name="${id}" id="${id}" value="${this.size}"></div>`;
 
     dlg.extra(html, function() {
-        var size = parseInt($(sel).val());
+        var size = parseInt(document.getElementById(id).value);
         if(isNaN(size) || size < 2 || size > 16) {
-            $(sel).select();
+	        document.getElementById(id).select();
             return "Must be an integer from 2 to 16";
         }
         return null;
     }, function() {
-        that.size = parseInt($(sel).val());
+        that.size = parseInt(document.getElementById(id).value);
         that.ensureIO();
     });
 
     dlg.open();
 };
-
-export default BusMultiplexer;
-

@@ -1,14 +1,16 @@
+import {Component} from '../Component';
+import {Connector} from '../Connector';
+import {Util} from '../Utility/Util';
+import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
+import {Sanitize} from '../Utility/Sanitize';
+import {PaletteImage} from "../Graphics/PaletteImage";
+
 /**
  * Component: 16-bit memory
+ * @param name Component name
+ * @constructor
  */
-
-import Component from '../Component.js';
-import Connector from '../Connector.js';
-import Util from '../Utility/Util.js';
-import ComponentPropertiesDlg from '../Dlg/ComponentPropertiesDlg.js';
-import Sanitize from '../Utility/Sanitize.js';
-
-let Memory16 = function(name) {
+export const Memory16 = function(name) {
     Component.call(this, name);
 
     this.height = 132;
@@ -39,7 +41,7 @@ Memory16.prototype.prefix = "M";
 Memory16.type = "Memory16";            ///< Name to use in files
 Memory16.label = "Memory";           ///< Label for the palette
 Memory16.desc = "16-bit Memory";       ///< Description for the palette
-Memory16.img = "memory.png";         ///< Image to use for the palette
+Memory16.img = null;         ///< Image to use for the palette
 Memory16.description = `<h2>16-bit Memory Bank</h2><p>The Memory component implements a simple 16-bit Memory Bank.
 Memory is an array of bytes. The A (address) input selects a memory location that is output on the R
 output. The component implements 16-bit memory,
@@ -170,7 +172,7 @@ Memory16.prototype.load = function(obj) {
 
 /**
  * Create a save object suitable for conversion to JSON for export.
- * @returns {*}
+ * @returns {*} Object
  */
 Memory16.prototype.save = function() {
     var obj = Component.prototype.save.call(this);
@@ -198,9 +200,12 @@ Memory16.prototype.draw = function(context, view) {
 };
 
 Memory16.prototype.properties = function(main) {
+    //
+    // Generate the hex representation of the memory
+    //
     let data = '';
     for(let a=0; a<this.data.length; a++) {
-        if((a % 8) == 0) {
+        if((a % 8) === 0) {
             if(data.length > 0) {
                 data += "\n";
             }
@@ -212,20 +217,61 @@ Memory16.prototype.properties = function(main) {
     }
 
     let dlg = new ComponentPropertiesDlg(this, main);
-    let html = `<div class="control"><label for="memory-data">Contents:</label>
-<textarea class="code1" type="text" rows="9" name="memory-data" id="memory-data" spellcheck="false">${data}</textarea>
+	let id = dlg.uniqueId();
+
+	let html = `<div class="control"><label for="${id}">Contents:</label>
+<textarea class="code1" type="text" rows="9" name="${id}" id="${id}" spellcheck="false">${data}</textarea>
 </div>`;
 
     dlg.extra(html, () => {
-        let value = $('#memory-data').val();
+        let value = document.getElementById(id).value;
         return this.setAsString(value, false);
     }, () => {
-        let value = $('#memory-data').val();
+        let value = document.getElementById(id).value;
         return this.setAsString(value);
     }, 85);
 
     dlg.open();
 };
 
-export default Memory16;
+/**
+ * Create a PaletteImage object for memory component
+ */
+Memory16.paletteImage = function() {
+	const paletteImage = new PaletteImage(120, 120);
 
+	const context = paletteImage.context;
+	context.lineWidth = 1.5;
+
+	paletteImage.box(40, 80);
+
+	const w = paletteImage.width;
+	const h = paletteImage.height;
+
+	const ioY = 18;
+	paletteImage.io(0, -40, 'n');
+
+	const lw = paletteImage.lineWidth(2);
+	paletteImage.io(20, -ioY, 'e');
+	paletteImage.io(-20, -ioY, 'w');
+	paletteImage.io(-20, ioY, 'w');
+	paletteImage.lineWidth(lw);
+
+	const font = '20px Times';
+	paletteImage.drawText('R', 10, -ioY + 5, font);
+	paletteImage.drawText('A', -12, -ioY + 5, font);
+	paletteImage.drawText('W', -12, ioY + 5, font);
+
+	const sz = 7;
+	context.beginPath();
+	context.moveTo(-sz + w/2, -40 + h/2);
+	context.lineTo(w/2, -40 + sz + h/2);
+	context.lineTo(sz + w/2, -40 + h/2);
+	context.stroke();
+
+	paletteImage.drawText("memory", 0, 38, "8px Times");
+	paletteImage.drawText("0000:0000", 0, 32, "8px Times");
+
+
+	return paletteImage;
+}

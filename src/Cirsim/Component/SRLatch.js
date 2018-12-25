@@ -1,10 +1,10 @@
+import {Component} from '../Component';
+import {PaletteImage} from "../Graphics/PaletteImage";
+
 /**
  * Component: SR-Latch gate
  */
-
-import Component from '../Component.js';
-
-var SRLatch = function(name) {
+export const SRLatch = function(name) {
     Component.call(this, name);
 
     this.height = 90;
@@ -27,7 +27,7 @@ SRLatch.prototype.constructor = SRLatch;
 SRLatch.type = "SRLatch";            ///< Name to use in files
 SRLatch.label = "SR Latch";           ///< Label for the palette
 SRLatch.desc = "SR Latch";       ///< Description for the palette
-SRLatch.img = "sr.png";         ///< Image to use for the palette
+//SRLatch.img = "sr.png";         ///< Image to use for the palette
 SRLatch.order = 18;               ///< Order of presentation in the palette
 SRLatch.description = '<h2>SR Latch</h2><p>Set/Reset latch. The S input sets the output. The R input resets the output.</p>';
 
@@ -58,9 +58,35 @@ SRLatch.prototype.compute = function(state) {
  * @returns {SRLatch}
  */
 SRLatch.prototype.clone = function() {
-    var copy = new SRLatch();
+    const copy = new SRLatch();
     copy.copyFrom(this);
     return copy;
 };
 
-export default SRLatch;
+
+/**
+ * Create a PaletteImage object for an SR Latch
+ */
+SRLatch.paletteImage = function() {
+	const paletteImage = new PaletteImage(120, 100);
+
+	const context = paletteImage.context;
+	context.lineWidth = 1.5;
+
+	paletteImage.box(40, 70);
+
+	const ioY = 20;
+	paletteImage.io(20, -ioY, 'e');
+	paletteImage.io(20, ioY, 'e');
+	paletteImage.io(-20, -ioY, 'w');
+	paletteImage.io(-20, ioY, 'w');
+	paletteImage.circle(23, ioY, 3);
+
+	const font = '20px Times';
+	paletteImage.drawText('Q', 10, -ioY + 5, font);
+	paletteImage.drawTextBar('Q', 10, ioY + 5, font);
+	paletteImage.drawText('R', -12, -ioY + 5, font);
+	paletteImage.drawText('S', -12, ioY + 5, font);
+
+	return paletteImage;
+}

@@ -21,32 +21,32 @@ import {BusConstant} from './BusConstant';
 import {BusOr} from './BusOr';
 import {BusDecoder} from './BusDecoder';
 import {BusSelector} from './BusSelector';
-import BusMultiplexer from './BusMultiplexer';
+import {BusMultiplexer} from './BusMultiplexer';
 import {Button} from './Button';
 import {Text} from './Text';
-import TrafficLight from './TrafficLight';
-import HexToSevenSegment from './HexToSevenSegment';
+import {TrafficLight} from './TrafficLight';
+import {HexToSevenSegment} from './HexToSevenSegment';
 import {SevenSeg} from './SevenSeg';
 import FmBus from './FmBus';
 import ToBus from './ToBus';
-import DFF from './DFF';
+import {DFF} from './DFF';
 import {DFFsr} from './DFFsr';
 import JKFF from './JKFF';
-import DLatch from './DLatch';
-import SRLatch from './SRLatch';
+import {DLatch} from './DLatch';
+import {SRLatch} from './SRLatch';
 import Letters16 from './Letters16';
 import Register from './Register';
 import {Alu4} from './Alu4';
 import Registers16 from './Registers16';
 import {Pad} from './Pad';
-import LEDBar from './LEDBar';
+import {LEDBar} from './LEDBar';
 import Pc16 from './Pc16';
-import Memory16 from './Memory16';
+import {Memory16} from './Memory16';
 
 /**
  * Add all components into the system.
  */
-export default function(components) {
+export const All = function(components) {
 
     components.add(Zero);
     components.add(One);

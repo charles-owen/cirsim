@@ -1,11 +1,12 @@
+import {Component} from '../Component';
+import {Led} from '../Graphics/Led';
+
 /**
  * Component: TrafficLight
+ * @param name Component name
+ * @constructor
  */
-
-import Component from '../Component.js';
-import Led from '../Graphics/Led.js'
-
-var TrafficLight = function(name) {
+export const TrafficLight = function(name) {
     Component.call(this, name);
 
     this.height = 96;
@@ -82,5 +83,3 @@ TrafficLight.prototype.draw = function(context, view) {
 
     this.drawIO(context, view);
 };
-
-export default TrafficLight;

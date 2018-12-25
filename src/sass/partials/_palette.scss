@@ -35,6 +35,12 @@ div.cirsim div.palette {
       -webkit-box-shadow: none;
       box-shadow: none;
 
+      div.img {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        line-height: 0;
+      }
 
       img {
         -moz-box-shadow: none;
@@ -51,7 +57,7 @@ div.cirsim div.palette {
         padding: 0;
         margin: 0;
         text-align: center;
-        font-size: 0.9em;
+        font-size: 0.80em;
       }
 
       div.long {

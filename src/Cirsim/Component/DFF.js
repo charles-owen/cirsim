@@ -1,10 +1,13 @@
+import {Component} from '../Component';
+import {PaletteImage} from "../Graphics/PaletteImage";
+
+
 /**
  * Component: D Flip-Flop
+ * @param name Component name
+ * @constructor
  */
-
-import Component from '../Component.js';
-
-var DFF = function(name) {
+export const DFF = function(name) {
     Component.call(this, name);
 
     this.height = 90;
@@ -32,7 +35,7 @@ DFF.prototype.constructor = DFF;
 DFF.type = "DFF";            ///< Name to use in files
 DFF.label = "D Flip-Flop";           ///< Label for the palette
 DFF.desc = "D Flip-Flop";       ///< Description for the palette
-DFF.img = "dff.png";         ///< Image to use for the palette
+//DFF.img = "dff.png";         ///< Image to use for the palette
 DFF.order = 20;               ///< Order of presentation in the palette
 DFF.description = '<h2>D Flip-Flop</h2><p>D Flip-Flop.</p>';
 
@@ -60,5 +63,39 @@ DFF.prototype.clone = function() {
     return copy;
 };
 
-export default DFF;
 
+/**
+ * Create a PaletteImage object for a D-Flip Flop
+ */
+DFF.paletteImage = function() {
+	const paletteImage = new PaletteImage(120, 120);
+
+	const context = paletteImage.context;
+	context.lineWidth = 1.5;
+
+	paletteImage.box(40, 80);
+
+	const w = paletteImage.width;
+	const h = paletteImage.height;
+
+	const ioY = 18;
+	paletteImage.io(20, -ioY, 'e');
+	paletteImage.io(20, ioY, 'e');
+	paletteImage.io(-20, 0, 'w');
+	paletteImage.io(0, -40, 'n');
+	paletteImage.circle(23, ioY, 3);
+
+	const font = '20px Times';
+	paletteImage.drawText('Q', 10, -ioY + 5, font);
+	paletteImage.drawTextBar('Q', 10, ioY + 5, font);
+	paletteImage.drawText('D', -12, 5, font);
+
+	const sz = 7;
+	context.beginPath();
+	context.moveTo(-sz + w/2, -40 + h/2);
+	context.lineTo(w/2, -40 + sz + h/2);
+	context.lineTo(sz + w/2, -40 + h/2);
+	context.stroke();
+
+	return paletteImage;
+}

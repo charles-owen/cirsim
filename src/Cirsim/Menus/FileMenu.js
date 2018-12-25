@@ -34,7 +34,7 @@ export const FileMenu = function(menu, main) {
         // Import/Export options
         if(options.export !== 'none') {
             if(fileHtml.length > 0) {
-                fileHtml += '<li>-</li>';       // Separator
+                fileHtml += '<li class="menu-divider">&nbsp;</li>';       // Separator
             }
 
             if(options.export === 'both' || options.export === 'import') {
@@ -47,13 +47,13 @@ export const FileMenu = function(menu, main) {
         }
 
         // if(options.imports.length > 0) {
-        //     fileHtml += '<li>-</li>' +
+        //     fileHtml += '<li class="menu-divider">&nbsp;</li>' +
         //         '<li><a class="file-import-tab"><span class="icons-cl icons-cl-arrowthickstop-1-n"></span>Import Tab</a></li>';
         // }
 
         if(options.exit !== null) {
             if(fileHtml.length > 0) {
-                fileHtml += '<li>-</li>';       // Separator
+                fileHtml += '<li class="menu-divider">&nbsp;</li>';       // Separator
             }
             fileHtml += '<li><a href="' + options.exit + '">Exit</a></li>';
         }

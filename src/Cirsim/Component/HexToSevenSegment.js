@@ -1,10 +1,11 @@
-/**
- * Component: Hexadecimal to 7-segment decoder
- */
-
-import Component from '../Component.js';
+import {Component} from '../Component';
 import {PaletteImage} from '../Graphics/PaletteImage';
 
+/**
+ * Component: Hexadecimal to 7-segment decoder
+ * @param name Component name
+ * @constructor
+ */
 export const HexToSevenSegment = function(name) {
     Component.call(this, name);
 
@@ -56,7 +57,7 @@ HexToSevenSegment.prototype.prefix = "D";
 HexToSevenSegment.type = "HexToSevenSegment";            ///< Name to use in files
 HexToSevenSegment.label = "Hex to Seven Segment";           ///< Label for the palette
 HexToSevenSegment.desc = "Hexadecimal to Seven Segment Decoder";       ///< Description for the palette
-HexToSevenSegment.img = null; // "hexto7.png";         ///< Image to use for the palette
+HexToSevenSegment.img = null;                       ///< Image to use for the palette
 HexToSevenSegment.description = '<h2>Hex to Seven Segement</h2>' +
     '<p>Decodes hexadecimal into the correct outputs for a seven-segment display. Accepts either' +
     ' single bit lines or bus input.</p>';
@@ -144,14 +145,16 @@ HexToSevenSegment.prototype.draw = function(context, view) {
 HexToSevenSegment.paletteImage = function() {
     var pi = new PaletteImage(60, 44);
 
-    pi.box(20, 42);
+    pi.box(20, 40);
     pi.io(-10, -15.5, 'w', 4, 5);
     pi.io(10, -15.5, 'e', 7, 5);
 
+    const lw = pi.context.lineWidth;
+    pi.context.lineWidth = 2;
     pi.io(-10, 15.5, 'w');
-    pi.drawText("Hex-to-7", 0, 20, "4px Times");
+    pi.context.lineWidth = lw;
+
+    pi.drawText("Hex-to-7", 0, 18, "4px Times");
 
     return pi;
 }
-
-export default HexToSevenSegment;

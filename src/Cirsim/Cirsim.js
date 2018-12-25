@@ -1,7 +1,7 @@
 import {Main} from './Main';
-import Options from './Options';
-import Components from './Components';
-import All from './Component/All';
+import {Options} from './Options';
+import {Components} from './Components';
+import {All} from './Component/All';
 import {Ready} from './Utility/Ready';
 
 /**
@@ -24,9 +24,7 @@ import {Ready} from './Utility/Ready';
  * @param options An object containing Cirsim options.
  * @constructor
  */
-var Cirsim = function(sel, options) {
-    var that = this;
-
+export const Cirsim = function(sel, options) {
     //
     // Master set of the version
     //
@@ -68,29 +66,29 @@ var Cirsim = function(sel, options) {
      * this.startNow() unless we are running in no-window
      * mode. In that case it returns a started instance.
      */
-    this.start = function() {
+    this.start = () => {
         if(sel === null) {
             return this.startNow();
         }
 
-        Ready.go(function() {
-            that.startNow();
+        Ready.go(() => {
+            this.startNow();
         });
     }
 
     /**
      * Start Cirsim running now. Does not wait for document ready.
      */
-    this.startNow = function() {
+    this.startNow = () => {
         if(sel !== null) {
             if(sel instanceof Element) {
-	            const main = new Main(that, sel, tests);
+	            const main = new Main(this, sel, tests);
 	            mains.push(main);
             } else {
                 const elements = document.querySelectorAll(sel);
                 for(let i=0; i<elements.length; i++) {
                     const element = elements[i];
-	                const main = new Main(that, element, tests);
+	                const main = new Main(this, element, tests);
 	                mains.push(main);
                 }
             }
@@ -100,7 +98,7 @@ var Cirsim = function(sel, options) {
             }
         } else {
             this.options.display = 'none';
-            let main = new Main(that, null, tests);
+            let main = new Main(this, null, tests);
             mains.push(main);
             return main;
         }

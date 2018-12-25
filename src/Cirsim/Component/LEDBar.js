@@ -1,12 +1,14 @@
+import {Component} from '../Component';
+import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
+import {Led} from '../Graphics/Led';
+import {Sanitize} from '../Utility/Sanitize';
+
 /**
  * Component: LED Bar - 2 to 16 LED's in a vertical bar
+ * @param name Component name
+ * @constructor
  */
-import Component from '../Component.js';
-import ComponentPropertiesDlg from '../Dlg/ComponentPropertiesDlg.js';
-import Led from '../Graphics/Led.js';
-import Sanitize from '../Utility/Sanitize.js';
-
-var LEDBar = function(name) {
+export const LEDBar = function(name) {
     Component.call(this, name);
 
     this.height = 50;
@@ -163,7 +165,6 @@ LEDBar.prototype.draw = function(context, view) {
 LEDBar.prototype.properties = function(main) {
     var dlg = new ComponentPropertiesDlg(this, main);
     var sizeId = dlg.uniqueId();
-    var sizeSel = '#' + sizeId;
     let html = `<div class="control1 center"><label for="${sizeId}">Size: </label>
 <input class="number" type="text" name="${sizeId}" id="${sizeId}" value="${this.size}"></div>`;
 
@@ -171,17 +172,15 @@ LEDBar.prototype.properties = function(main) {
     html += Led.colorSelector(colorId, this.color);
 
     dlg.extra(html, () => {
-        var size = parseInt($(sizeSel).val());
+        const size = parseInt(document.getElementById(sizeId).value);
         if(isNaN(size) || size < 2 || size > 16) {
             return "Size must be an integer from 2 to 16";
         }
         return null;
     }, () => {
-        this.color = Sanitize.sanitize($('#' + colorId).val());
-        this.setSize(parseInt($(sizeSel).val()));
+        this.color = Sanitize.sanitize(document.getElementById(colorId).value);
+        this.setSize(parseInt(document.getElementById(sizeId).value));
     });
 
     dlg.open();
 };
-
-export default LEDBar;

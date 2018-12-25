@@ -1,4 +1,3 @@
-
 import {Dialog} from './Dialog';
 
 /**

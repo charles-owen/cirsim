@@ -1,15 +1,16 @@
-/**
- * @file
- * Dialog box for adding a named tab.
- */
 
 import Dialog from './Dialog.js';
 
-var TabPropertiesDlg = function(tabs) {
+/**
+ * Dialog box for adding a named tab.
+ * @param tabs Tabs object
+ * @constructor
+ */
+export const TabPropertiesDlg = function(tabs) {
     Dialog.call(this);
 
     const MaxName = 8;
-    var sel;
+    let id;
 
     this.open = function() {
 
@@ -18,8 +19,7 @@ var TabPropertiesDlg = function(tabs) {
         let stats = circuit.stats();
 
         // Dialog box contents
-        var id = this.uniqueId();
-        sel = '#' + id;
+        id = this.uniqueId();
 
         var dlg = `
 <div class="control1 center"><label for="${id}">Tab name: </label>
@@ -42,7 +42,7 @@ var TabPropertiesDlg = function(tabs) {
 
         this.contents(dlg, "New Tab");
         Dialog.prototype.open.call(this);
-        $(sel).select();
+        document.getElementById(id).select();
     }
 
     this.ok = function() {
@@ -55,18 +55,18 @@ var TabPropertiesDlg = function(tabs) {
         }
 
 
-        let name = $(sel).val();
+        let name = document.getElementById(id).value;
         name = name.replace(/^\s+|\s+$/gm,'');
         name = this.sanitize(name);
         if(name.length < 1) {
             this.error('Must provide a tab name');
-            $(sel).select();
+	        document.getElementById(id).select();
             return;
         }
 
         if(name.length > MaxName) {
             this.error('Name must be no longer than ' + MaxName + ' characters');
-            $(sel).select();
+	        document.getElementById(id).select();
             return;
         }
 
@@ -77,7 +77,7 @@ var TabPropertiesDlg = function(tabs) {
         let val = tabs.validateName(name, circuit);
         if(val !== null) {
             this.error(val);
-            $(sel).select();
+	        document.getElementById(id).select();
             return;
         }
 
@@ -92,5 +92,3 @@ var TabPropertiesDlg = function(tabs) {
 
 TabPropertiesDlg.prototype = Object.create(Dialog.prototype);
 TabPropertiesDlg.prototype.constructor = TabPropertiesDlg;
-
-export default TabPropertiesDlg;

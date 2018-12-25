@@ -56,11 +56,14 @@ export const Test = function(main) {
      * @param A test from the array of tests.
      */
     this.runTestDlg = function(tag) {
+        // Save before we test
+        main.save(true, true);
+
         // Set the overlay so the tests are modal
         main.modal(true);
 
         var promise = this.runTest(tag);
-        promise.then(() => {
+        promise.then((test) => {
             // Success
             main.modal(false);
 
@@ -68,9 +71,10 @@ export const Test = function(main) {
                 '<p>The test has passed.</p>'
             var dlg = new MessageDialog("Success", html);
             dlg.open();
-            $("#answer").val("success");
-            $("#circuit").val(main.model.toJSON());
-            
+
+	        setResult(test, test.success !== undefined ? test.success : 'success');
+	        setCircuit(test, main.model.toJSON());
+
         }, (msg) => {
             // Failure
             main.modal(false);
@@ -79,26 +83,47 @@ export const Test = function(main) {
             var dlg = new MessageDialog("Test Failure", html, 450);
             dlg.open();
 
-            $("#answer").val("fail");
-            $("#circuit").val(main.model.toJSON());
+	        const test = this.findTest(tag);
+	        console.log(test);
+	        if(test !== null) {
+		        setResult(test, 'fail');
+		        setCircuit(test, main.model.toJSON());
+            }
+
+
         });
+    }
+
+    function setResult(test, result) {
+	    if(test.result !== undefined) {
+		    const elements = document.querySelectorAll(test.result);
+		    for(const element of elements) {
+			    element.value = result;
+		    }
+	    }
+    }
+
+    function setCircuit(test, circuit) {
+        if(test.circuit !== undefined) {
+	        const elements = document.querySelectorAll(test.circuit);
+	        for(const element of elements) {
+		        element.value = circuit;
+	        }
+        }
     }
 
     this.runTest = function(tag) {
         return new Promise((success, failure) => {
 
-            var test = this.findTest(tag);
+            const test = this.findTest(tag);
             if (test === null) {
                 failure('<p>Test ' + tag + ' does not exist.</p>');
             }
 
             var model = main.model;
     
-            // Backup the model if we have an available user id to save to
+            // Backup the model to support Undo of what the test changes
             model.backup();
-            if(main.userid === null) {
-                main.saveSingle();
-            }
 
             // The current test number
             var testNum = -1;
@@ -268,7 +293,7 @@ export const Test = function(main) {
                         simulation.view.draw();
                     }
                 } else {
-                    success();
+                    success(test);
                 }
             }
     

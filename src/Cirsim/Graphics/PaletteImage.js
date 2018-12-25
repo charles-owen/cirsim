@@ -91,7 +91,7 @@ PaletteImage.prototype.io = function(x, y, dir, cnt, dy) {
     y += this.height/2;
 
     for(var i=0; i<cnt; i++) {
-
+        this.context.beginPath();
         this.context.moveTo(x, y);
 
         var len = 6 * this.scale;
@@ -131,12 +131,30 @@ PaletteImage.prototype.io = function(x, y, dir, cnt, dy) {
  * @param font Font to use
  */
 PaletteImage.prototype.drawText = function (text, x, y, font) {
-    var context = this.context;
+    const context = this.context;
     context.beginPath();
     context.font = font !== undefined ? font : "14px Times";
     context.textAlign = "center";
     context.fillText(text, x+this.width/2, y+this.height/2);
     context.stroke();
+}
+
+PaletteImage.prototype.drawTextBar = function (text, x, y, font) {
+	const context = this.context;
+
+	const lw = context.lineWidth;
+    this.drawText(text, x, y, font);
+
+    context.lineWidth = 1;
+    const wid = context.measureText(text);
+
+	context.beginPath();
+	y += this.height/2 - 16;
+	context.moveTo(x+this.width/2-wid.width/2, y);
+	context.lineTo(x+this.width/2+wid.width/2, y);
+	context.stroke();
+
+	context.lineWidth = lw;
 }
 
 /**
@@ -152,4 +170,16 @@ PaletteImage.prototype.fillStroke = function(fillStyle) {
 	this.context.fillStyle = fillStyle;
 	this.context.fill();
 	this.context.fillStyle = fs;
+	this.context.stroke();
+}
+
+/**
+ * Set the line width.
+ * @param w New width to set
+ * @returns {number} Current line width
+ */
+PaletteImage.prototype.lineWidth = function(w) {
+    const lw = this.context.lineWidth;
+    this.context.lineWidth = w;
+    return lw;
 }

@@ -94,6 +94,7 @@ export const DragAndDrop = function(main) {
 
 	const mouseUp = (x, y) => {
 		if(dragElement !== null) {
+
 			for(const view of dropViews) {
 				//
 				// Is the view enabled?
@@ -112,8 +113,8 @@ export const DragAndDrop = function(main) {
 
 				if(x >= viewX &&
 					y >= viewY &&
-					x < rect.right &&
-					y < rect.bottom) {
+					x < viewX + (rect.right - rect.left) &&
+					y < viewY + (rect.bottom - rect.top)) {
 					view.callback(dragItem, x - viewX, y - viewY);
 					break;
 				}
