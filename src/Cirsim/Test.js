@@ -55,14 +55,14 @@ export const Test = function(main) {
      * Run a single test and bring up result dialog boxes
      * @param A test from the array of tests.
      */
-    this.runTestDlg = function(tag) {
+    this.runTestDlg = function(test) {
         // Save before we test
         main.save(true, true);
 
         // Set the overlay so the tests are modal
         main.modal(true);
 
-        var promise = this.runTest(tag);
+        const promise = this.runTest(test);
         promise.then((test) => {
             // Success
             main.modal(false);
@@ -84,7 +84,6 @@ export const Test = function(main) {
             dlg.open();
 
 	        const test = this.findTest(tag);
-	        console.log(test);
 	        if(test !== null) {
 		        setResult(test, 'fail');
 		        setCircuit(test, main.model.toJSON());
@@ -112,15 +111,9 @@ export const Test = function(main) {
         }
     }
 
-    this.runTest = function(tag) {
+    this.runTest = function(test) {
         return new Promise((success, failure) => {
-
-            const test = this.findTest(tag);
-            if (test === null) {
-                failure('<p>Test ' + tag + ' does not exist.</p>');
-            }
-
-            var model = main.model;
+            const model = main.model;
     
             // Backup the model to support Undo of what the test changes
             model.backup();

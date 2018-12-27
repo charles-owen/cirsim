@@ -272,9 +272,12 @@ export const Main = function(cirsim, element, tests) {
 	 * @param silent If true, do not display a toast on successful single-file save
 	 */
 	this.save = (singleOnly, silent) => {
-        let that = this;
-
         const api = this.options.getAPI('save');
+        if(api === null) {
+        	// Save is not supported
+        	return;
+        }
+
         if(api.name !== undefined) {
 	        const json = model.toJSON();
 	        let data = Object.assign({cmd: "save",

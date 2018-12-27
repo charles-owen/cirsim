@@ -109,7 +109,7 @@ export const Menu = function(main) {
 		    this.click(cls, (event) => {
 		    	event.preventDefault();
 
-			    main.test.runTestDlg(test.tag);
+			    main.test.runTestDlg(test);
 		    });
 
 		    i++;
