@@ -37,7 +37,7 @@ export const Menu = function(main) {
         //
         this.nav = document.createElement('nav');
         Tools.addClass(this.nav, 'menubar');
-        main.divMain.appendChild(this.nav);
+        main.div.appendChild(this.nav);
 
         const ul = document.createElement('ul');
         this.nav.appendChild(ul);

@@ -35,7 +35,7 @@ export const Main = function(cirsim, element, tests) {
     this.test = new Test(this);
 
     /// div.main
-    this.divMain = null;
+    this.div = null;
 
     //
     // Tests can come from add_test or from options
@@ -122,8 +122,8 @@ export const Main = function(cirsim, element, tests) {
             //
 
             // <div class="main"></div>
-            this.divMain = Tools.createClassedDiv('main');
-            this.element.appendChild(this.divMain);
+            this.div = Tools.createClassedDiv('main');
+            this.element.appendChild(this.div);
 
 	        this.help = new HelpDiv(this);
 
@@ -141,7 +141,7 @@ export const Main = function(cirsim, element, tests) {
             // <div class="work"></div>
             //
             divWork = Tools.createClassedDiv('work');
-            this.divMain.appendChild(divWork);
+            this.div.appendChild(divWork);
 
             //
             // And the palette
@@ -159,10 +159,10 @@ export const Main = function(cirsim, element, tests) {
 	        // <div class="cirsim-overlay"></div>
 	        //
 	        divOverlay = Tools.createClassedDiv('cirsim-overlay');
-	        this.divMain.appendChild(divOverlay);
+	        this.div.appendChild(divOverlay);
 
             this.toast = new Toast(this);
-            this.toast.create(this.divMain);
+            this.toast.create(this.div);
         }
 
         if(options.display === 'inline') {

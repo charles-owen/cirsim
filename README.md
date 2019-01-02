@@ -42,7 +42,7 @@ and running would be this:
 
 ``` html
 <!doctype html>
-<html lang=en-US>
+<html lang="en-US">
 <head>
   <title>Cirsim Circuit Simulator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
