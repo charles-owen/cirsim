@@ -2,7 +2,6 @@
 import {Value} from './Value';
 import MessageDialog from './Dlg/MessageDialog';
 import TestException from './TestException';
-import Promise from 'es6-promise';
 
 /**
  * Constructor
@@ -53,7 +52,7 @@ export const Test = function(main) {
 
     /**
      * Run a single test and bring up result dialog boxes
-     * @param A test from the array of tests.
+     * @param test A test from the array of tests.
      */
     this.runTestDlg = function(test) {
         // Save before we test
@@ -83,13 +82,8 @@ export const Test = function(main) {
             var dlg = new MessageDialog("Test Failure", html, 450);
             dlg.open();
 
-	        const test = this.findTest(tag);
-	        if(test !== null) {
-		        setResult(test, 'fail');
-		        setCircuit(test, main.model.toJSON());
-            }
-
-
+            setResult(test, 'fail');
+            setCircuit(test, main.model.toJSON());
         });
     }
 

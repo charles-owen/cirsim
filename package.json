@@ -55,9 +55,9 @@
     "buckets-js": "^1.98.2",
     "dialog-cl": ">=1.0.0",
     "dompurify": "^1.0.8",
-    "es6-promise": "^4.2.5",
     "icons-cl": ">=1.0.4",
     "jquery": "^3.3.1",
-    "resizer-cl": "~2.3.4"
+    "resizer-cl": "~2.3.4",
+    "promise-polyfill": "^8.1.0"
   }
 }
