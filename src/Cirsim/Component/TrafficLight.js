@@ -3,11 +3,11 @@ import {Led} from '../Graphics/Led';
 
 /**
  * Component: TrafficLight
- * @param name Component name
+
  * @constructor
  */
-export const TrafficLight = function(name) {
-    Component.call(this, name);
+export const TrafficLight = function() {
+    Component.call(this);
 
     this.height = 96;
     this.width = 32;

@@ -5,11 +5,10 @@ import ComponentPropertiesDlg from '../Dlg/ComponentPropertiesDlg.js';
 
 /**
  * Component: Simple 4-bit ALU
- * @param name Component name
  * @constructor
  */
-export const Alu4 = function(name) {
-    Component.call(this, name);
+export const Alu4 = function() {
+    Component.call(this);
 
     this.height = 16 * 8;
     this.width = 64;

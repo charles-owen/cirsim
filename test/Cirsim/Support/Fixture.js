@@ -1,9 +1,9 @@
-import Circuits from '../../../src/Cirsim/Circuits';
-import Circuit from '../../../src/Cirsim/Circuit';
-import InPin from '../../../src/Cirsim/Component/InPin';
-import OutPin from '../../../src/Cirsim/Component/OutPin';
-import InPinBus from '../../../src/Cirsim/Component/InPinBus';
-import OutPinBus from '../../../src/Cirsim/Component/OutPinBus';
+import {Circuits} from '../../../src/Cirsim/Circuits';
+import {Circuit} from '../../../src/Cirsim/Circuit';
+import {InPin} from '../../../src/Cirsim/Component/InPin';
+import {OutPin} from '../../../src/Cirsim/Component/OutPin';
+import {InPinBus} from '../../../src/Cirsim/Component/InPinBus';
+import {OutPinBus} from '../../../src/Cirsim/Component/OutPinBus';
 
 
 /**
@@ -11,7 +11,7 @@ import OutPinBus from '../../../src/Cirsim/Component/OutPinBus';
  * @param component under tests
  * @constructor
  */
-function Fixture(component, inputNames, outputNames) {
+export const Fixture = function(component, inputNames, outputNames) {
     var circuits = new Circuits(null);
 
     // Add a "main" circuit

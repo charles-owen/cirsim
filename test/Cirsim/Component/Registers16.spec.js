@@ -75,9 +75,9 @@ describe('Registers16', function() {
         cirsim.addTest(test);
         cirsim.startNow();
         var main = cirsim.getInstances()[0];
-        var test = main.test;
+        var tester = main.test;
 
-        var promise = test.runTest('test');
+        var promise = tester.runTest(test);
         promise.then(() => {
             // Success
             expect(true).toBeTruthy();

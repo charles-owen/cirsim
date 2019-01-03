@@ -7,11 +7,11 @@ import {PaletteImage} from "../Graphics/PaletteImage";
 
 /**
  * Component: 16-bit memory
- * @param name Component name
+
  * @constructor
  */
-export const Memory16 = function(name) {
-    Component.call(this, name);
+export const Memory16 = function() {
+    Component.call(this);
 
     this.height = 132;
     this.width = 64;

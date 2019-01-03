@@ -4,11 +4,11 @@ import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
 
 /**
  * Component: Bus OR gate
- * @param name Component name
+
  * @constructor
  */
-export const BusOr = function(name) {
-    Component.call(this, name);
+export const BusOr = function() {
+    Component.call(this);
 
     this.height = 50;
     this.width = 80;

@@ -5,8 +5,8 @@ import {And} from './And';
  * Component: 4-input AND gate
  * @constructor
  */
-export const And4 = function(name) {
-    Component.call(this, name);
+export const And4 = function() {
+    Component.call(this);
 
     this.height = 50;
     this.width = 64;

@@ -1,5 +1,5 @@
-import '../../src/app.modules.js';
-import Cirsim from '../../src/Cirsim/Cirsim.js';
+import '../../src/app.modules';
+import {Cirsim} from '../../src/Cirsim/Cirsim';
 
 describe('Testing in full system', function() {
     // inject the HTML fixture for the tests
@@ -42,9 +42,9 @@ describe('Testing in full system', function() {
         cirsim.addTest(test);
         cirsim.startNow();
         var main = cirsim.getInstances()[0];
-        var test = main.test;
+        var tester = main.test;
 
-        var promise = test.runTest('test');
+        var promise = tester.runTest(test);
         promise.then(() => {
             // Success
             expect(true).toBeTruthy();

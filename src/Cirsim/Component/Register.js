@@ -4,8 +4,8 @@
 
 import Component from '../Component.js';
 
-var Register = function(name) {
-    Component.call(this, name);
+var Register = function() {
+    Component.call(this);
 
     this.height = 90;
     this.width = 32;

@@ -3,11 +3,11 @@ import {PaletteImage} from '../Graphics/PaletteImage';
 
 /**
  * Component: Hexadecimal to 7-segment decoder
- * @param name Component name
+
  * @constructor
  */
-export const HexToSevenSegment = function(name) {
-    Component.call(this, name);
+export const HexToSevenSegment = function() {
+    Component.call(this);
 
     this.height = 134;
     this.width = 64;

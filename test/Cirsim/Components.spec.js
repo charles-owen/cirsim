@@ -2,8 +2,8 @@
  * Components collection
  */
 
-import Components from '../../src/Cirsim/Components.js';
-import Or from '../../src/Cirsim/Component/Or.js';
+import {Components} from '../../src/Cirsim/Components';
+import {Or} from '../../src/Cirsim/Component/Or';
 
 describe('Components', function() {
     it('Construct', function() {

@@ -6,11 +6,11 @@ import {CanvasHelper} from '../Graphics/CanvasHelper';
 
 /**
  * Component: Text (labelling) gate
- * @param name Component name
+
  * @constructor
  */
-export const Text = function(name) {
-    Component.call(this, name);
+export const Text = function() {
+    Component.call(this);
 
     this.size = 22;
     this.text = "Text";

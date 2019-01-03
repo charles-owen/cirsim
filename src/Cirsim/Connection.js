@@ -1,6 +1,6 @@
 
-import Selectable from './Selectable';
-import Bend from './Bend';
+import {Selectable} from './Selectable';
+import {Bend} from './Bend';
 import {Vector} from './Utility/Vector';
 
 /**

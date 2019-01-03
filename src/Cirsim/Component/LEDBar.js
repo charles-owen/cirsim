@@ -5,11 +5,11 @@ import {Sanitize} from '../Utility/Sanitize';
 
 /**
  * Component: LED Bar - 2 to 16 LED's in a vertical bar
- * @param name Component name
+
  * @constructor
  */
-export const LEDBar = function(name) {
-    Component.call(this, name);
+export const LEDBar = function() {
+    Component.call(this);
 
     this.height = 50;
     this.width = 20;

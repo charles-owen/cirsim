@@ -1,17 +1,13 @@
-/**
- * Simple rectangle
- */
-
 
 /**
- * Constructor
+ * A simple rectangle representation
  * @param left Left. If undefined, uses zero.
  * @param top Top. If undefined, uses zero.
  * @param right Right side. If undefined, uses this.left
  * @param bottom Bottom side. If undefined, used this.top.
  * @constructor
  */
-var Rect = function(left, top, right, bottom) {
+export const Rect = function(left, top, right, bottom) {
     if(left !== undefined) {
         this.left = left;
     } else {
@@ -64,5 +60,3 @@ Rect.prototype.contains = function(x, y) {
     return x >= this.left && x <= this.right &&
             y >= this.top && y <= this.bottom;
 };
-
-export default Rect;

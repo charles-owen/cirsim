@@ -1,11 +1,10 @@
-
 import {Selectable} from './Selectable';
 
 /**
  * Object that represents a bend in a connection line.
  * @constructor
  */
-var Bend = function(x, y) {
+export const Bend = function(x, y) {
     Selectable.call(this);
     this.connection = null;     // Connection this bend is associated with
 
@@ -68,5 +67,3 @@ Bend.prototype.delete = function(caller) {
 Bend.prototype.save = function() {
     return {"x": this.x, "y": this.y};
 };
-
-export default Bend;

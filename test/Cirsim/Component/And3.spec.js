@@ -1,5 +1,5 @@
-import Fixture from '../Support/Fixture.js'
-import And3 from '../../../src/Cirsim/Component/And3.js';
+import {Fixture} from '../Support/Fixture'
+import {And3} from '../../../src/Cirsim/Component/And3';
 
 describe('And3', function() {
     beforeEach(function() {
@@ -7,10 +7,11 @@ describe('And3', function() {
     });
 
     it('Fixture Test', function() {
-        var component = new And3('U7');
+        const component = new And3();
+        component.naming = 'U7';
         expect(component.naming).toBe('U7');
 
-        var fixture = new Fixture(component);
+        const fixture = new Fixture(component);
         expect(fixture).toPassTest([
             [undefined, undefined, undefined, undefined],
             [true, undefined, undefined, undefined],

@@ -4,7 +4,7 @@ import {Or} from './Or';
 /**
  * Component: NOR gate
  */
-export const Nor = function(name) {
+export const Nor = function() {
     Or.call(this, name);
 
     // Replace the regular output with an inverse output

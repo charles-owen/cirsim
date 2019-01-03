@@ -1,5 +1,5 @@
-import Fixture from '../Support/Fixture.js'
-import Inverter from '../../../src/Cirsim/Component/Inverter.js';
+import {Fixture} from '../Support/Fixture'
+import {Inverter} from '../../../src/Cirsim/Component/Inverter';
 
 describe('Or', function() {
     beforeEach(function() {
@@ -7,10 +7,11 @@ describe('Or', function() {
     });
 
     it('Fixture Test', function() {
-        var component = new Inverter('U1');
+        const component = new Inverter();
+        component.naming = 'U1';
         expect(component.naming).toBe('U1');
 
-        var fixture = new Fixture(component);
+        const fixture = new Fixture(component);
         expect(fixture).toPassTest([
             [undefined, undefined],
             [true, false],

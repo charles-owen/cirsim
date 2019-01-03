@@ -14,19 +14,20 @@ import {Tools} from './DOM/Tools';
 export const PaletteItem = function(palette, obj, circuit) {
     this.palette = palette;
     this.obj = obj;
+    this.circuit = circuit !== undefined ? circuit.name : null;
 
     // Create an image component DOM element (canvas or img)
     const image = this.paletteImage(obj);
 
-    const element = Tools.createClassedDiv('item');
-    const box = Tools.createClassedDiv('box');
+    const element = Tools.createClassedDiv('cs-item');
+    const box = Tools.createClassedDiv('cs-box');
     element.appendChild(box);
 
-    const img = Tools.createClassedDiv('img');
+    const img = Tools.createClassedDiv('cs-img');
     box.appendChild(img);
     img.appendChild(image);
 
-    const desc = Tools.createClassedDiv('desc');
+    const desc = Tools.createClassedDiv('cs-desc');
     if(obj.label.length > 7) {
         Tools.addClass(desc, 'long');
     }
@@ -36,6 +37,7 @@ export const PaletteItem = function(palette, obj, circuit) {
 	this.element = element;
 	palette.main.dragAndDrop.draggable(this);
 };
+
 
 /**
  * Create the image for the palette, either using an existing

@@ -4,11 +4,11 @@ import {PaletteImage} from "../Graphics/PaletteImage";
 
 /**
  * Component: D Flip-Flop
- * @param name Component name
+
  * @constructor
  */
-export const DFF = function(name) {
-    Component.call(this, name);
+export const DFF = function() {
+    Component.call(this);
 
     this.height = 90;
     this.width = 64;

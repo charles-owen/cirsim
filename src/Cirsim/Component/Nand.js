@@ -3,7 +3,7 @@
  */
 import {And} from './And';
 
-export const Nand = function(name) {
+export const Nand = function() {
     And.call(this, name);
 
     // Replace the regular output with an inverse output

@@ -1,10 +1,16 @@
+import {Out} from './Out';
+
 /**
  * Out connection for a component/inverted
+ * @param component Component this connector is for
+ * @param x Relative x on the component
+ * @param y Relative y on the component
+ * @param len Length in pixels to draw the connector
+ * @param name Name to draw next to the connector
+ * @param inv True (optional) if connector has a circle (inverse)
+ * @constructor
  */
-
-import Out from './Out.js';
-
-var OutInv = function(component, x, y, len, name, inv) {
+export const OutInv = function(component, x, y, len, name, inv) {
     Out.call(this, component, x, y, len, name, inv);
 };
 
@@ -66,4 +72,4 @@ OutInv.prototype.set = function(value) {
 
 };
 
-export default OutInv;
+

@@ -1,6 +1,6 @@
 
 import {Simulation} from './Simulation';
-import Circuit from './Circuit';
+import {Circuit} from './Circuit';
 import {Sanitize} from './Utility/Sanitize';
 
 /**

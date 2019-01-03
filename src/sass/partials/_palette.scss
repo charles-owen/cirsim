@@ -1,4 +1,4 @@
-div.cirsim div.palette {
+div.cirsim div.cs-palette {
   position: absolute;
   left: 0;
   top: 0;
@@ -14,19 +14,18 @@ div.cirsim div.palette {
   cursor: pointer;
 
   -moz-user-select: -moz-none;
-  -khtml-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
 
-  div.item {
+  div.cs-item {
     position: relative;
     min-height: 60px;
     border-bottom: thin solid #dddddd;
     align-items: center;
     display: flex;
 
-    div.box {
+    div.cs-box {
       vertical-align: middle;
 
       margin: 0;
@@ -35,7 +34,7 @@ div.cirsim div.palette {
       -webkit-box-shadow: none;
       box-shadow: none;
 
-      div.img {
+      div.cs-img {
         margin: 0;
         padding: 0;
         border: 0;
@@ -50,7 +49,7 @@ div.cirsim div.palette {
         margin: 0;
       }
 
-      div.desc {
+      div.cs-desc {
         display: block;
         font-style: normal;
         font-weight: bold;

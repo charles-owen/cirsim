@@ -1,10 +1,12 @@
+
+import {Component} from '../Component';
+
 /**
  * Component: JK Flip-Flop
+ * @constructor
  */
-import Component from '../Component.js';
-
-var JKFF = function(name) {
-    Component.call(this, name);
+export const JKFF = function() {
+    Component.call(this);
 
     this.height = 90;
     this.width = 64;
@@ -92,4 +94,3 @@ JKFF.prototype.clone = function() {
     return copy;
 };
 
-export default JKFF;

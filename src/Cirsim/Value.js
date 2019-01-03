@@ -1,5 +1,5 @@
 
-import Sanitize from './Utility/Sanitize';
+import {Sanitize} from './Utility/Sanitize';
 
 /**
  * Support for values that can be passed around in Cirsim.

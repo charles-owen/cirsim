@@ -1,6 +1,5 @@
-import '../../src/app.modules.js';
-import Cirsim from '../../src/Cirsim/Cirsim.js';
-import $ from 'jquery';
+import '../../src/app.modules';
+import Cirsim from '../../src/Cirsim/Cirsim';
 
 describe('Cirsim', function() {
     // inject the HTML fixture for the tests
@@ -17,13 +16,6 @@ describe('Cirsim', function() {
 
     it('version', function() {
         var cirsim = new Cirsim('#cirsim');
-        expect(cirsim.version).toBe('2.0.0');
-    });
-
-    it('start', function() {
-        var cirsim = new Cirsim('#cirsim');
-        cirsim.startNow();
-
-        expect($('#cirsim').hasClass('cirsim')).toBe(true);
+        expect(cirsim.version).toBe('2.0.9');
     });
 });

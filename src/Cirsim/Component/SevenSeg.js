@@ -5,8 +5,8 @@ import {Vector} from '../Utility/Vector';
 /**
  * Component: SevenSeg Seven Segment display
  */
-export const SevenSeg = function(name) {
-    Component.call(this, name);
+export const SevenSeg = function() {
+    Component.call(this);
 
     this.height = 150;
     this.width = 90;

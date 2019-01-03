@@ -6,11 +6,11 @@ import {And} from "./And";
 
 /**
  * Component: OR gate
- * @param name Component name
+
  * @constructor
  */
-export const Or = function(name) {
-    Component.call(this, name);
+export const Or = function() {
+    Component.call(this);
 
     this.height = 50;
     this.width = 64;

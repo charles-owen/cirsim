@@ -6,8 +6,8 @@ import {Sanitize} from '../Utility/Sanitize';
 /**
  * Component: OutPinBus gate
  */
-export const OutPinBus = function(name) {
-    Component.call(this, name);
+export const OutPinBus = function() {
+    Component.call(this);
 
     this.value = new Value();
     this.narrow = false;

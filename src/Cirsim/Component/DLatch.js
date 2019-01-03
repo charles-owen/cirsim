@@ -4,8 +4,8 @@ import {PaletteImage} from "../Graphics/PaletteImage";
 /**
  * Component: D-Latch gate
  */
-export const DLatch = function(name) {
-    Component.call(this, name);
+export const DLatch = function() {
+    Component.call(this);
 
     this.height = 90;
     this.width = 64;

@@ -4,11 +4,11 @@ import {Or} from './Or';
 
 /**
  * Component: XOR gate
- * @param name Component name
+
  * @constructor
  */
-export const Xor = function(name) {
-    Component.call(this, name);
+export const Xor = function() {
+    Component.call(this);
 
     this.height = 50;
     this.width = 64;

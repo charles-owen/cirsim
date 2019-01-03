@@ -1,7 +1,7 @@
 
 import {Value} from './Value';
-import MessageDialog from './Dlg/MessageDialog';
-import TestException from './TestException';
+import {MessageDialog} from './Dlg/MessageDialog';
+import {TestException} from './TestException';
 
 /**
  * Constructor
@@ -258,7 +258,6 @@ export const Test = function(main) {
                                 try {
                                     inputs[i].setAsString(t[i]);
                                 } catch(msg) {
-                                    console.log("exception: " + msg);
                                     failure('<p>This test is failing. ' + msg + '</p>');
                                     return;
                                 }
@@ -319,7 +318,6 @@ export const Test = function(main) {
                 search = model.getCircuit(tabname);
                 if(search === null) {
                     throw new TestException('<p>Invalid input tab: ' + tabname + '</p>');
-                    break;
                 }
 
                 tabmsg = ' in tab <em>' + tabname + '</em>';
@@ -329,16 +327,14 @@ export const Test = function(main) {
             if(input.substr(0, 5) === "type:") {
                 var type = input.substr(5);
                 var components = search.getComponentsByType(type);
-                if(components.length == 0) {
+                if(components.length === 0) {
                     throw new TestException('<p>The test is not able to pass because you do not have a' +
                         ' component of type ' + type + tabmsg + '.</p>');
-                    break;
                 } else if(components.length > 1) {
                     throw new TestException('<p>The test is not able to pass because you have more than' +
                         ' one  component of type ' + type + tabmsg + '.</p>' +
                         '<p>You are only allowed one component of that type ' +
                         'in this circuit.</p>');
-                    break;
                 }
                 inputs.push(components[0]);
             } else {
@@ -352,7 +348,6 @@ export const Test = function(main) {
                         '<p>Typically, the tests are looking for an input' +
                         ' pin or a bus input pin. Input pins are labeled IN in the palette. Double-click' +
                         ' on an input pin to set the name. Names in Cirsim are case sensitive.</p>');
-                    break;
                 }
             }
         }

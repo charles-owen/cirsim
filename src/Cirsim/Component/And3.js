@@ -1,12 +1,14 @@
-/**
- * Component: 3-input AND gate
- */
 
 import {Component} from '../Component';
 import {And} from './And';
 
-export const And3 = function(name) {
-    Component.call(this, name);
+/**
+ * Component: 3-input AND gate
+
+ * @constructor
+ */
+export const And3 = function() {
+    Component.call(this);
 
     this.height = 50;
     this.width = 64;

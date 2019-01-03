@@ -8,7 +8,7 @@
   "scripts": {
     "build:dev": "npx webpack --config webpack.dev.js",
     "build:prod": "npx webpack --config webpack.prod.js",
-    "build:both": "npm run build:dev && npm run build:prod",
+    "build:all": "npm run build:dev && npm run build:prod",
     "test": "karma start karma.conf.js",
     "serve": "webpack-dev-server  --config webpack.dev.js --open",
     "build:docs": "documentation build src/Cirsim/**/*.js --sort-order alpha -f html -o doc/js"
@@ -36,7 +36,7 @@
     "jasmine-core": "^3.3.0",
     "karma": "^3.1.4",
     "karma-chrome-launcher": "^2.2.0",
-    "karma-jasmine": "^1.1.2",
+    "karma-jasmine": "^2.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack-with-fast-source-maps": "^1.10.2",
@@ -53,11 +53,10 @@
   },
   "dependencies": {
     "buckets-js": "^1.98.2",
-    "dialog-cl": ">=1.0.0",
+    "dialog-cl": "~1.0.1",
     "dompurify": "^1.0.8",
-    "icons-cl": ">=1.0.4",
-    "jquery": "^3.3.1",
-    "resizer-cl": "~2.3.4",
-    "promise-polyfill": "^8.1.0"
+    "icons-cl": "~1.0.5",
+    "promise-polyfill": "^8.1.0",
+    "resizer-cl": "~2.3.4"
   }
 }

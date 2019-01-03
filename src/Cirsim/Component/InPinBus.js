@@ -8,8 +8,8 @@ import {Sanitize} from '../Utility/Sanitize';
  * An input pin for Bus inputs
  * @constructor
  */
-export const InPinBus = function(name) {
-    Component.call(this, name);
+export const InPinBus = function() {
+    Component.call(this);
 
     this.height = 16;
     this.width = 96;

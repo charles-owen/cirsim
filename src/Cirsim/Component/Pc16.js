@@ -5,8 +5,8 @@ import Util from '../Utility/Util.js';
 import Component from '../Component.js';
 import Connector from '../Connector.js';
 
-var Pc16 = function(name) {
-    Component.call(this, name);
+var Pc16 = function() {
+    Component.call(this);
 
     this.height = 128;
     this.width = 64;

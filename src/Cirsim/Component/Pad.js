@@ -7,11 +7,11 @@ import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
 /**
  * Component: Pad
  * Configurable keypad for button presses
- * @param name Component name
+
  * @constructor
  */
-export const Pad = function(name) {
-    Component.call(this, name);
+export const Pad = function() {
+    Component.call(this);
 
     this.height = 150;
     this.width = 150;

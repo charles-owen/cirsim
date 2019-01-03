@@ -1,4 +1,4 @@
-import Connector from './Connector';
+import {Connector} from './Connector';
 
 /**
  * Out connector
@@ -10,7 +10,7 @@ import Connector from './Connector';
  * @param inv True (optional) if connector has a circle (inverse)
  * @constructor
  */
-var Out = function(component, x, y, len, name, inv) {
+export const Out = function(component, x, y, len, name, inv) {
     Connector.call(this, component, x, y, len, name, inv);
 
     this.to = [];   // Objects of type Connection
@@ -28,7 +28,7 @@ Out.prototype.constructor = Out;
  * @param value Value to set
  */
 Out.prototype.set = function(value) {
-    var diff = true;
+    let diff = true;
 
     // If the result is an array, compare it...
     if(Array.isArray(value)) {
@@ -36,7 +36,7 @@ Out.prototype.set = function(value) {
             if(value.length === this.value.length) {
                 diff = false;
                 for(let i in value) {
-                    if(value[i] != this.value[i]) {
+                    if(value[i] !== this.value[i]) {
                         diff = true;
                         break;
                     }
@@ -45,7 +45,7 @@ Out.prototype.set = function(value) {
         }
 
     } else {
-        diff = this.value != value;
+        diff = this.value !== value;
     }
 
     if(diff) {

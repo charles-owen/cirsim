@@ -1,4 +1,4 @@
-var webpackConfig = require('./webpack.dev.js');
+const webpackConfig = require('./webpack.dev.js');
 
 //
 // Karma configuration
@@ -9,22 +9,10 @@ module.exports = function (config) {
         webpack: webpackConfig,
         basePath: '',
         frameworks: ['jasmine'], // 'source-map-support',
-        // files: [
-        //     {
-        //         pattern: '**/*.js.map',
-        //         included: false
-        //     },
-        //     'src/**/*.spec.js',
-        //     'test/**/*.spec.js'
-        // ],
         files: [
             'test/all.js'
         ],
         exclude: [],
-        // preprocessors: {
-        //     'test/**/*.spec.js': ['webpack', 'sourcemap'],
-        //     'src/**/*.spec.js': ['webpack', 'sourcemap']
-        // },
         preprocessors: {
             'test/all.js': ['webpack', 'sourcemap']
         },
@@ -34,7 +22,7 @@ module.exports = function (config) {
 
         // level of logging
         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-        logLevel: config.LOG_INFO,
+        logLevel: config.LOG_DEBUG,
 
         autoWatch: true,
         browsers: ['Chrome'],

@@ -1,6 +1,3 @@
-
-
-
 import {Component} from './Component';
 import {Tools} from './DOM/Tools';
 

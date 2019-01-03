@@ -1,9 +1,12 @@
-import Selection from './Selection.js';
-import Component from './Component.js';
+import {Selection} from './Selection';
+import {Component} from './Component';
 import {Tools} from './DOM/Tools';
 
 /**
  * View of a circuit
+ * @param main Main object for interface
+ * @param canvas Canvas element in the view
+ * @param circuit Circuit we draw on that canvas
  * @constructor
  */
 export const View = function(main, canvas, circuit) {
@@ -40,7 +43,7 @@ export const View = function(main, canvas, circuit) {
             }
 
             this.backup();
-            const component = new componentObject;
+            const component = new componentObject(paletteItem);
 
             component.x = x;
             component.y = y;

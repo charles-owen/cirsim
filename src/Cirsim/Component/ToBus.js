@@ -1,11 +1,13 @@
+import {Component} from '../Component';
+import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
+
+
 /**
  * Component: Convert single-bit signals into a bus
+ * @constructor
  */
-import Component from '../Component.js';
-import ComponentPropertiesDlg from '../Dlg/ComponentPropertiesDlg.js';
-
-var ToBus = function(name) {
-    Component.call(this, name);
+export const ToBus = function() {
+    Component.call(this);
 
     this.height = 80;
     this.width = 32;
@@ -155,6 +157,3 @@ ToBus.prototype.properties = function(main) {
     dlg.open();
     $('#' + id).select();
 };
-
-export default ToBus;
-

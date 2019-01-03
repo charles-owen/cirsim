@@ -5,11 +5,11 @@ import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
 
 /**
  * Component: InPin gate
- * @param name Component name
+
  * @constructor
  */
-export const InPin = function(name) {
-    Component.call(this, name);
+export const InPin = function() {
+    Component.call(this);
 
     this.height = 16;
     this.width = 64;

@@ -4,8 +4,8 @@ import {PaletteImage} from "../Graphics/PaletteImage";
 /**
  * Component: SR-Latch gate
  */
-export const SRLatch = function(name) {
-    Component.call(this, name);
+export const SRLatch = function() {
+    Component.call(this);
 
     this.height = 90;
     this.width = 64;

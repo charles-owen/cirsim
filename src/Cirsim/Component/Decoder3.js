@@ -3,8 +3,8 @@
  */
 import Component from '../Component.js';
 
-var Decoder3 = function(name) {
-    Component.call(this, name);
+var Decoder3 = function() {
+    Component.call(this);
 
     this.height = 100;
     this.width = 48;

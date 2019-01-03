@@ -6,8 +6,8 @@ import {Component} from '../Component';
 import {PaletteImage} from '../Graphics/PaletteImage';
 import {CanvasHelper} from '../Graphics/CanvasHelper';
 
-export const And = function(name) {
-    Component.call(this, name);
+export const And = function() {
+    Component.call(this);
 
     this.height = 50;
     this.width = 64;

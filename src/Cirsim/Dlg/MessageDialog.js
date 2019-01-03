@@ -1,11 +1,14 @@
+import Dialog from './Dialog';
+
+
 /**
- * @file
  * The standard Message dialog box.
+ * @param title Title text
+ * @param body Body HTML
+ * @param height Height of the box
+ * @constructor
  */
-
-import Dialog from './Dialog.js';
-
-var MessageDialog = function(title, body, height) {
+export const MessageDialog = function(title, body, height) {
     Dialog.call(this);
 
 
@@ -36,5 +39,3 @@ var MessageDialog = function(title, body, height) {
 
 MessageDialog.prototype = Object.create(Dialog.prototype);
 MessageDialog.prototype.constructor = MessageDialog;
-
-export default MessageDialog;

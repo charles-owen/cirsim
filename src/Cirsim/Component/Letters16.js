@@ -1,10 +1,11 @@
+import {Component} from '../Component';
+
 /**
  * Component: Letters16 Special 16 letter display
+ * @constructor
  */
-import Component from '../Component.js';
-
-var Letters16 = function(name) {
-    Component.call(this, name);
+export const Letters16 = function() {
+    Component.call(this);
 
     this.height = 150;
     this.width = 90;
@@ -133,5 +134,3 @@ Letters16.prototype.draw = function(context, view) {
     this.drawName(context, 0, this.height/2 - 8);
     this.drawIO(context, view);
 };
-
-export default Letters16;

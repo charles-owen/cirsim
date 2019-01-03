@@ -2,11 +2,11 @@ import {Component} from '../Component';
 
 /**
  * Component: D Flip-Flop with Set and Reset
- * @param name Component name
+
  * @constructor
  */
-export const DFFsr = function(name) {
-    Component.call(this, name);
+export const DFFsr = function() {
+    Component.call(this);
 
     this.height = 90;
     this.width = 64;

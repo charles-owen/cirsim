@@ -7,8 +7,8 @@ import {CanvasHelper} from '../Graphics/CanvasHelper';
  * Component: Inverter gate
  * @constructor
  */
-export const Inverter = function(name) {
-    Component.call(this, name);
+export const Inverter = function() {
+    Component.call(this);
 
     this.height = 50;
     this.width = 40;

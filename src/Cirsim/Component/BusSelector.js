@@ -6,11 +6,11 @@ import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
  * Component: BusSelector
  * A Bus Selector chooses some range of signals from an input
  * bus to output as a subset bus.
- * @param name Component name
+
  * @constructor
  */
-export const BusSelector = function(name) {
-    Component.call(this, name);
+export const BusSelector = function() {
+    Component.call(this);
 
     this.height = 16;
     this.width = 96;

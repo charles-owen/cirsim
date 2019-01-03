@@ -5,11 +5,11 @@ import {PaletteImage} from '../Graphics/PaletteImage';
 
 /**
  * Component: General purpose BUS decoder
- * @param name Component name
+
  * @constructor
  */
-export const BusDecoder = function(name) {
-    Component.call(this, name);
+export const BusDecoder = function() {
+    Component.call(this);
 
     this.height = 100;
     this.width = 52;

@@ -39,12 +39,6 @@ module.exports = {
         }),
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.ProvidePlugin({
-            $: "jquery",
-            jQuery: "jquery",
-            "window.jQuery": "jquery'",
-            "window.$": "jquery"
-        }),
         new CopyWebpackPlugin([
             {
                 from: 'src/img/*.png',

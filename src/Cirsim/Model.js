@@ -1,16 +1,12 @@
+import {Circuit} from './Circuit';
+import {Circuits} from './Circuits'
+
 /**
  * The circuits model.
  *
  * One Model objects owns the circuits, so all references are
  * to the model rather than to the circuits. This allows the
  * circuits to be switched out due to an undo or load.
- */
-
-import Circuit from './Circuit';
-import Circuits from './Circuits'
-
-/**
- * Construct a model
  * @param main The Cirsim object
  * @constructor
  */

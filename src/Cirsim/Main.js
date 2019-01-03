@@ -3,7 +3,7 @@ import Resizer from 'resizer-cl';
 import {Menu} from './Menu';
 import {Palette} from './Palette';
 import {Model} from './Model';
-import Circuit from './Circuit';
+import {Circuit} from './Circuit';
 import {Tabs} from './Tabs';
 import {ExportDlg} from './Dlg/ExportDlg';
 import {ImportDlg} from './Dlg/ImportDlg';

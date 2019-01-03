@@ -1,4 +1,3 @@
-
 import {Util} from './Utility/Util';
 import {Vector} from './Utility/Vector';
 

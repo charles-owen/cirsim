@@ -1,12 +1,12 @@
+import {Component} from '../Component';
+import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
+
 /**
  * Component: Convert bus into single-bit signals
+ * @constructor
  */
-
-import Component from '../Component.js';
-import ComponentPropertiesDlg from '../Dlg/ComponentPropertiesDlg.js';
-
-var FmBus = function(name) {
-    Component.call(this, name);
+export const FmBus = function() {
+    Component.call(this);
 
     this.height = 80;
     this.width = 32;
@@ -167,7 +167,5 @@ FmBus.prototype.properties = function(main) {
     });
 
     dlg.open();
-    $('#' + id).select();
+    document.getElementById(id).select();
 };
-
-export default FmBus;

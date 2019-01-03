@@ -3,11 +3,11 @@ import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
 
 /**
  * Component: n-to-1 Bus multiplexer
- * @param name Component name
+
  * @constructor
  */
-export const BusMultiplexer = function(name) {
-    Component.call(this, name);
+export const BusMultiplexer = function() {
+    Component.call(this);
 
     this.height = 80;
     this.width = 32;

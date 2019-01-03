@@ -6,11 +6,11 @@ import {Value} from '../Value';
 /**
  * Component: BusConstant gate
  * A constant bus value component.
- * @param name Component name
+
  * @constructor
  */
-export const BusConstant = function(name) {
-    Component.call(this, name);
+export const BusConstant = function() {
+    Component.call(this);
 
     this.height = 16;
     this.width = 96;

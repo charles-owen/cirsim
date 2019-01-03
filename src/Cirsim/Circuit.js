@@ -8,7 +8,7 @@ import {Sanitize} from './Utility/Sanitize';
  * @param name Name of the circuit
  * @constructor
  */
-var Circuit = function(name) {
+export const Circuit = function(name) {
 
     this.circuits = null;
     this.components = [];
@@ -169,10 +169,17 @@ Circuit.prototype.add = function(component) {
     return component;
 };
 
+/**
+ * Delete a specific item from the list of components
+ * @param toDelete Item to delete
+ */
 Circuit.prototype.delete = function(toDelete) {
-    this.components = $.grep(this.components, function(component, index) {
-        return component !== toDelete;
-    });
+    for(let i=0; i<this.components.length; i++) {
+        if(this.components[i] === toDelete) {
+            this.components.splice(i, 1);
+            break;
+        }
+    }
 };
 
 /**
@@ -261,7 +268,7 @@ Circuit.prototype.load = function(obj) {
         }
 
         if(componentProto !== null) {
-            var component = new componentProto;
+            var component = new componentProto();
             component.load(componentObj);
             compsMap[component.id] = component;
             this.add(component);

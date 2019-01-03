@@ -4,8 +4,8 @@ import {PaletteImage} from '../Graphics/PaletteImage';
 /**
  * Component: Zero (fixed false) gate
  */
-export const Zero = function(name) {
-    Component.call(this, name);
+export const Zero = function() {
+    Component.call(this);
 
     this.height = 16;
     this.width = 16;

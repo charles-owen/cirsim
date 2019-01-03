@@ -1,11 +1,7 @@
+import {Connector} from './Connector';
+
 /**
  * In connection for a component
- */
-
-import Connector from './Connector.js';
-
-/**
- * In connector
  * @param component Component this connector is for
  * @param x Relative x on the component
  * @param y Relative y on the component
@@ -14,7 +10,7 @@ import Connector from './Connector.js';
  * @param inv True (optional) if connector has a circle (inverse)
  * @constructor
  */
-var In = function(component, x, y, len, name, inv) {
+export const In = function(component, x, y, len, name, inv) {
     Connector.call(this, component, x, y, len, name, inv);
 
     this.from = []; // Objects of type Connection
@@ -26,7 +22,6 @@ In.prototype.constructor = In;
 
 /**
  * Set the value from a connection
- * @param value Value to set
  */
 In.prototype.set = function() {
     var value = this.from.length > 0 && this.from[0].from !== null ?
@@ -97,4 +92,3 @@ In.prototype.draw = function(context, view) {
     }
 };
 
-export default In;

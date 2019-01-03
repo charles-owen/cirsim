@@ -7,8 +7,8 @@ import {PaletteImage} from '../Graphics/PaletteImage';
  * @param name Name assigned to this component
  * @constructor
  */
-export const One = function(name) {
-    Component.call(this, name);
+export const One = function() {
+    Component.call(this);
 
     this.height = 16;
     this.width = 16;

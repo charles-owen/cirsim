@@ -5,11 +5,11 @@ import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
 
 /**
  * Component: Button than can be pressed by the user
- * @param name Component name
+
  * @constructor
  */
-export const Button = function(name) {
-    Component.call(this, name);
+export const Button = function() {
+    Component.call(this);
 
     // Size
     this.height = 50;

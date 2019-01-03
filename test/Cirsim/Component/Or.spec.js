@@ -1,5 +1,5 @@
-import Fixture from '../Support/Fixture.js'
-import Or from '../../../src/Cirsim/Component/Or.js';
+import {Fixture} from '../Support/Fixture'
+import {Or} from '../../../src/Cirsim/Component/Or';
 
 describe('Or', function() {
     beforeEach(function() {
@@ -7,10 +7,11 @@ describe('Or', function() {
     });
 
     it('Fixture Test', function() {
-        var component = new Or('U1');
+        const component = new Or();
+        component.naming = 'U1';
         expect(component.naming).toBe('U1');
 
-        var fixture = new Fixture(component);
+	    const fixture = new Fixture(component);
         expect(fixture).toPassTest([
             [undefined, undefined, undefined],
             [true, undefined, true],

@@ -1,16 +1,16 @@
-/**
- * Base object for a component in a circuit
- */
-
-import Selectable from './Selectable';
-import In from './In';
-import Out from './Out';
-import OutInv from './OutInv';
-import Connection from './Connection';
+import {Selectable} from './Selectable';
+import {In} from './In';
+import {Out} from './Out';
+import {OutInv} from './OutInv';
+import {Connection} from './Connection';
 import {ComponentPropertiesDlg} from './Dlg/ComponentPropertiesDlg';
 import DOMPurify from 'dompurify';
 
-export const Component = function (name) {
+/**
+ * Base object for a component in a circuit
+ * @constructor
+ */
+export const Component = function () {
     Selectable.call(this);
 
     this.height = 10;
@@ -18,7 +18,7 @@ export const Component = function (name) {
     this.prev = null;
     this.id = "";
     this.circuit = null;
-    this.naming = name !== undefined ? name : null;     ///< Naming, as in U1 or I1
+    this.naming = null;     // Naming, as in U1 or I1
 
     this.ins = [];
     this.outs = [];
@@ -54,8 +54,6 @@ Component.prototype.copyFrom = function (component) {
     }
 };
 
-Component.prototype.setImg = function (imgObj) {
-}
 
 Component.prototype.drop = function () {
     if (this.x < this.width / 2) {

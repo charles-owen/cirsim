@@ -1,4 +1,4 @@
-import Options from '../../src/Cirsim/Options.js';
+import {Options} from '../../src/Cirsim/Options';
 
 describe('Options', function() {
     it('should accept options', function() {
@@ -82,8 +82,7 @@ describe('Options', function() {
                     url: '../api-demo/',
                     name: "ab+c.cirsim"
                 }
-            },
-            helpURL: '../help'
+            }
         });
 
         open = options.getAPI('open');

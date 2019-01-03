@@ -6,8 +6,8 @@ import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
  * @param name The name to assign to the component
  * @constructor
  */
-export const Clock = function(name) {
-    Component.call(this, name);
+export const Clock = function() {
+    Component.call(this);
 
     this.height = 44;
     this.width = 44;

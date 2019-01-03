@@ -1,6 +1,6 @@
-import {TabAddDlg} from '../Dlg/TabAddDlg.js';
-import MessageDialog from '../Dlg/MessageDialog.js';
-import {TabPropertiesDlg} from '../Dlg/TabPropertiesDlg.js';
+import {TabAddDlg} from '../Dlg/TabAddDlg';
+import {MessageDialog} from '../Dlg/MessageDialog';
+import {TabPropertiesDlg} from '../Dlg/TabPropertiesDlg';
 
 /**
  * The Tabs menu

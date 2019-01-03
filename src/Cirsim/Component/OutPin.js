@@ -3,11 +3,11 @@ import {Led} from '../Graphics/Led'
 
 /**
  * Component: OutPin output pin
- * @param name Component name
+
  * @constructor
  */
-export const OutPin = function(name) {
-    Component.call(this, name);
+export const OutPin = function() {
+    Component.call(this);
 
     this.height = 16;
     this.width = 64;

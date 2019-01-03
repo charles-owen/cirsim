@@ -1,11 +1,13 @@
+
+import {Rect} from './Utility/Rect';
+
 /**
  * The Selection object keeps track of what is currently
  * selected in a view.
+ * @param view The view this selection object is associated with
+ * @constructor
  */
-
-import Rect from './Utility/Rect.js';
-
-var Selection = function(view) {
+export const Selection = function(view) {
     var that = this;
 
     /// Maintains a list of the currently selected components

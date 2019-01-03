@@ -6,11 +6,11 @@ import {Sanitize} from '../Utility/Sanitize';
 
 /**
  * Component: LED
- * @param name Component name
+
  * @constructor
  */
-export const LED = function(name) {
-    Component.call(this, name);
+export const LED = function() {
+    Component.call(this);
 
     this.height = 32;
     this.width = 32;

@@ -3,7 +3,7 @@ import './public-path.js';
 
 import './polyfills/all.js';
 import Cirsim from './Cirsim/Cirsim.js';
-import './cirsim.scss';
+import './_cirsim.scss';
 
 export {Cirsim};
 export {Cirsim as default};

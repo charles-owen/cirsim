@@ -21,7 +21,7 @@ export const Palette = function(main, work) {
 
     const initialize = () => {
         // Create and install the div
-	    div = Tools.createClassedDiv('palette');
+	    div = Tools.createClassedDiv('cs-palette');
 	    work.appendChild(div);
 
 	    // We allow either an array of strings in components
@@ -76,7 +76,7 @@ export const Palette = function(main, work) {
 	 */
 	this.refresh = function() {
         // Remove any palette items that are of class "circuitref"
-        for(const c of div.querySelectorAll('.circuitref')) {
+        for(const c of div.querySelectorAll('.cs-circuitref')) {
             div.removeChild(c);
         }
 
@@ -85,7 +85,7 @@ export const Palette = function(main, work) {
             const circuit = main.model.circuits.circuits[i];
 
 	        const pi = new PaletteItem(this, CircuitRef, circuit);
-	        Tools.addClass(pi.element, 'circuitref');
+	        pi.element.classList.add('cs-circuitref');
 	        div.appendChild(pi.element);
         }
     }

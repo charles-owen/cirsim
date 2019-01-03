@@ -1,6 +1,6 @@
 
-import Cirsim from '../../src/Cirsim/Cirsim.js';
-import Model from '../../src/Cirsim/Model.js';
+import {Cirsim} from '../../src/Cirsim/Cirsim';
+import {Model} from '../../src/Cirsim/Model';
 
 describe('Model', function() {
    it('Construct', function() {

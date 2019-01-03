@@ -1,5 +1,5 @@
 
-import Simulation from '../../src/Cirsim/Simulation.js';
+import {Simulation} from '../../src/Cirsim/Simulation';
 
 describe('Simulation', function() {
     it('Construct', function() {

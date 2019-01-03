@@ -2,12 +2,12 @@
  * Component: Simple 16-bit 8-register file.
  */
 
-import Component from '../Component.js';
-import Connector from '../Connector.js';
-import Util from '../Utility/Util.js';
+import {Component} from '../Component';
+import {Connector} from '../Connector';
+import {Util} from '../Utility/Util';
 
-var Registers16 = function(name) {
-    Component.call(this, name);
+var Registers16 = function() {
+    Component.call(this);
 
     this.height = 176;
     this.width = 128;
