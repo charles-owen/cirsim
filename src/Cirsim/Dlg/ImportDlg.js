@@ -7,7 +7,7 @@ import '../Vendor/Blob.js';
 import Unique from '../Utility/Unique.js';
 import saveAs from '../Vendor/FileSaver.js';
 
-var ImportDlg = function(main, model) {
+export const ImportDlg = function(main, model) {
     Dialog.call(this);
 
     var that = this;
@@ -21,7 +21,7 @@ var ImportDlg = function(main, model) {
         '<p>Choose a file to import into Cirsim.</p>';
 
     this.ok = function() {
-        var files = $("#" + id)[0].files;
+        const files = document.getElementById(id).files;
         if(files.length < 1) {
             return;
         }
@@ -56,5 +56,3 @@ var ImportDlg = function(main, model) {
 
 ImportDlg.prototype = Object.create(Dialog.prototype);
 ImportDlg.prototype.constructor = ImportDlg;
-
-export default ImportDlg;

@@ -1,11 +1,10 @@
-/**
- * Simulation management object
- */
-
 import buckets from 'buckets-js';
 
-var Simulation = function() {
-    var that = this;
+/**
+ * Simulation management object
+ * @constructor
+ */
+export const Simulation = function() {
 
     // Current animation time in seconds, we start at time 1 to avoid 0 issues
     this.time = 1;
@@ -20,7 +19,7 @@ var Simulation = function() {
     this.order = 1;             ///< Extra sorting order to ensure stable sort
 
     this.priorityQueue = new buckets.PriorityQueue(function(a, b) {
-        if(a.time == b.time) {
+        if(a.time === b.time) {
             return b.order - a.order;
         }
 
@@ -46,7 +45,7 @@ var Simulation = function() {
     var pendingAnimationFrame = false;
     var lastAnimationFrameTime = null;
 
-    function mainloop(time) {
+    const mainloop = (time) => {
         pendingAnimationFrame = false;
         if(lastAnimationFrameTime === null) {
             lastAnimationFrameTime = time;
@@ -74,16 +73,16 @@ var Simulation = function() {
                 useDelta = 0.03;
             }
 
-            if(that.advance(useDelta * that.speed)) {
-                if(that.view !== null) {
-                    that.view.draw();
+            if(this.advance(useDelta * this.speed)) {
+                if(this.view !== null) {
+	                this.view.draw();
                 }
             }
 
             delta -= useDelta;
         }
 
-        if(that.view !== null) {
+        if(this.view !== null) {
             pendingAnimationFrame = true;
             requestAnimationFrame(mainloop);
         }
@@ -135,5 +134,3 @@ Simulation.prototype.advance = function(delta) {
 
     return any;
 };
-
-export default Simulation;

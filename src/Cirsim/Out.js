@@ -1,8 +1,4 @@
-/**
- * Out connection for a component
- */
-
-import Connector from './Connector.js';
+import Connector from './Connector';
 
 /**
  * Out connector
@@ -33,12 +29,13 @@ Out.prototype.constructor = Out;
  */
 Out.prototype.set = function(value) {
     var diff = true;
+
     // If the result is an array, compare it...
     if(Array.isArray(value)) {
         if(Array.isArray(this.value)) {
-            if(value.length == this.value.length) {
+            if(value.length === this.value.length) {
                 diff = false;
-                for(var i in value) {
+                for(let i in value) {
                     if(value[i] != this.value[i]) {
                         diff = true;
                         break;
@@ -53,7 +50,7 @@ Out.prototype.set = function(value) {
 
     if(diff) {
         this.value = value;
-        for(var i=0; i<this.to.length; i++) {
+        for(let i=0; i<this.to.length; i++) {
             var inp = this.to[i].to;
             if(inp !== null) {
                 inp.set();

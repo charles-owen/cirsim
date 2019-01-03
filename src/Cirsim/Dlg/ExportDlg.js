@@ -12,8 +12,7 @@ export const ExportDlg = function(model) {
     Dialog.call(this);
 
     // A unique ID for the input control
-    var id = this.uniqueId();
-    var sel = '#' + id;
+    const id = this.uniqueId();
 
     this.open = function() {
         // Create the dialog box form
@@ -25,7 +24,7 @@ export const ExportDlg = function(model) {
         this.buttonOk = 'Export';
         this.contents(dlg, "Cirsim Export");
         Dialog.prototype.open.call(this);
-        $(sel).select();
+        document.getElementById(id).select();
     }
 
 
@@ -37,14 +36,12 @@ export const ExportDlg = function(model) {
         // Get name.
         // Trim spaces on either end
         // Remove extension
-        let jName = $(sel);
-        let name = this.sanitize(jName.val())
+        let name = this.sanitize(document.getElementById(id).value)
             .replace(/^\s+|\s+$/gm,'')
             .replace(/\.[^/.]+$/, "");
 
         if(name.length === 0) {
             // Invalid name
-            jName.addClass("ui-state-error");
             this.error("You must supply a name");
         } else {
             this.close();
@@ -63,5 +60,3 @@ export const ExportDlg = function(model) {
 
 ExportDlg.prototype = Object.create(Dialog.prototype);
 ExportDlg.prototype.constructor = ExportDlg;
-
-export default ExportDlg;
