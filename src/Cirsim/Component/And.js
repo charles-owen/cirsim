@@ -63,7 +63,7 @@ And.prototype.draw = function(context, view) {
     And.path(context, this.x, this.y, this.width, this.height);
     CanvasHelper.fillWith(context);
 
-    And.path(context, this.x, this.y, this.width, this.height);
+   // And.path(context, this.x, this.y, this.width, this.height);
     context.stroke();
 
     this.drawName(context, -2, 5);

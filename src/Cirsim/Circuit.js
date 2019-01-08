@@ -32,9 +32,9 @@ export const Circuit = function(name) {
         // We do this in reverse order so we are selecting
         // from top down.
         //
-        for(var i=this.components.length-1; i>= 0; i--) {
-            var component = this.components[i];
-            var grabbed = component.touch(x, y);
+        for(let i=this.components.length-1; i>= 0; i--) {
+	        let component = this.components[i];
+	        let grabbed = component.touch(x, y);
             if(grabbed !== null) {
                 return grabbed;
             }
@@ -257,26 +257,31 @@ Circuit.prototype.load = function(obj) {
     this.height = +obj.height;
 
     // Load the components
-    var compsMap = {};  // Map from component ID to component object
+    const compsMap = {};  // Map from component ID to component object
 
-    for(var i=0; i<obj.components.length; i++) {
-        var componentObj = obj.components[i];
+    for(let i=0; i<obj.components.length; i++) {
+        const componentObj = obj.components[i];
+
+        let componentProto;
         if(componentObj.type === "CircuitRef") {
-            var componentProto = CircuitRef;
+            componentProto = CircuitRef;
         } else {
-            var componentProto = this.circuits.model.main.components.get(componentObj.type);
+            componentProto = this.circuits.model.main.components.get(componentObj.type);
         }
 
         if(componentProto !== null) {
-            var component = new componentProto();
+            const component = new componentProto();
+            component.circuit = this;
             component.load(componentObj);
             compsMap[component.id] = component;
             this.add(component);
+        } else {
+            console.log(componentObj);
         }
     }
 
     // Load the connections
-    for(var i=0; i<obj.connections.length; i++) {
+    for(let i=0; i<obj.connections.length; i++) {
         var connectionObj = obj.connections[i];
         var fmComp = compsMap[connectionObj["from"]];
         if(fmComp === undefined) {
@@ -390,8 +395,8 @@ Circuit.prototype.maxXY = function() {
 }
 
 Circuit.prototype.pending = function() {
-    for(var i=0; i<this.components.length; i++) {
-        var component = this.components[i];
+    for(let i=0; i<this.components.length; i++) {
+        const component = this.components[i];
         component.pending();
     }
 }
@@ -425,5 +430,13 @@ Circuit.prototype.stats = function() {
     };
 }
 
+Circuit.prototype.moveToFront = function(component) {
 
-export default Circuit;
+	for(let i=0; i<this.components.length; i++) {
+		if(this.components[i] === component) {
+			this.components.splice(i, 1);
+			this.components.push(component);
+			break;
+		}
+	}
+}

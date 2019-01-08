@@ -46,5 +46,3 @@ export const HelpDialog = function(main) {
 HelpDialog.prototype = Object.create(Dialog.prototype);
 HelpDialog.prototype.constructor = HelpDialog;
 
-//export default HelpDialog;
-

@@ -1,4 +1,3 @@
-
 import {Component} from '../Component';
 import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
 

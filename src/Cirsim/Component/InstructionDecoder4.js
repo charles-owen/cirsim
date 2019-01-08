@@ -1,8 +1,11 @@
+import {Component} from '../Component';
+import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
+
 /**
  * Component: Simple 4-bit instruction decoder
  */
-Cirsim.InstructionDecoder4 = function(name) {
-    Cirsim.Component.call(this, name);
+export const InstructionDecoder4 = function(name) {
+    Component.call(this, name);
 
     this.height = 120;
     this.width = 80;
@@ -20,43 +23,45 @@ Cirsim.InstructionDecoder4 = function(name) {
     this.setAsString("nop");
 };
 
-Cirsim.InstructionDecoder4.prototype = Object.create(Cirsim.Component.prototype);
-Cirsim.InstructionDecoder4.prototype.constructor = Cirsim.InstructionDecoder4;
+InstructionDecoder4.prototype = Object.create(Component.prototype);
+InstructionDecoder4.prototype.constructor = InstructionDecoder4;
 
-Cirsim.InstructionDecoder4.prototype.prefix = "ID";
-Cirsim.InstructionDecoder4.prototype.nameRequired = true;
+InstructionDecoder4.prototype.prefix = "ID";
+InstructionDecoder4.prototype.nameRequired = true;
 
-Cirsim.InstructionDecoder4.type = "InstructionDecoder4";            ///< Name to use in files
-Cirsim.InstructionDecoder4.label = "Ins Dec";           ///< Label for the palette
-Cirsim.InstructionDecoder4.desc = "Instruction Decoder";       ///< Description for the palette
-Cirsim.InstructionDecoder4.img = "insdecoder4.png";         ///< Image to use for the palette
-Cirsim.InstructionDecoder4.description = '<h2>Instruction Decoder</h2><p>Simple example' +
+InstructionDecoder4.type = "InstructionDecoder4";            ///< Name to use in files
+InstructionDecoder4.label = "Instruction Decoder 4";           ///< Label for the palette
+InstructionDecoder4.desc = "Instruction Decoder";       ///< Description for the palette
+InstructionDecoder4.img = "insdecoder4.png";         ///< Image to use for the palette
+InstructionDecoder4.description = '<h2>Instruction Decoder</h2><p>Simple example' +
     ' instruction decoder. Decodes assembly statements into register and ALU operations.</p>';
+InstructionDecoder4.help = 'instructiondecoder4';
 
 /**
  * Compute the gate result
  * @param state
  */
-Cirsim.InstructionDecoder4.prototype.compute = function(state) {
+InstructionDecoder4.prototype.compute = function(state) {
 };
 
-Cirsim.InstructionDecoder4.prototype.setAsString = function(value, set) {
+InstructionDecoder4.prototype.setAsString = function(value, set) {
     this.instruction = value;
     if(set === undefined) {
         set = true;
     }
 
-    var re = /\s*([a-zA-Z]*)(?:[\s,$]+([^\s,]+))?(?:[\s,$]+([^\s,]+))?(?:[\s,$]+([^\s,]+))?/;
-    var match = this.instruction.toLowerCase().match(re);
-    if(match === null) {
+    // regular expression for lexical analysis
+    const re = /\s*([a-zA-Z]*)(?:[\s,$]+([^\s,]+))?(?:[\s,$]+([^\s,]+))?(?:[\s,$]+([^\s,]+))?/;
+    const match = this.instruction.toLowerCase().match(re);
+    if(match === null || match.length < 2) {
         return "syntax error in input";
     }
 
-    var ae = this.outs[0];
-    var be = this.outs[1];
-    var alue = this.outs[2];
-    var im = this.outs[3];
-    var c = this.outs[4];
+	const ae = this.outs[0];
+	const be = this.outs[1];
+	const alue = this.outs[2];
+	const im = this.outs[3];
+	const c = this.outs[4];
 
     // Get a register value from a string
     function getreg(s) {
@@ -94,15 +99,14 @@ Cirsim.InstructionDecoder4.prototype.setAsString = function(value, set) {
         }
 
 
-        return ((im & 8) != 0 ? '1' : '0') + ((im & 4) != 0 ? '1' : '0') +
-            ((im & 2) != 0 ? '1' : '0') + ((im & 1) != 0 ? '1' : '0');
+        return ((im & 8) !== 0 ? '1' : '0') + ((im & 4) !== 0 ? '1' : '0') +
+            ((im & 2) !== 0 ? '1' : '0') + ((im & 1) !== 0 ? '1' : '0');
     }
-
 
     var opcode = match[1];
     var rd = match[2];
-    var ra = match[3];
-    var rb = match[4];
+    var ra = match.length > 3 ? match[3] : null;
+    var rb = match.length > 4 ? match[4] : null;
 
     var rdreg = getreg(rd);
     var rareg = getreg(ra);
@@ -111,10 +115,9 @@ Cirsim.InstructionDecoder4.prototype.setAsString = function(value, set) {
     var raimm = getimm(ra);
     var rbimm = getimm(rb);
 
-
     function operation(cOp) {
         // Must have registers Rd and Ra
-        if(rdreg === null || rareg === null) {
+        if(rdreg === null || rareg === null || rb === null) {
             return null;
         }
 
@@ -210,10 +213,10 @@ Cirsim.InstructionDecoder4.prototype.setAsString = function(value, set) {
 
 /**
  * Clone this component object.
- * @returns {Cirsim.InstructionDecoder4}
+ * @returns {InstructionDecoder4}
  */
-Cirsim.InstructionDecoder4.prototype.clone = function() {
-    var copy = new Cirsim.InstructionDecoder4();
+InstructionDecoder4.prototype.clone = function() {
+    var copy = new InstructionDecoder4();
     copy.copyFrom(this);
     return copy;
 };
@@ -224,7 +227,7 @@ Cirsim.InstructionDecoder4.prototype.clone = function() {
  * @param context Display context
  * @param view View object
  */
-Cirsim.InstructionDecoder4.prototype.draw = function(context, view) {
+InstructionDecoder4.prototype.draw = function(context, view) {
     this.selectStyle(context, view);
 
     var leftX = this.x - this.width/2 - 0.5;
@@ -251,7 +254,7 @@ Cirsim.InstructionDecoder4.prototype.draw = function(context, view) {
     context.fillText("instruction", this.x, this.y + this.height/2 - 14);
     context.fillText("decoder", this.x, this.y + this.height/2 - 2);
 
-    context.fillText(this.instruction, this.x, this.y - this.height/2 + 10);
+    context.fillText(this.instruction, this.x, this.y - this.height/2 + 11);
 
     // Name
     if(this.naming !== null) {
@@ -265,23 +268,26 @@ Cirsim.InstructionDecoder4.prototype.draw = function(context, view) {
     this.drawIO(context, view);
 };
 
-Cirsim.InstructionDecoder4.prototype.properties = function(main) {
-    var that = this;
-
+InstructionDecoder4.prototype.properties = function(main) {
     var value = this.instruction;
 
-    var dlg = new Cirsim.ComponentPropertiesDlg(this, main);
-    var html = '<p>Value<br>' +
-        '<input type="text" id="insdecoder-value" name="insdecoder-value" spellcheck="false" value="' + value + '"></p>';
+    var dlg = new ComponentPropertiesDlg(this, main);
+	const id = dlg.uniqueId();
 
-    dlg.extra(html, function() {
-        var value = $('input[name="insdecoder-value"]').val();
-        return that.setAsString(value, false);
-    }, function() {
-        var value = $('input[name="insdecoder-value"]').val();
-        that.setAsString(value);
+	var html = '<p>Value<br>' +
+        `<input type="text" id="${id}" spellcheck="false" value="${value}"></p>`;
+
+    dlg.extra(html, () => {
+        const newValue = document.getElementById(id).value;
+        return this.setAsString(newValue, false);
+    }, () => {
+	    const newValue = document.getElementById(id).value;
+        this.setAsString(newValue);
     }, 40);
 
     dlg.open();
-    $("#insdecoder-value").focus().select();
+
+    const input = document.getElementById(id);
+    input.select();
+    input.focus();
 };

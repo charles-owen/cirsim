@@ -4,6 +4,7 @@ import {Out} from './Out';
 import {OutInv} from './OutInv';
 import {Connection} from './Connection';
 import {ComponentPropertiesDlg} from './Dlg/ComponentPropertiesDlg';
+
 import DOMPurify from 'dompurify';
 
 /**
@@ -65,6 +66,12 @@ Component.prototype.drop = function () {
     }
 };
 
+Component.prototype.grab = function() {
+    Selectable.prototype.grab.call(this);
+
+    this.circuit.moveToFront(this);
+}
+
 Component.prototype.mouseUp = function () {
 
 };
@@ -79,17 +86,18 @@ Component.prototype.added = function (circuit) {
     if (this.naming === null && this.nameRequired) {
         // Create a new name
         for (var i = 1; ; i++) {
+            let naming;
             if (this.prefix.charAt(0) === "*") {
                 if (i <= 26) {
-                    var naming = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.charAt(i - 1);
+                    naming = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.charAt(i - 1);
                 } else {
-                    var naming = this.prefix.charAt(1) + (i - 26);
+                    naming = this.prefix.charAt(1) + (i - 26);
                 }
             } else {
-                var naming = this.prefix + i;
+                naming = this.prefix + i;
             }
 
-            var existing = this.circuit.getComponentByNaming(naming);
+            const existing = this.circuit.getComponentByNaming(naming);
             if (existing === null) {
                 this.naming = naming;
                 break;
@@ -560,4 +568,4 @@ Component.prototype.sanitize = function(text) {
     return DOMPurify.sanitize(text);
 }
 
-export default Component;
+//export default Component;

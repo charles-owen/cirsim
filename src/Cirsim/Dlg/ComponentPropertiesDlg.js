@@ -139,5 +139,3 @@ export const ComponentPropertiesDlg = function(component, main) {
 
 ComponentPropertiesDlg.prototype = Object.create(Dialog.prototype);
 ComponentPropertiesDlg.prototype.constructor = ComponentPropertiesDlg;
-
-export default ComponentPropertiesDlg;

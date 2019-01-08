@@ -23,7 +23,7 @@ export const Selection = function(view) {
         down = true;
         firstMove = true;
 
-        var touched = view.circuit.touch(x, y);
+        const touched = view.circuit.touch(x, y);
         if(touched !== null) {
             // Some selectables are singles, meaning we can
             // only select one at a time.
@@ -32,7 +32,7 @@ export const Selection = function(view) {
             } else {
                 // If we touched something that was not
                 // previously selected, it becomes the selection
-                if(!that.isSelected(touched)) {
+                if(!this.isSelected(touched)) {
                     if(!event.shiftKey) {
                         this.selection = [];
                     }
@@ -51,7 +51,7 @@ export const Selection = function(view) {
             rect = new Rect(x, y);
         }
 
-        for(var i=0; i<this.selection.length; i++) {
+        for(let i=0; i<this.selection.length; i++) {
             this.selection[i].grab();
         }
     };
@@ -70,7 +70,7 @@ export const Selection = function(view) {
                 // one item selected, check to see if it is
                 // something that might spawn a new child that
                 // we drag. This is how bending points are implemented.
-                if(this.selection.length == 1) {
+                if(this.selection.length === 1) {
                     var spawned = this.selection[0].spawn(x, y);
                     if(spawned !== null) {
                         this.selection = [spawned];
@@ -139,7 +139,7 @@ export const Selection = function(view) {
      * @returns {boolean} true if selected.
      */
     this.isSelected = function(component) {
-        for(var i=0; i<this.selection.length; i++) {
+        for(let i=0; i<this.selection.length; i++) {
             if(component === this.selection[i]) {
                 return true;
             }

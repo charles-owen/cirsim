@@ -1,11 +1,12 @@
+
+import {Util} from '../Utility/Util';
+import {Component} from '../Component';
+import {Connector} from '../Connector';
+
 /**
  * Component: Simple 16-bit program counter
  */
-import Util from '../Utility/Util.js';
-import Component from '../Component.js';
-import Connector from '../Connector.js';
-
-var Pc16 = function() {
+export const Pc16 = function() {
     Component.call(this);
 
     this.height = 128;
@@ -122,5 +123,3 @@ Pc16.prototype.draw = function(context, view) {
     //this.drawName(context, 0, -this.height/2 + 20);
     this.drawIO(context, view);
 };
-
-export default Pc16;

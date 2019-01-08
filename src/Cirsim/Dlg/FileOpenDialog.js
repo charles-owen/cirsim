@@ -1,32 +1,34 @@
+import {FileDialog} from './FileDialog';
+import {JsonAPI} from '../Api/JsonAPI';
+import {Ajax} from '../Utility/Ajax';
+
+
 /**
- * @file
  * File system save dialog box
+ * @param options
+ * @param toast
+ * @constructor
  */
-
-import FileDialog from './FileDialog.js';
-import JsonAPI from '../Api/JsonAPI.js';
-
-var FileOpenDialog = function(options, toast) {
+export const FileOpenDialog = function(options, toast) {
     FileDialog.call(this, true, options, toast);
     
-    var open = options.getAPI('open');
+    const open = options.getAPI('open');
 
     /**
      * Read the file.
      */
     this.read = function(name, callback) {
-        $.ajax({
+        Ajax.do({
             url: open.url,
             data: Object.assign({cmd: "open", name: name}, open.extra),
             method: "GET",
             dataType: 'json',
             success: (data) => {
-                var json = new JsonAPI(data);
+                const json = new JsonAPI(data);
                 if(!toast.jsonErrors(json)) {
-                    var json = data.data[0].attributes.data;
-                    callback(name, json);
+                    var file = data.data[0].attributes.data;
+                    callback(name, file);
                     this.close();
-                    return;
                 }
             },
             error: (xhr, status, error) => {
@@ -41,6 +43,3 @@ var FileOpenDialog = function(options, toast) {
 
 FileOpenDialog.prototype = Object.create(FileDialog.prototype);
 FileOpenDialog.prototype.constructor = FileOpenDialog;
-
-export default FileOpenDialog;
-

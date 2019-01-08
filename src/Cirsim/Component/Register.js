@@ -1,10 +1,9 @@
+import {Component} from '../Component';
+
 /**
  * Component: Simple register.
  */
-
-import Component from '../Component.js';
-
-var Register = function() {
+export const Register = function() {
     Component.call(this);
 
     this.height = 90;
@@ -72,5 +71,3 @@ Register.prototype.draw = function(context, view) {
     this.drawName(context, 0, -16);
     this.drawIO(context, view);
 };
-
-export default Register;

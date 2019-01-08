@@ -7,7 +7,20 @@ export const Ajax = function() {
 
 Ajax.do = function(obj) {
 	const request = new XMLHttpRequest();
-	request.open(obj.method, obj.url, true);
+	if(obj.method === 'GET') {
+		let data = [];
+		for(let key in obj.data) {
+			if(!obj.data.hasOwnProperty(key)) {
+				continue;
+			}
+
+			data.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj.data[key]));
+		}
+
+		request.open('GET', obj.url + '?' + data.join('&'), true);
+	} else {
+		request.open(obj.method, obj.url, true);
+	}
 
 	request.onload = function() {
 		if (request.status >= 200 && request.status < 400) {
@@ -16,6 +29,7 @@ Ajax.do = function(obj) {
 				try {
 					obj.success(JSON.parse(request.responseText));
 				} catch(ex) {
+					console.log(ex);
 					console.log(request.responseText);
 				}
 
@@ -42,6 +56,10 @@ Ajax.do = function(obj) {
 
 			let formData = [];
 			for(let key in obj.data) {
+				if(!obj.data.hasOwnProperty(key)) {
+					continue;
+				}
+
 				formData.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj.data[key]));
 			}
 

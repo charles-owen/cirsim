@@ -14,7 +14,6 @@ export const Circuits = function(model, simulation) {
     this.circuits = [];
     this.grid = 8;
     this.snap = true;
-    this.showOutputStates = false;
     this.id = model !== null ? model.id : undefined;
 
     // If none is supplied, create a simulation object
@@ -108,8 +107,12 @@ Circuits.prototype.toJSON = function() {
     return JSON.stringify(this.save());
 };
 
+/**
+ * Load the circuits from a JSON-encoded object
+ * @param json
+ */
 Circuits.prototype.fmJSON = function(json) {
-    var obj = JSON.parse(json);
+    const obj = JSON.parse(json);
     this.load(obj);
 };
 
@@ -132,10 +135,6 @@ Circuits.prototype.save = function() {
         obj.snap = true;
     }
 
-    if(this.showOutputStates) {
-        obj.showoutputstates = true;
-    }
-
     return obj;
 };
 
@@ -145,11 +144,9 @@ Circuits.prototype.save = function() {
  * @param obj
  */
 Circuits.prototype.load = function(obj) {
-    var that = this;
 
     this.grid = +obj["grid"];
     this.snap = Sanitize.boolean(obj["snap"]);
-    this.showOutputStates = Sanitize.boolean(obj["showoutputstates"]);
     this.prev = null;
     this.circuits = [];
 
@@ -160,18 +157,16 @@ Circuits.prototype.load = function(obj) {
     //
     // Load circuits in reverse order
     //
-    var i;
-
-    for(i=obj.circuits.length-1;  i>=0; i--) {
+    for(let i=obj.circuits.length-1;  i>=0; i--) {
         var circuitObj = obj.circuits[i];
         var circuit = new Circuit(circuitObj.name);
-        that.insert(circuit);
+        this.insert(circuit);
         circuit.load(circuitObj);
     }
     
     // In reverse order, ensure all circuits have
     // had compute called on all components
-    for(var i=this.circuits.length-1;  i>=0; i--) {
+    for(let i=this.circuits.length-1;  i>=0; i--) {
         this.circuits[i].pending();
     }
 

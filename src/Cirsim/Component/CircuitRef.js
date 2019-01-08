@@ -1,4 +1,5 @@
 import {Component} from '../Component';
+import {CanvasHelper} from "../Graphics/CanvasHelper";
 
 /**
  * Component: Circuit Reference
@@ -19,13 +20,6 @@ export const CircuitRef = function(paletteItem) {
     this.circuitOuts = [];
 };
 
-CircuitRef.prototype.setImg = function(imgObj) {
-	var circuit = imgObj.componentCircuit;
-	if(circuit !== undefined) {
-		this.circuitName = circuit.name;
-		this.circuitRef = null;
-	}
-}
 
 CircuitRef.prototype = Object.create(Component.prototype);
 CircuitRef.prototype.constructor = CircuitRef;
@@ -37,6 +31,7 @@ CircuitRef.img = "circuitref.png";         ///< Image to use for the palette
 CircuitRef.order = 99;               ///< Order of presentation in the palette
 CircuitRef.description = '<h2>Circuit Component</h2><p>A Circuit Component uses another' +
     'Cirsim circuit as a component in the current circuit</p>';
+
 
 /**
  * Compute the gate result
@@ -60,6 +55,9 @@ CircuitRef.prototype.compute = function(state) {
  * @returns true if animation needs to be redrawn
  */
 CircuitRef.prototype.advance = function(delta) {
+	if(this.circuitName === 'register-file') {
+	}
+
     for(var i=0; i<this.ins.length && i < this.circuitIns.length; i++) {
         this.circuitIns[i].set(this.ins[i].get());
     }
@@ -99,7 +97,7 @@ CircuitRef.prototype.newTab = function() {
 
 
 CircuitRef.prototype.ensureIO = function() {
-    var circuit = this.circuitRef;
+    const circuit = this.circuitRef;
     if(circuit !== null) {
         //
         // Fix inputs
@@ -122,6 +120,16 @@ CircuitRef.prototype.ensureIO = function() {
                 ins[i].set(undefined);
             }
         }
+
+        // Sort the order so they are in the order they appear
+        ins.sort(function(a,b) {
+        	if(a.y === b.y) {
+        		return a.x - b.x;
+	        }
+
+	        return a.y - b.y;
+        });
+
         this.circuitIns = ins;
 
         // Find output pins in the tab circuit
@@ -130,6 +138,15 @@ CircuitRef.prototype.ensureIO = function() {
         for(const pin of outsb) {
 	        outs.push(pin);
         }
+
+	    // Sort the order so they are in the order they appear
+	    outs.sort(function(a,b) {
+		    if(a.y === b.y) {
+			    return a.x - b.x;
+		    }
+
+		    return a.y - b.y;
+	    });
 
         this.circuitOuts = outs;
 
@@ -169,8 +186,8 @@ CircuitRef.prototype.ensureIO = function() {
         const maxIO = ins.length > outs.length ? ins.length : outs.length;
 
         this.height = maxIO * 16 + 32;
-        if(this.height < 50) {
-            this.height = 50;
+        if(this.height < 48) {
+            this.height = 48;
         }
 
         let x = this.width / 2;
@@ -195,40 +212,12 @@ CircuitRef.prototype.ensureIO = function() {
 	            this.ins[i].y = startY + i * 16;
 	            this.ins[i].len = 16;
 	            this.ins[i].bus = ins[i].constructor.type === 'InPinBus';
+	            this.ins[i].index = i;
             } else {
 	            this.addIn(-x, startY + i * 16, 16, ins[i].naming)
 		            .bus = ins[i].constructor.type === 'InPinBus';
             }
         }
-
-
-        // // let i = 0;
-        // for( ; i<ins.length; i++) {
-        //     if(i >= this.ins.length) {
-        //         break;
-        //     }
-        //
-        //     this.ins[i].name = ins[i].naming;
-        //     this.ins[i].x = -x;
-        //     this.ins[i].y = startY + i * 16;
-        //     this.ins[i].len = 16;
-        //     this.ins[i].bus = ins[i].constructor.type === 'InPinBus';
-        // }
-        //
-        // // Add any new pins
-        // for(; i<ins.length; i++) {
-        //     this.addIn(-x, startY + i * 16, 16, ins[i].naming)
-        //         .bus = ins[i].constructor.type === 'InPinBus';
-        // }
-        //
-        // // Delete pins that have ceased to exist
-        // if(i < this.ins.length) {
-        //     for( ; i<this.ins.length; i++) {
-        //         this.ins[i].clear();
-        //     }
-        //
-        //     this.ins.splice(ins.length);
-        // }
 
         //
         // Fix outputs
@@ -243,46 +232,20 @@ CircuitRef.prototype.ensureIO = function() {
 	    this.outs = [];
 
 	    for(i=0; i<outs.length; i++) {
-		    if(savedInputs[outs[i].naming] !== undefined) {
-			    this.ins.push(savedOutputs[outs[i].naming]);
+		    if(savedOutputs[outs[i].naming] !== undefined) {
+			    this.outs.push(savedOutputs[outs[i].naming]);
 
 			    this.outs[i].name = outs[i].naming;
 			    this.outs[i].x = x;
 			    this.outs[i].y = startY + i * 16;
 			    this.outs[i].len = 16;
 			    this.outs[i].bus = outs[i].constructor.type === 'OutPinBus';
+			    this.outs[i].index = i;
 		    } else {
 			    this.addOut(x, startY + i * 16, 16, outs[i].naming)
 				    .bus = outs[i].constructor.type === 'OutPinBus';
 		    }
 	    }
-
-        // for(i=0; i<outs.length; i++) {
-        //     if(i >= this.outs.length) {
-        //         break;
-        //     }
-        //
-        //     this.outs[i].name = outs[i].naming;
-        //     this.outs[i].x = x;
-        //     this.outs[i].y = startY + i * 16;
-        //     this.outs[i].len = 16;
-        //     this.outs[i].bus = outs[i].constructor.type === 'OutPinBus';
-        // }
-        //
-        // // Add any new pins
-        // for(; i<outs.length; i++) {
-        //     this.addOut(x, startY + i * 16, 16, outs[i].naming)
-        //         .bus = outs[i].constructor.type === 'OutPinBus';
-        // }
-        //
-        // // Delete pins that have ceased to exist
-        // if(i < this.outs.length) {
-        //     for( ; i<this.outs.length; i++) {
-        //         this.outs[i].clear();
-        //     }
-        //
-        //     this.outs.splice(outs.length);
-        // }
 
     }
 
@@ -318,6 +281,8 @@ CircuitRef.prototype.clone = function() {
 CircuitRef.prototype.load = function(obj) {
     this.circuitName = obj["circuitName"];
     Component.prototype.load.call(this, obj);
+
+    this.getCircuitRef();
 };
 
 
@@ -350,7 +315,8 @@ CircuitRef.prototype.draw = function(context, view) {
 
     context.beginPath();
     context.rect(leftX, topY, this.width, this.height);
-    context.stroke();
+	CanvasHelper.fillWith(context);
+	context.stroke();
 
     // Name
 

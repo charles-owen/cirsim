@@ -32,7 +32,7 @@ OutInv.prototype.draw = function(context, view) {
     context.lineTo(x + this.len, y + 0.5);
     context.fillRect(x + this.len - 1, y - 1, 3, 3);
 
-    if(this.component.circuit.circuits.showOutputStates) {
+    if(this.component.circuit.circuits.model.main.options.showOutputStates) {
         context.font = "11px Times";
         context.fillText(this.value === undefined ? "?" : (this.value ? "1" : "0"),
             x+7+notRad*2,

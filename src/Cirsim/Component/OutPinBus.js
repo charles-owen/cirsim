@@ -161,4 +161,3 @@ OutPinBus.prototype.setNarrow = function(narrow) {
     this.ins[0].x = -this.width/2;
 }
 
-export default OutPinBus;

@@ -47,7 +47,6 @@ export const View = function(main, canvas, circuit) {
 
             component.x = x;
             component.y = y;
-            //component.setImg(imgObj);
 
 	        this.circuit.add(component);
 	        this.circuit.snapIt(component);
@@ -98,16 +97,11 @@ export const View = function(main, canvas, circuit) {
             // handler while we are moving
             if(touch) {
                 canvas.addEventListener('touchmove', touchMoveListener);
-                //canvasJ.on('touchmove', touchMoveListener);
             } else {
 	            canvas.addEventListener('mousemove', mouseMoveListener);
-                //canvasJ.mousemove(mouseMoveListener);
             }
 
             canvas.parentNode.addEventListener('scroll', scrollListener);
-            // canvasJ.parent().scroll(function(event) {
-            //
-            // });
         };
 
         let scrollListener = (event) => {

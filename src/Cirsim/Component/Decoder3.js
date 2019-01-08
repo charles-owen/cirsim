@@ -1,9 +1,9 @@
+import {Component} from '../Component';
+
 /**
  * Component: 3-8 decoder
  */
-import Component from '../Component.js';
-
-var Decoder3 = function() {
+export const Decoder3 = function() {
     Component.call(this);
 
     this.height = 100;
@@ -129,6 +129,3 @@ Decoder3.prototype.draw = function(context, view) {
 
     this.drawIO(context, view);
 };
-
-export default Decoder3;
-

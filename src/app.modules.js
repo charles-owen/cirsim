@@ -1,8 +1,8 @@
 // The public-path module must be imported first!
-import './public-path.js';
+import './public-path';
 
-import './polyfills/all.js';
-import Cirsim from './Cirsim/Cirsim.js';
+import './polyfills/all';
+import {Cirsim} from './Cirsim/Cirsim';
 import './_cirsim.scss';
 
 export {Cirsim};

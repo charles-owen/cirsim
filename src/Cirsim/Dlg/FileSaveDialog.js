@@ -1,6 +1,6 @@
-
-import FileDialog from './FileDialog.js';
-import JsonAPI from '../Api/JsonAPI.js';
+import {FileDialog} from './FileDialog';
+import {JsonAPI} from '../Api/JsonAPI';
+import {Ajax} from '../Utility/Ajax';
 
 /**
  * File system save dialog box
@@ -13,14 +13,14 @@ import JsonAPI from '../Api/JsonAPI.js';
 export const FileSaveDialog = function(data, type, options, toast) {
     FileDialog.call(this, false, options, toast);
 
-    var save = options.getAPI('save');
+    const save = options.getAPI('save');
 
     /**
      * Write the file. This is called only if we
      * know for sure the file does not exist.
      */
     this.write = function(name, callback) {
-        $.ajax({
+        Ajax.do({
             url: save.url,
             data: Object.assign({cmd: "save", name: name, data: data}, save.extra),
             method: "POST",

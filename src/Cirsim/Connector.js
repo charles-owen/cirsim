@@ -170,8 +170,8 @@ Connector.prototype.getLoc = function() {
  * @param view View object we are drawing in
  */
 Connector.prototype.draw = function(context, view) {
-    var x = this.component.x + this.x;
-    var y = this.component.y + this.y;
+    let x = this.component.x + this.x;
+    let y = this.component.y + this.y;
 
     if(this.bus) {
         context.lineWidth = 2;
@@ -186,10 +186,11 @@ Connector.prototype.draw = function(context, view) {
             context.lineTo(x + this.len, y + 0.5);
             context.fillRect(x + this.len - 1, y - 1, 3, 3);
 
-            if(this.component.circuit.circuits.showOutputStates) {
+            if(this.component.circuit.circuits.model.main.options.showOutputStates) {
                 context.font = "11px Times";
                 context.textAlign = "left";
-                var value = this.getAsString();
+                let value = this.getAsString();
+
                 if(value.length > 8) {
                     value = parseInt(value, 2);
                     if(isNaN(value)) {
@@ -198,6 +199,7 @@ Connector.prototype.draw = function(context, view) {
                         value = Util.toHex(value, 4);
                     }
                 }
+
                 context.fillText(value, x+5, y-2);
             }
 

@@ -35,13 +35,15 @@ import {JKFF} from './JKFF';
 import {DLatch} from './DLatch';
 import {SRLatch} from './SRLatch';
 import {Letters16} from './Letters16';
-import Register from './Register';
+import {Register} from './Register';
 import {Alu4} from './Alu4';
 import Registers16 from './Registers16';
 import {Pad} from './Pad';
 import {LEDBar} from './LEDBar';
-import Pc16 from './Pc16';
+import {Pc16} from './Pc16';
 import {Memory16} from './Memory16';
+import {Decoder3} from './Decoder3';
+import {InstructionDecoder4} from './InstructionDecoder4';
 
 /**
  * Add all components into the system.
@@ -91,6 +93,8 @@ export const All = function(components) {
     components.add(Pad);
     components.add(Pc16);
     components.add(Memory16);
+    components.add(Decoder3);
+    components.add(InstructionDecoder4);
 
     components.addPalette('combinatorial',
         [Or, And, Inverter, Xor, Nand, Nor]);
@@ -107,9 +111,10 @@ export const All = function(components) {
             Inverter, Xor,
             DFF, DFFsr, JKFF, DLatch, SRLatch,
             InPinBus, OutPinBus, BusConstant, BusOr, BusDecoder, BusSelector,
+            Decoder3,
             BusMultiplexer,
             TrafficLight, HexToSevenSegment, SevenSeg, FmBus,
             ToBus, Register,
-            Letters16, Alu4, Registers16, Pc16, Memory16, Pad ]
+            Letters16, Alu4, Registers16, Pc16, Memory16, InstructionDecoder4, Pad ]
     )
 }

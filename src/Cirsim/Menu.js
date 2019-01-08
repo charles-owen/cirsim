@@ -47,7 +47,11 @@ export const Menu = function(main) {
 
 	    html += fileMenu.html();
         html += editMenu.html();
-        html += tabsMenu.html();
+
+        if(main.options.tabsMenu) {
+	        html += tabsMenu.html();
+        }
+
         html += optionsMenu.html();
         html += helpMenu.html();
 

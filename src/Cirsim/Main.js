@@ -10,7 +10,7 @@ import {ImportDlg} from './Dlg/ImportDlg';
 import {Test} from './Test';
 import {Toast} from './Graphics/Toast';
 import {FileSaveDialog} from './Dlg/FileSaveDialog';
-import FileOpenDialog from './Dlg/FileOpenDialog';
+import {FileOpenDialog} from './Dlg/FileOpenDialog';
 import {SaveDialog} from './Dlg/SaveDialog';
 import OpenDialog from './Dlg/OpenDialog';
 import {View} from './View';

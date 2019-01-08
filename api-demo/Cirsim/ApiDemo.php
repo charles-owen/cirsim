@@ -4,7 +4,7 @@
  * Simple session-based demonstration of Cirsim API features.
  */
 
-namespace Cirsim;
+namespace CL\Cirsim;
 
 
 class ApiDemo {

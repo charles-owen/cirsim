@@ -20,6 +20,9 @@ export const Options = function(options) {
     /// Do not include "main", it is always included
     this.tabs = [];
 
+    /// If true, we include the tabs menu
+    this.tabsMenu = true;
+
     /// Do we include the input/export menu options?
     /// Options are: 'none', 'import', 'export', 'both'
     this.export = 'both';
@@ -95,6 +98,8 @@ export const Options = function(options) {
     /// specified in this.components.
     this.always = ['Zero', 'One', 'InPin', 'OutPin', 'Clock', 'Button', 'LED'];
 
+    /// Display all output states
+    this.showOutputStates = true;
 
     for(var property in options) {
         if(options.hasOwnProperty(property)) {

@@ -4,10 +4,9 @@
  * @constructor
  */
 export const FileMenu = function(menu, main) {
+	const options = main.options;
 
-    this.html = function() {
-        let options = main.options;
-
+	this.html = function() {
         let fileHtml = '';
 
 	    let saveAPI = options.getAPI('save');
@@ -55,11 +54,11 @@ export const FileMenu = function(menu, main) {
             if(fileHtml.length > 0) {
                 fileHtml += '<li class="menu-divider">&nbsp;</li>';       // Separator
             }
-            fileHtml += '<li><a href="' + options.exit + '">Exit</a></li>';
+            fileHtml += '<li><a class="file-exit">Exit</a></li>';
         }
 
         if(fileHtml !== '') {
-            return '<li><a href="javascript:;">File</a><ul class="file-menu">' +
+            return '<li><a>File</a><ul class="file-menu">' +
                 fileHtml + '</ul></li>';
         } else {
             return '';
@@ -90,5 +89,11 @@ export const FileMenu = function(menu, main) {
 	    menu.click('.file-import-tab', (event) => {
 		    main.import_tab();
 	    });
+
+	    menu.click('.file-exit', (event) => {
+	    	if(options.exit !== null) {
+	    		window.location.href = options.exit;
+		    }
+	    })
     }
 }

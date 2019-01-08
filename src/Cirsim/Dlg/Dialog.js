@@ -48,7 +48,8 @@ Dialog.prototype.open = function() {
             click: (dialog) => {
                 this.ok();
             },
-            focus: true
+            focus: true,
+            'class': 'cs-ok'
         });
     }
 
@@ -57,7 +58,8 @@ Dialog.prototype.open = function() {
             contents: 'Cancel',
             click: (dialog) => {
                 dialog.close();
-            }
+            },
+	        'class': 'cs-cancel'
         });
     }
 
@@ -70,6 +72,8 @@ Dialog.prototype.open = function() {
         titleBarButtons: this.titleBarButtons
     });
 
+    this.dialog = dialog;
+
     this.onOpen();
 
     this.close = function() {
@@ -80,6 +84,10 @@ Dialog.prototype.open = function() {
     	event.preventDefault();
     	this.ok();
     });
+
+    this.buttonOk = function() {
+	    return this.dialog.div.querySelector('button.cs-ok');
+    }
 }
 
 Dialog.prototype.ok = function() {
@@ -96,15 +104,6 @@ Dialog.prototype.error = function(msg) {
 Dialog.prototype.cancel = function() {}
 
 Dialog.prototype.onOpen = function() {}
-
-Dialog.prototype.enable = function(cls, enable) {
-    if(enable) {
-        this.element.parentNode.querySelector('.' + cls).removeAttribute('disabled');
-
-    } else {
-        this.element.parentNode.querySelector('.' + cls).setAttribute('disabled', 'disabled');
-    }
-}
 
 /**
  * Sanitize text from user input to prevent XSS attacks.

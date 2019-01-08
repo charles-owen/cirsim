@@ -156,5 +156,3 @@ export const Cirsim = function(sel, options) {
     }
 
 }
-
-export default Cirsim;

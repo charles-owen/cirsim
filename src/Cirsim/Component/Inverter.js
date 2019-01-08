@@ -109,4 +109,3 @@ Inverter.paletteImage = function() {
     return paletteImage;
 }
 
-//export default Inverter;

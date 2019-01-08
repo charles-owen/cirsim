@@ -29,4 +29,18 @@ JsonAPI.prototype.fetch = function(type) {
     return ret;
 }
 
+JsonAPI.prototype.getData = function(type) {
+	if(this.api.data === undefined) {
+		return [];
+	}
+
+    for(let item of this.api.data) {
+	    if(item.type === type) {
+		    return item;
+	    }
+    }
+
+	return null;
+}
+
 export default JsonAPI;
