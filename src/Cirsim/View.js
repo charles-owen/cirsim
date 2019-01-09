@@ -44,6 +44,7 @@ export const View = function(main, canvas, circuit) {
 
             this.backup();
             const component = new componentObject(paletteItem);
+            component.brand();
 
             component.x = x;
             component.y = y;

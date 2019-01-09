@@ -1,5 +1,3 @@
-
-
 import {Component} from '../Component';
 import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
 
@@ -14,8 +12,8 @@ export const Alu4 = function() {
     this.width = 64;
     this.shrink = 15;
 
-    var left = -this.width / 2;
-    var right = this.width / 2;
+    const left = -this.width / 2;
+    const right = this.width / 2;
 
     // Inputs and one output
     var inOffset = 32;

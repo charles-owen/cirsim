@@ -68,7 +68,7 @@ Circuit.prototype.defHeight = 1080;  ///< Default height
  * @returns {Circuit}
  */
 Circuit.prototype.clone = function() {
-    var copy = new Circuit(this.name);
+    const copy = new Circuit(this.name);
     copy.width = this.width;
     copy.height = this.height;
 
@@ -77,7 +77,7 @@ Circuit.prototype.clone = function() {
     this.prev = copy;
 
     // Iterate over the components, cloning each of them
-    for(var i=0; i<this.components.length; i++) {
+    for(let i=0; i<this.components.length; i++) {
         var component = this.components[i];
         var componentCopy = component.clone();
         copy.add(componentCopy);
@@ -85,7 +85,7 @@ Circuit.prototype.clone = function() {
 
     // Again we iterate over the components, this time
     // cloning the output connections.
-    for(var i=0; i<this.components.length; i++) {
+    for(let i=0; i<this.components.length; i++) {
         var component = this.components[i];
         for(var j=0; j<component.outs.length; j++) {
             var out = component.outs[j];
@@ -225,20 +225,19 @@ Circuit.prototype.save = function() {
     // Iterate over the components, saving each of them
     var comps = [];
 
-    for(var i=0; i<this.components.length; i++) {
-        var component = this.components[i];
+    for(let i=0; i<this.components.length; i++) {
+        const component = this.components[i];
 
         // Set an ID on each component
-        component.id = "c" + (i + 1001);
-
+       // component.id = "c" + (i + 1001);
 
         comps.push(component.save());
     }
 
     // Then iterate over the connections, saving each of them
     var connections = [];
-    for(var i=0; i<this.components.length; i++) {
-        var component = this.components[i];
+    for(let i=0; i<this.components.length; i++) {
+        const component = this.components[i];
         connections = connections.concat(component.saveConnections());
     }
 

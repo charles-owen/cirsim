@@ -122,9 +122,9 @@ Circuits.prototype.fmJSON = function(json) {
  * @returns Object
  */
 Circuits.prototype.save = function() {
-    var cirs = [];
-    for(var i=0; i<this.circuits.length; i++) {
-        var circuit = this.circuits[i];
+    const cirs = [];
+    for(let i=0; i<this.circuits.length; i++) {
+        const circuit = this.circuits[i];
         cirs.push(circuit.save());
     }
 

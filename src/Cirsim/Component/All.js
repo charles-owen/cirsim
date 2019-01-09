@@ -44,6 +44,8 @@ import {Pc16} from './Pc16';
 import {Memory16} from './Memory16';
 import {Decoder3} from './Decoder3';
 import {InstructionDecoder4} from './InstructionDecoder4';
+import {Alu16} from './Alu16';
+
 
 /**
  * Add all components into the system.
@@ -95,6 +97,7 @@ export const All = function(components) {
     components.add(Memory16);
     components.add(Decoder3);
     components.add(InstructionDecoder4);
+    components.add(Alu16);
 
     components.addPalette('combinatorial',
         [Or, And, Inverter, Xor, Nand, Nor]);
@@ -115,6 +118,7 @@ export const All = function(components) {
             BusMultiplexer,
             TrafficLight, HexToSevenSegment, SevenSeg, FmBus,
             ToBus, Register,
-            Letters16, Alu4, Registers16, Pc16, Memory16, InstructionDecoder4, Pad ]
+            Letters16, Alu4, Registers16, Pc16, Memory16, InstructionDecoder4, Pad,
+            Alu16 ]
     )
 }

@@ -1,4 +1,4 @@
-import Dialog from './Dialog.js';
+import {Dialog} from './Dialog';
 import '../Vendor/Blob.js';
 import Unique from '../Utility/Unique.js';
 import saveAs from '../Vendor/FileSaver.js';

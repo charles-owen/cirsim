@@ -17,7 +17,8 @@ export const Component = function () {
     this.height = 10;
     this.width = 10;
     this.prev = null;
-    this.id = "";
+
+    this.id = '';           // Will be set to a unique id for this component
     this.circuit = null;
     this.naming = null;     // Naming, as in U1 or I1
 
@@ -28,6 +29,8 @@ export const Component = function () {
 Component.prototype = Object.create(Selectable.prototype);
 Component.prototype.constructor = Component;
 
+
+
 /**
  * Prefix for component naming
  */
@@ -35,11 +38,24 @@ Component.prototype.prefix = "U";
 Component.prototype.nameRequired = false;
 Component.prototype.delay = 11;      ///< Propagation delay in nanoseconds
 
+/**
+ * Assign this component a unique ID. This is done when a
+ * component is created by the view.
+ */
+Component.prototype.brand = function() {
+	// Every component get a unique ID when it is created
+	this.id = 'c' + (++Component.maxId);
+}
+
+/// Maximum ID integer value for any component
+Component.maxId = 1000;
+
 Component.prototype.copyFrom = function (component) {
     this.height = component.height;
     this.width = component.width;
     this.prev = component.prev;
     this.naming = component.naming;
+    this.id = component.id;
     component.prev = this;
     Selectable.prototype.copyFrom.call(this, component);
 
@@ -306,6 +322,14 @@ Component.prototype.save = function () {
 
 Component.prototype.load = function (obj) {
     this.id = this.sanitize(obj["id"]);
+
+    // Determine the maximum loaded ID value as we load
+    // in new components.
+    const idValue = +this.id.substr(1);
+    if(idValue > Component.maxId) {
+        Component.maxId = idValue;
+    }
+
     this.x = +obj["x"];
     this.y = +obj["y"];
     this.moveX = this.x;
@@ -567,5 +591,3 @@ Component.prototype.jaggedLine = function (context, x1, y1, x2, y2, t) {
 Component.prototype.sanitize = function(text) {
     return DOMPurify.sanitize(text);
 }
-
-//export default Component;

@@ -4,7 +4,7 @@
  * already known.
  */
 
-import Dialog from './Dialog.js';
+import {Dialog} from './Dialog';
 import JsonAPI from '../Api/JsonAPI.js';
 
 var OpenDialog = function(name, options, toast) {

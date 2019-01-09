@@ -96,19 +96,52 @@ CircuitRef.prototype.newTab = function() {
 };
 
 
+
 CircuitRef.prototype.ensureIO = function() {
     const circuit = this.circuitRef;
+
     if(circuit !== null) {
+
+    	// Find all of the pins (in or out) for a circuit
+	    const findAllPins = function(regPin, busPin) {
+		    // Find all input pins in the tab circuit
+		    const ins = circuit.getComponentsByType(regPin);
+		    const insb = circuit.getComponentsByType(busPin);
+		    for(const pin of insb) {
+			    ins.push(pin);
+		    }
+
+		    // Sort the order so they are in the order they appear
+		    ins.sort(function(a,b) {
+			    if(a.y === b.y) {
+				    return a.x - b.x;
+			    }
+
+			    return a.y - b.y;
+		    });
+
+		    return ins;
+	    }
+
+	    // Collect an array of pins by the component ID.
+	    const collectById = function(pins) {
+		    const pinsById = {};
+		    for(let pin of pins) {
+			    pinsById[pin.id] = pin;
+		    }
+
+		    return pinsById;
+	    }
+
         //
-        // Fix inputs
+        // Collect inputs
         //
 
         // Find all input pins in the tab circuit
-        const ins = circuit.getComponentsByType("InPin");
-        const insb = circuit.getComponentsByType("InPinBus");
-        for(const pin of insb) {
-	        ins.push(pin);
-        }
+	    const ins = findAllPins('InPin', 'InPinBus');
+
+	    // Collect inputs by their ID
+	    const insById = collectById(ins);
 
         //
         // If this is the first time this circuit
@@ -121,32 +154,17 @@ CircuitRef.prototype.ensureIO = function() {
             }
         }
 
-        // Sort the order so they are in the order they appear
-        ins.sort(function(a,b) {
-        	if(a.y === b.y) {
-        		return a.x - b.x;
-	        }
-
-	        return a.y - b.y;
-        });
-
         this.circuitIns = ins;
 
+        //
+	    // Collect outputs
+	    //
+
         // Find output pins in the tab circuit
-        const outs = circuit.getComponentsByType("OutPin");
-        const outsb = circuit.getComponentsByType("OutPinBus");
-        for(const pin of outsb) {
-	        outs.push(pin);
-        }
+	    const outs = findAllPins('OutPin', 'OutPinBus');
 
-	    // Sort the order so they are in the order they appear
-	    outs.sort(function(a,b) {
-		    if(a.y === b.y) {
-			    return a.x - b.x;
-		    }
-
-		    return a.y - b.y;
-	    });
+        // Collect outputs by their ID
+	    const outsById = collectById(outs);
 
         this.circuitOuts = outs;
 
@@ -157,8 +175,7 @@ CircuitRef.prototype.ensureIO = function() {
             let bad = false;
 
             // Check the inputs
-	        let i = 0;
-	        for( ; i<ins.length; i++) {
+	        for(let i=0; i<ins.length; i++) {
 	            if(this.ins[i].name !== ins[i].naming ||
                     this.ins[i].bus !== (ins[i].constructor.type === 'InPinBus')) {
 	                bad = true;
@@ -166,7 +183,8 @@ CircuitRef.prototype.ensureIO = function() {
                 }
 	        }
 
-	        for(i=0; i<outs.length; i++) {
+	        // Check the outputs
+	        for(let i=0; i<outs.length; i++) {
 		        if(this.outs[i].name !== outs[i].naming ||
 			        this.outs[i].bus !== (outs[i].constructor.type === 'OutPinBus')) {
 			        bad = true;
@@ -191,59 +209,94 @@ CircuitRef.prototype.ensureIO = function() {
         }
 
         let x = this.width / 2;
-
         let startY = - this.height / 2 + 8;
 
-        // Save off the existing inputs by name
-        const savedInputs = {};
-        for(const pin of this.ins) {
-            savedInputs[pin.name] = pin;
+        const saveExistingPins = function(currentPins, pinsById) {
+	        const savedPins = {};
+	        for(const pin of currentPins) {
+		        if(pin.reference !== null && pinsById[pin.reference] !== undefined) {
+			        savedPins[pinsById[pin.reference].naming] = pin;
+		        } else {
+			        savedPins[pin.name] = pin;
+		        }
+	        }
+
+	        return savedPins;
         }
 
+        //
+	    // Fix inputs
+	    //
+
+        // Save off the existing inputs by name, then
+	    // clear the inputs so we can add them back in
+        const savedInputs = saveExistingPins(this.ins, insById);
         this.ins = [];
 
         let i = 0;
         for(i=0; i<ins.length; i++) {
+        	let inp;
             if(savedInputs[ins[i].naming] !== undefined) {
-                this.ins.push(savedInputs[ins[i].naming]);
+            	inp = savedInputs[ins[i].naming];
+                this.ins.push(inp);
 
-	            this.ins[i].name = ins[i].naming;
-	            this.ins[i].x = -x;
-	            this.ins[i].y = startY + i * 16;
-	            this.ins[i].len = 16;
-	            this.ins[i].bus = ins[i].constructor.type === 'InPinBus';
-	            this.ins[i].index = i;
+	            inp.name = ins[i].naming;
+	            inp.x = -x;
+	            inp.y = startY + i * 16;
+	            inp.len = 16;
+
+	            savedInputs[ins[i].naming] = null;
             } else {
-	            this.addIn(-x, startY + i * 16, 16, ins[i].naming)
-		            .bus = ins[i].constructor.type === 'InPinBus';
+	            inp = this.addIn(-x, startY + i * 16, 16, ins[i].naming);
             }
+
+	        inp.bus = ins[i].constructor.type === 'InPinBus';
+	        inp.index = i;
+	        inp.reference = ins[i].id;
+        }
+
+        for(let name in savedInputs) {
+        	if(savedInputs[name] !== null) {
+        		// We have an input that has been deleted!
+		        console.log(savedInputs[name]);
+		        savedInputs[name].clear();
+	        }
         }
 
         //
         // Fix outputs
         //
 
-        // Save off existing outputs by name
-	    const savedOutputs = {};
-	    for(const pin of this.outs) {
-		    savedOutputs[pin.name] = pin;
-	    }
-
+        // Save off existing outputs by name, then
+	    // clear the outputs so we can add them back in
+	    const savedOutputs = saveExistingPins(this.outs, outsById);
 	    this.outs = [];
 
 	    for(i=0; i<outs.length; i++) {
+	    	let out;
 		    if(savedOutputs[outs[i].naming] !== undefined) {
-			    this.outs.push(savedOutputs[outs[i].naming]);
+		    	out = savedOutputs[outs[i].naming];
+			    this.outs.push(out);
 
-			    this.outs[i].name = outs[i].naming;
-			    this.outs[i].x = x;
-			    this.outs[i].y = startY + i * 16;
-			    this.outs[i].len = 16;
-			    this.outs[i].bus = outs[i].constructor.type === 'OutPinBus';
-			    this.outs[i].index = i;
+			    out.name = outs[i].naming;
+			    out.x = x;
+			    out.y = startY + i * 16;
+			    out.len = 16;
+
+			    savedOutputs[outs[i].naming] = null;
 		    } else {
-			    this.addOut(x, startY + i * 16, 16, outs[i].naming)
-				    .bus = outs[i].constructor.type === 'OutPinBus';
+		    	out = this.addOut(x, startY + i * 16, 16, outs[i].naming);
+		    }
+
+		    out.index = i;
+		    out.bus = outs[i].constructor.type === 'OutPinBus';
+		    out.reference = outs[i].id;
+	    }
+
+	    for(let name in savedOutputs) {
+		    if(savedOutputs[name] !== null) {
+			    // We have an output that has been deleted!
+			    savedOutputs[name].clear();
 		    }
 	    }
 

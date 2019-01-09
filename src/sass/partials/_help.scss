@@ -30,6 +30,13 @@
     text-align: center;
     overflow-x: auto;
     margin: 1em 0;
+
+    img {
+      box-shadow: none;
+      border: 0;
+      padding: 0;
+      margin: 0;
+    }
   }
 }
 

@@ -1,8 +1,12 @@
+import {Component} from '../Component';
+
+
 /**
  * Component: 16-bit ALU
+ * @constructor
  */
-Cirsim.Alu16 = function(name) {
-    Cirsim.Component.call(this, name);
+export const Alu16 = function(name) {
+    Component.call(this, name);
 
     this.height = 16 * 8;
     this.width = 64;
@@ -10,8 +14,8 @@ Cirsim.Alu16 = function(name) {
 
     this.cin = false;   // Carry in
 
-    var left = -this.width / 2;
-    var right = this.width / 2;
+    const left = -this.width / 2;
+    const right = this.width / 2;
 
     this.operator = '';
 
@@ -31,28 +35,29 @@ Cirsim.Alu16 = function(name) {
     this.addOut(right, 24, 16, "CPSR").bus = true;
 };
 
-Cirsim.Alu16.prototype = Object.create(Cirsim.Component.prototype);
-Cirsim.Alu16.prototype.constructor = Cirsim.Alu16;
+Alu16.prototype = Object.create(Component.prototype);
+Alu16.prototype.constructor = Alu16;
 
-Cirsim.Alu16.prototype.prefix = "ALU";
-Cirsim.Alu16.prototype.nameRequired = true;
+Alu16.prototype.prefix = "ALU";
+Alu16.prototype.nameRequired = true;
 
-Cirsim.Alu16.type = "Alu16";            ///< Name to use in files
-Cirsim.Alu16.label = "ALU 16";           ///< Label for the palette
-Cirsim.Alu16.desc = "Simple 16-bit ALU";       ///< Description for the palette
-Cirsim.Alu16.img = "alu.png";         ///< Image to use for the palette
-Cirsim.Alu16.description = '<h2>16-bit ALU</h2><p>Simple example 16-bit ALU. A and ' +
+Alu16.type = "Alu16";            ///< Name to use in files
+Alu16.label = "ALU 16";           ///< Label for the palette
+Alu16.desc = "Simple 16-bit ALU";       ///< Description for the palette
+Alu16.img = "alu.png";         ///< Image to use for the palette
+Alu16.description = '<h2>16-bit ALU</h2><p>Simple example 16-bit ALU. A and ' +
     'B are bus inputs to the ALU. C is the control input. Cin is the carry input ' +
     'for adc and sbc operations. O is a bus output result and CPSR is the status' +
     ' output bits for the current program status register.</p>' +
     '<p>If Cin is not connected, it is assumed to be false.</p>' +
     '<p>The status bits in CPSR are: 0:N, 1:Z, 2:C, 3:V</p>';
+Alu16.help = 'alu16';
 
 /**
  * Compute the gate result
  * @param state
  */
-Cirsim.Alu16.prototype.compute = function(state) {
+Alu16.prototype.compute = function(state) {
     var a = state[0];
     var b = state[1];
     var c = state[2];
@@ -245,10 +250,10 @@ Cirsim.Alu16.prototype.compute = function(state) {
 
 /**
  * Clone this component object.
- * @returns {Cirsim.Alu16}
+ * @returns {Alu16}
  */
-Cirsim.Alu16.prototype.clone = function() {
-    var copy = new Cirsim.Alu16();
+Alu16.prototype.clone = function() {
+    const copy = new Alu16();
     copy.copyFrom(this);
     return copy;
 };
@@ -260,7 +265,7 @@ Cirsim.Alu16.prototype.clone = function() {
  * @param context Display context
  * @param view View object
  */
-Cirsim.Alu16.prototype.draw = function(context, view) {
+Alu16.prototype.draw = function(context, view) {
     this.selectStyle(context, view);
 
     var leftX = this.x - this.width/2 - 0.5;

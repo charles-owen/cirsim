@@ -1,4 +1,3 @@
-
 import {Component} from '../Component';
 import {Or} from './Or';
 
@@ -43,6 +42,7 @@ Xor.img = "xor.png";         ///< Image to use for the palette
 Xor.order = 17;               ///< Xorder of presentation in the palette
 Xor.description = '<h2>XOR Gate</h2><p>The output of an XOR ' +
     'gate is <em>true</em> if the state of the inputs differ. Otherwise, it is false.</p>';
+Xor.help = 'xor';
 
 /**
  * Compute the gate result

@@ -1,4 +1,3 @@
-
 import {Dialog} from './Dialog';
 import {HelpPresenter} from '../Graphics/HelpPresenter';
 

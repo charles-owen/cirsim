@@ -1,5 +1,5 @@
 
-import Dialog from './Dialog.js';
+import {Dialog} from './Dialog';
 
 /**
  * Dialog box for adding a named tab.

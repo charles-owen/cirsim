@@ -1,7 +1,9 @@
 import {Unique} from '../Utility/Unique';
+import {Tools} from '../DOM/Tools';
+
 import DOMPurify from 'dompurify';
 import DialogCL from 'dialog-cl';
-import {Tools} from '../DOM/Tools';
+
 
 /**
  * Base object for general-purpose dialog boxes where the
@@ -120,5 +122,3 @@ Dialog.prototype.sanitize = function(text) {
 Dialog.prototype.uniqueId = function() {
     return Unique.uniqueName();
 }
-
-export default Dialog;

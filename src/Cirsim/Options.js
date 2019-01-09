@@ -99,7 +99,7 @@ export const Options = function(options) {
     this.always = ['Zero', 'One', 'InPin', 'OutPin', 'Clock', 'Button', 'LED'];
 
     /// Display all output states
-    this.showOutputStates = true;
+    this.showOutputStates = false;
 
     for(var property in options) {
         if(options.hasOwnProperty(property)) {
