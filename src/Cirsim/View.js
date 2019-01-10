@@ -64,17 +64,17 @@ export const View = function(main, canvas, circuit) {
         let mouseDownListener = (event) => {
             event.preventDefault();
 
-            downListener(event.pageX, event.pageY, false);
+            downListener(event.pageX, event.pageY, false, event);
         }
 
         let touchStartListener = (event) => {
             event.preventDefault();
 
             let touch = event.changedTouches[0];
-            downListener(touch.pageX, touch.pageY, true);
+            downListener(touch.pageX, touch.pageY, true, event);
         }
 
-        let downListener = (pageX, pageY, touch) => {
+        let downListener = (pageX, pageY, touch, event) => {
 
             let offset = Tools.offset(canvas);
             lastPage = {x: pageX, y: pageY};
