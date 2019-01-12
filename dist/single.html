@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="shortcut icon" href="../img/favicon.ico" />
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+  <title>Cirsim SingleSave demo</title>
+<script type="text/javascript" src="cirsim.min.js"></script></head>
+<body>
+<div id="cirsim" class="cirsim-window"></div>
+<script>
+    var cirsim = new Cirsim('#cirsim', {
+        components: 'all',
+        testTime: 100,
+        export: "none",
+        api: {
+            open: {
+                url: '../api-demo/',
+                name: "a+bc.cirsim"
+            },
+            save: {
+
+            }
+        },
+        helpURL: '../help'
+    });
+
+    cirsim.start();
+</script>
+<style>
+  body {
+    margin: 20px 0;
+  }
+</style>
+</body>
+
+</html>

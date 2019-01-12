@@ -1,0 +1,19 @@
+<p>The Instruction Decoder 4 component is a simple 4-bit instruction decoder. It allows
+	you to enter an instruction from a small subset of instructions and configures the
+	outputs appropriately for that instruction. </p>
+
+<p>It is assumed that there are four registers r0-r3 and two buses A and B.
+The bus output Ae determines what register is enabled to bus A. The bus output
+Be determines what register is enabled to bus B or if the immediate output is
+	enabled to bus B.</p>
+
+<p>The supported instructions are:</p>
+
+<ul>
+	<li>nop - No operation</li>
+	<li>mov rd, rs - Mov content from register rs to register rd</li>
+	<li>mov rd, #value - Move immediate value to register rd</li>
+	<li>add rd, ra, rb - rd = ra + rb</li>
+
+
+</ul>
