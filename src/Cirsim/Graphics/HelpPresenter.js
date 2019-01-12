@@ -6,8 +6,6 @@ import {Ajax} from '../Utility/Ajax';
  * @constructor
  */
 export const HelpPresenter = function(main, owner) {
-    var that = this;
-
     let stack = [];
 
     this.html = function() {
@@ -40,7 +38,7 @@ export const HelpPresenter = function(main, owner) {
 	    });
     }
 
-	/**
+	/*
 	 * Install help HTML into the presenter.
 	 * @param html HTML to present
 	 */

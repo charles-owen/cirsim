@@ -16,22 +16,22 @@ export const Menu = function(main) {
     //
     // Create the menu components
     //
-    var fileMenu = new FileMenu(this, main);
-    var editMenu = new EditMenu(this, main);
-    var tabsMenu = new TabsMenu(this, main);
-    var optionsMenu = new OptionsMenu(this, main);
-    var helpMenu = new HelpMenu(this, main);
+    const fileMenu = new FileMenu(this, main);
+	const editMenu = new EditMenu(this, main);
+	const tabsMenu = new TabsMenu(this, main);
+	const optionsMenu = new OptionsMenu(this, main);
+	const helpMenu = new HelpMenu(this, main);
 
     this.helpMenu = helpMenu;
 
-    /// The nav element
+    /// The nav and ul elements for the menu
     this.nav = null;
     this.ul = null;
 
     const initialize = () => {
-        //
+    	//
         // <nav class="menubar"><ul></ul></nav>
-        //
+	    //
         this.nav = document.createElement('nav');
         Tools.addClass(this.nav, 'menubar');
         main.div.appendChild(this.nav);
@@ -124,10 +124,9 @@ export const Menu = function(main) {
         helpMenu.activate();
     }
 
-	/**
+	/*
      * Listen to key down events so we can close the menu
      * if we click outside of the menu while it is open.
-	 * @param event
 	 */
 	const closeListener = (event) => {
         // See if we clicked on some child of nav...
@@ -141,7 +140,9 @@ export const Menu = function(main) {
 	    this.closeAll();
     }
 
-    // Open a menu
+    /*
+     * Open a menu
+     */
     const open = (li) => {
         // Hide any other menus
         for(const node of this.ul.childNodes) {
@@ -156,25 +157,12 @@ export const Menu = function(main) {
         selectionDependent(".edit-delete");
         componentSelectionDependent(".edit-properties");
 
+        fileMenu.opening();
         tabsMenu.opening();
         optionsMenu.opening();
         helpMenu.opening();
 
-        // this.enable("#file-save-single", cirsim.singleSave !== null && cirsim.singleSave.loaded);
 
-        // // The import-into option if any
-        // this.enable("#file-import-tab", false);
-        // var circuit = cirsim.currentView().circuit;
-        // if(circuit !== null) {
-        //     var name = circuit.name;
-        //     for(var i=0; i<cirsim.options.imports.length; i++) {
-        //         var importer = cirsim.options.imports[i];
-        //         if(importer.into === name) {
-        //             this.enable("#file-import-tab", true);
-        //             break;
-        //         }
-        //     }
-        // }
 
 	    // And open this menu
 	    const ul = Tools.child(li, 'UL');
@@ -219,14 +207,16 @@ export const Menu = function(main) {
         }
     }
 
-    /**
+    /*
      * Enable a menu option only if there is a current selection
-     * @param sel
      */
     const selectionDependent = (sel) => {
         this.enable(sel, main.currentView().selection.selection.length > 0);
     }
 
+	/*
+	 * Enable a menu option only if one component is selected
+	 */
     const componentSelectionDependent = (sel) => {
         if(main.currentView().selection.selection.length !== 1 ||
             !(main.currentView().selection.selection[0] instanceof Component)) {

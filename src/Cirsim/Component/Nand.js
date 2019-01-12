@@ -1,8 +1,9 @@
-/**
- * Component: NAND gate
- */
 import {And} from './And';
 
+/**
+ * Component: NAND gate
+ * @constructor
+ */
 export const Nand = function() {
     And.call(this, name);
 
@@ -17,7 +18,6 @@ Nand.prototype.constructor = Nand;
 Nand.type = "Nand";            ///< Name to use in files
 Nand.label = "NAND";           ///< Label for the palette
 Nand.desc = "NAND gate";       ///< Description for the palette
-// Nand.img = "nand.png";         ///< Image to use for the palette
 Nand.order = 12;               ///< Order of presentation in the palette
 Nand.description = '<h2>NAND Gate</h2><p>The output of a NAND ' +
     'gate is <em>false</em> if and only if both' +
@@ -25,17 +25,18 @@ Nand.description = '<h2>NAND Gate</h2><p>The output of a NAND ' +
 Nand.help = 'nand';
 
 /**
- * Clone this component object.
- * @returns {And}
+ * Clone this component object: a NAND gate
+ * @returns {Nand}
+ * @instance Nand
  */
 Nand.prototype.clone = function() {
-    var copy = new Nand();
+    const copy = new Nand();
     copy.copyFrom(this);
     return copy;
 };
 
 /**
- * Create a PaletteImage object for an And gate
+ * Create a PaletteImage object for a NAND gate
  */
 Nand.paletteImage = function() {
 

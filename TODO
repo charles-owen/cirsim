@@ -1,7 +1,7 @@
+FIXME: Clock period slider not working on Firefox
 
 FIXME: CircuitRef behavior when tab deleted
 FIXME: CircuitRef behavior when tab is renamed
-FIXME: CircuitRef behavior when
 
 TODO: Unit testing for InstructionDecoder4
 TODO: Help for InstructionDecoder4

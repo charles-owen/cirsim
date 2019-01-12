@@ -1,5 +1,5 @@
 import {FileDialog} from './FileDialog';
-import {JsonAPI} from '../Api/JsonAPI';
+import {JsonAPI} from '../Utility/JsonAPI';
 import {Ajax} from '../Utility/Ajax';
 
 /**

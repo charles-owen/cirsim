@@ -40,11 +40,11 @@ CircuitRef.description = '<h2>Circuit Component</h2><p>A Circuit Component uses 
 CircuitRef.prototype.compute = function(state) {
     this.getCircuitRef();
 
-    for(var i=0; i<this.ins.length && i<this.circuitIns.length; i++) {
+    for(let i=0; i<this.ins.length && i<this.circuitIns.length; i++) {
         this.circuitIns[i].set(state[i]);
     }
 
-    for(i=0; i<this.outs.length && i<this.circuitOuts.length; i++) {
+    for(let i=0; i<this.outs.length && i<this.circuitOuts.length; i++) {
         this.outs[i].set(this.circuitOuts[i].get());
     }
 };
@@ -55,10 +55,7 @@ CircuitRef.prototype.compute = function(state) {
  * @returns true if animation needs to be redrawn
  */
 CircuitRef.prototype.advance = function(delta) {
-	if(this.circuitName === 'register-file') {
-	}
-
-    for(var i=0; i<this.ins.length && i < this.circuitIns.length; i++) {
+    for(let i=0; i<this.ins.length && i < this.circuitIns.length; i++) {
         this.circuitIns[i].set(this.ins[i].get());
     }
 
@@ -66,7 +63,7 @@ CircuitRef.prototype.advance = function(delta) {
         this.circuitRef.advance(delta);
     }
 
-    for(var i=0; i<this.outs.length && i < this.circuitOuts.length; i++) {
+    for(let i=0; i<this.outs.length && i < this.circuitOuts.length; i++) {
         this.outs[i].set(this.circuitOuts[i].get());
     }
 
@@ -89,6 +86,12 @@ CircuitRef.prototype.getCircuitRef = function() {
     return this.circuitRef;
 }
 
+/**
+ * Called whenever a new tab is selected.
+ *
+ * This ensures the reference is rebuilt if a referenced tab
+ * is modified or reloaded with a fresh circuit.
+ */
 CircuitRef.prototype.newTab = function() {
     this.circuitRef = null;
     this.circuitIns = [];
@@ -313,12 +316,16 @@ CircuitRef.prototype.clone = function() {
 
     copy.circuitName = this.circuitName;
     for(let i=0; i<this.ins.length; i++) {
-        copy.addIn(-32, i * 16, 16, this.ins[i].name);
+    	const clone = this.ins[i].clone();
+    	clone.component = copy;
+    	copy.ins.push(clone);
     }
 
 
     for(let i=0; i<this.outs.length; i++) {
-        copy.addOut(-32, i * 16, 16, this.outs[i].name);
+	    const clone = this.outs[i].clone();
+	    clone.component = copy;
+	    copy.outs.push(clone);
     }
 
     copy.copyFrom(this);

@@ -19,7 +19,7 @@ JsonAPI.prototype.fetch = function(type) {
         return [];
     }
 
-    var ret = [];
+    const ret = [];
     this.api.data.forEach((item) => {
        if(item.type === type) {
            ret.push(item);
@@ -29,6 +29,11 @@ JsonAPI.prototype.fetch = function(type) {
     return ret;
 }
 
+/**
+ * Get data from the JsonAPI object by data type.
+ * @param type Data type name
+ * @returns {*} Object or null if not found
+ */
 JsonAPI.prototype.getData = function(type) {
 	if(this.api.data === undefined) {
 		return [];
@@ -42,5 +47,3 @@ JsonAPI.prototype.getData = function(type) {
 
 	return null;
 }
-
-export default JsonAPI;

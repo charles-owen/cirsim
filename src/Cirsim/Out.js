@@ -1,4 +1,5 @@
 import {Connector} from './Connector';
+import {In} from "./In";
 
 /**
  * Out connector
@@ -20,6 +21,13 @@ export const Out = function(component, x, y, len, name, inv) {
 
 Out.prototype = Object.create(Connector.prototype);
 Out.prototype.constructor = Out;
+
+Out.prototype.clone = function() {
+	const copy = new Out(this.component, this.x, this.y, this.len, this.name, this.inv);
+	copy.orientation = this.orientation;
+	copy.copyFrom(this);
+	return copy;
+}
 
 /**
  * Set the output value.

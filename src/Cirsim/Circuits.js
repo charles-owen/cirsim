@@ -86,7 +86,7 @@ Circuits.prototype.newTab = function() {
  * @returns {Circuits}
  */
 Circuits.prototype.clone = function() {
-    var copy = new Circuits(this.model, this.simulation);
+    const copy = new Circuits(this.model, this.simulation);
     copy.grid = this.grid;
     copy.snap = this.snap;
 
@@ -95,8 +95,8 @@ Circuits.prototype.clone = function() {
     this.prev = copy;
 
     // Copy the circuit objects
-    for(var i=0; i<this.circuits.length; i++) {
-        var circuit = this.circuits[i];
+    for(let i=0; i<this.circuits.length; i++) {
+        const circuit = this.circuits[i];
         copy.add(circuit.clone());
     }
 
@@ -209,11 +209,11 @@ Circuits.prototype.getComponentByNaming = function(naming) {
  * @returns Array with collection of components of that type
  */
 Circuits.prototype.getComponentsByType = function(type) {
-    var components = [];
+    let components = [];
 
-    for(var i=0; i<this.circuits.length; i++) {
-        var circuit = this.circuits[i];
-        var c = circuit.getComponentsByType(type);
+    for(let i=0; i<this.circuits.length; i++) {
+        const circuit = this.circuits[i];
+        const c = circuit.getComponentsByType(type);
         components = components.concat(c);
     }
 
@@ -226,12 +226,21 @@ Circuits.prototype.getComponentsByType = function(type) {
 Circuits.prototype.replaceCircuit = function(circuit) {
     circuit.circuits = this;
 
-    for(var i=0; i<this.circuits.length; i++) {
+    for(let i=0; i<this.circuits.length; i++) {
         if(this.circuits[i].name === circuit.name) {
             this.circuits[i] = circuit;
+
+	        // Ensure all components in the new circuit are pending, so they
+	        // all get updated.
+	        circuit.components.forEach(function(component) {
+		        component.pending();
+	        });
+
+	        // Force this to appear to be a new tab
+	        this.model.newTab();
             break;
         }
     }
-}
 
-export default Circuits;
+
+}

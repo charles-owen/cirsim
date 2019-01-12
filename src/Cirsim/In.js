@@ -20,11 +20,18 @@ export const In = function(component, x, y, len, name, inv) {
 In.prototype = Object.create(Connector.prototype);
 In.prototype.constructor = In;
 
+In.prototype.clone = function() {
+    const copy = new In(this.component, this.x, this.y, this.len, this.name, this.inv);
+    copy.orientation = this.orientation;
+    copy.copyFrom(this);
+    return copy;
+}
+
 /**
  * Set the value from a connection
  */
 In.prototype.set = function() {
-    var value = this.from.length > 0 && this.from[0].from !== null ?
+    const value = this.from.length > 0 && this.from[0].from !== null ?
         this.from[0].from.value : undefined;
     if(this.value !== value) {
         this.value = value;
@@ -85,7 +92,7 @@ In.prototype.remove = function(connection) {
 In.prototype.draw = function(context, view) {
     Connector.prototype.draw.call(this, context, view);
 
-    for(var i=0; i<this.from.length;  i++) {
+    for(let i=0; i<this.from.length;  i++) {
         if(this.from[i].from === null) {
             this.from[i].draw(context, view);
         }

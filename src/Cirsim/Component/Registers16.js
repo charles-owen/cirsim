@@ -1,12 +1,11 @@
-/**
- * Component: Simple 16-bit 8-register file.
- */
-
 import {Component} from '../Component';
 import {Connector} from '../Connector';
 import {Util} from '../Utility/Util';
 
-var Registers16 = function() {
+/**
+ * Component: Simple 16-bit 8-register file.
+ */
+export const Registers16 = function() {
     Component.call(this);
 
     this.height = 176;
@@ -199,5 +198,3 @@ Registers16.prototype.setAsString = function(value) {
         }
     }
 }
-
-export default Registers16;

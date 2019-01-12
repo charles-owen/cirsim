@@ -3,35 +3,36 @@ import {JsonAPI} from '../Utility/JsonAPI';
 import {Ajax} from '../Utility/Ajax';
 
 /**
- * File open dialog box for when the filename to load is
- * already known.
+ * Dialog box for importing tabs from an existing file.
  * @constructor
  */
-export const OpenDialog = function(name, options, toast) {
+export const ImportTabDialog = function(importer, options, toast) {
     Dialog.call(this);
 
     this.buttonOk = null;
     
     this.open = function(callback) {
         // Dialog box contents
-        const body = '<p>Loading from server...</p>';
-
-        this.contents(body, "Loading...");
+        const body = '<p>Loading tab from server...</p>';
+        this.contents(body, "Loading tab...");
 
         Dialog.prototype.open.call(this);
 
-        const open = options.getAPI('open');
+        const open = options.getAPI('import');
+        const extra = open.extra;
+        Object.assign(extra, importer.extra);
+
         if(open !== null) {
 	        Ajax.do({
 		        url: open.url,
-		        data: Object.assign({cmd: "open", name: name}, open.extra),
+		        data: Object.assign({cmd: "open", name: importer.name}, extra),
 		        method: "GET",
 		        dataType: 'json',
 		        success: (data) => {
 			        const json = new JsonAPI(data);
 			        if (!toast.jsonErrors(json)) {
 				        const load = data.data[0].attributes.data;
-				        callback(name, load);
+				        callback(load);
 			        }
 
 			        this.close();
@@ -46,5 +47,5 @@ export const OpenDialog = function(name, options, toast) {
     }
 }
 
-OpenDialog.prototype = Object.create(Dialog.prototype);
-OpenDialog.prototype.constructor = OpenDialog;
+ImportTabDialog.prototype = Object.create(Dialog.prototype);
+ImportTabDialog.prototype.constructor = ImportTabDialog;

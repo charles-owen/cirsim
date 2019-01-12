@@ -12,13 +12,13 @@ import {Toast} from './Graphics/Toast';
 import {FileSaveDialog} from './Dlg/FileSaveDialog';
 import {FileOpenDialog} from './Dlg/FileOpenDialog';
 import {SaveDialog} from './Dlg/SaveDialog';
-import OpenDialog from './Dlg/OpenDialog';
+import {OpenDialog} from './Dlg/OpenDialog';
 import {View} from './View';
 import {HelpDiv} from './Graphics/HelpDiv';
 import {DragAndDrop} from './UI/DragAndDrop';
 import {Tools} from './DOM/Tools';
 import {Ajax} from './Utility/Ajax';
-import {JsonAPI} from "./Api/JsonAPI";
+import {JsonAPI} from "./Utility/JsonAPI";
 
 /**
  * Actual instance of Cirsim for a single element.
@@ -345,16 +345,16 @@ export const Main = function(cirsim, element, tests) {
         dlg.open();
     };
 
-    // this.import_tab = function() {
-    //     // Is the current tab in this list?
-    //     for(var i=0; i<this.options.imports.length; i++) {
-    //         var importer = this.options.imports[i];
-    //         if(importer.into === this.currentView().circuit.name) {
-    //             this.currentView().import_tab(importer);
-    //             return;
-    //         }
-    //     }
-    // }
+    this.importTab = function() {
+	    // Is the current tab in this list?
+        for(let i=0; i<this.options.imports.length; i++) {
+            const importer = this.options.imports[i];
+            if(importer.into === this.currentView().circuit.name) {
+                this.currentView().importTab(importer);
+                return;
+            }
+        }
+    }
 
     /**
      * Complete reload after a new model is loaded

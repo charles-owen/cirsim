@@ -37,7 +37,7 @@ import {SRLatch} from './SRLatch';
 import {Letters16} from './Letters16';
 import {Register} from './Register';
 import {Alu4} from './Alu4';
-import Registers16 from './Registers16';
+import {Registers16} from './Registers16';
 import {Pad} from './Pad';
 import {LEDBar} from './LEDBar';
 import {Pc16} from './Pc16';

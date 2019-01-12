@@ -1,6 +1,8 @@
 import {Selection} from './Selection';
 import {Component} from './Component';
 import {Tools} from './DOM/Tools';
+import {ImportTabDialog} from "./Dlg/ImportTabDialog";
+import {Model} from "./Model";
 
 /**
  * View of a circuit
@@ -212,7 +214,7 @@ export const View = function(main, canvas, circuit) {
     }
 
     this.draw = function() {
-        var ctx = canvas.getContext("2d");
+        const ctx = canvas.getContext("2d");
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         this.circuit.draw(ctx, this);
@@ -264,31 +266,35 @@ View.prototype.undo = function() {
     }
 };
 
+/**
+ * Import a tab from another file that we load via AJAX.
+ * @param importer Object from the list of imports
+ *
+ * Keys in the importer object:
+ *
+ * from - Tab in source we import from
+ * into - Tab we import into
+ * name - Filename for source
+ * extra - Object with extra key/value pairs to send to server when importing
+ */
+View.prototype.importTab = function(importer) {
+    this.selection.clear();
 
-View.prototype.import_tab = function(importer) {
-    // var that = this;
-    // this.selection.clear();
-    //
-    // var dlg = new LoadSingleDialog(importer, null);
-    // dlg.open(function(data) {
-    //     that.backup();
-    //
-    //     var model = new Model(that.main.model.id);
-    //     model.circuits.fmJSON(data.data);
-    //
-    //     // Find the tab
-    //     var circuit = model.getCircuit(importer.from);
-    //     if(circuit !== null) {
-    //         circuit.name = importer.into;
-    //         that.circuit = circuit;
-    //         that.main.model.replaceCircuit(circuit);
-    //
-    //         circuit.components.forEach(function(component) {
-    //             component.pending();
-    //         });
-    //
-    //         that.draw();
-    //     }
-    // });
+    const dlg = new ImportTabDialog(importer, this.main.options, this.main.toast);
+    dlg.open((data) => {
+        this.backup();
+
+        const model = new Model(this.main);
+        model.fmJSON(data);
+
+        // Find the tab
+        const circuit = model.getCircuit(importer.from);
+        if(circuit !== null) {
+            circuit.name = importer.into;
+	        this.main.model.replaceCircuit(circuit);
+	        this.circuit = circuit;
+	        this.draw();
+        }
+    });
 }
 

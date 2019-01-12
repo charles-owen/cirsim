@@ -1,4 +1,3 @@
-
 import {Component} from '../Component';
 import {Led} from '../Graphics/Led'
 import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
@@ -6,7 +5,7 @@ import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
 /**
  * Component: InPin gate
 
- * @constructor
+ * @constructor InPin
  */
 export const InPin = function() {
     Component.call(this);

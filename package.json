@@ -11,7 +11,7 @@
     "build:all": "npm run build:dev && npm run build:prod",
     "test": "karma start karma.conf.js",
     "serve": "webpack-dev-server  --config webpack.dev.js --open",
-    "build:docs": "documentation build src/Cirsim/**/*.js --sort-order alpha -f html -o doc/js"
+    "build:docs": "documentation build src/Cirsim/**/*.js --sort-order source -f html -o doc/js"
   },
   "keywords": [
     "Education",

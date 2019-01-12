@@ -63,16 +63,16 @@ Connection.prototype.clone = function() {
     }
 
     // Get the new component object
-    var from = this.from.component.prev;
-    var to = this.to.component.prev;
-    var fromNdx = this.from.index;
-    var toNdx = this.to.index;
+    const from = this.from.component.prev;
+    const to = this.to.component.prev;
+    const fromNdx = this.from.index;
+    const toNdx = this.to.index;
 
-    var copyConn = new Connection(from.outs[fromNdx], to.ins[toNdx], true);
+    const copyConn = new Connection(from.outs[fromNdx], to.ins[toNdx], true);
 
     // Copy the bends
-    for(var l=0; l<this.bends.length; l++) {
-        var copyBend = this.bends[l].clone();
+    for(let l=0; l<this.bends.length; l++) {
+        const copyBend = this.bends[l].clone();
         copyConn.addBend(copyBend);
     }
 

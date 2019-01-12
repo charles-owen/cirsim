@@ -1,11 +1,11 @@
-/**
- * Component: AND gate
- */
-
 import {Component} from '../Component';
 import {PaletteImage} from '../Graphics/PaletteImage';
 import {CanvasHelper} from '../Graphics/CanvasHelper';
 
+/**
+ * Component: AND gate
+ * @constructor
+ */
 export const And = function() {
     Component.call(this);
 
@@ -43,11 +43,12 @@ And.prototype.compute = function(state) {
 };
 
 /**
- * Clone this component object.
- * @returns {And}
+ * Clone this component object: AND gate.
+ * @return {And}
+ * @instance And
  */
 And.prototype.clone = function() {
-    var copy = new And();
+    const copy = new And();
     copy.copyFrom(this);
     return copy;
 };

@@ -30,7 +30,6 @@ Component.prototype = Object.create(Selectable.prototype);
 Component.prototype.constructor = Component;
 
 
-
 /**
  * Prefix for component naming
  */

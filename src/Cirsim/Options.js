@@ -61,9 +61,16 @@ export const Options = function(options) {
 	 */
     this.tests = [];
 
-    /// Any import options, importing from
-    /// files from other assignments
-   // this.imports = [];
+	/**
+     * Any import options, importing from files from other assignments
+     *
+     * Array of possible imports, each an object with the keys:
+     * from - Tab in source we import from
+     * into - Tab we import into
+     * name - Filename for source
+     * extra - Object with extra key/value pairs to send to server when importing
+	 */
+    this.imports = [];
 
     /// Optional specification of server-side API for save/load capabilities
     /// Most simple version is a URL for the server.
@@ -73,6 +80,7 @@ export const Options = function(options) {
     /// extra - Object with extra data to be send with API operations
     /// save - Object with save-specific resources (url, name, mode, extra)
     /// open - Object with open-specific resources (url, extra)
+    /// import - Object with import-specific resources (url, name,
     /// files - Object with directory query-specific resources
     ///
     this.api = null;

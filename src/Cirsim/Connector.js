@@ -41,13 +41,24 @@ Connector.prototype.orientation = "w";
 /// inputs only. Clocks draw as a triangle instead of a label
 Connector.clock = false;
 
+
 Connector.prototype.single = function() {
     return true;
 };
 
 
 Connector.prototype.copyFrom = function(other) {
+    this.x = other.x;
+    this.y = other.y;
+	this.len = other.len;
+	this.index = other.index;
+	this.name = other.name;
+	this.inv = other.inv;
+
     this.value = other.value;
+	this.touchRange = other.touchRange;
+	this.bus = other.bus;
+	this.reference = other.reference;
 }
 
 
@@ -176,6 +187,10 @@ Connector.prototype.getLoc = function() {
 Connector.prototype.draw = function(context, view) {
     let x = this.component.x + this.x;
     let y = this.component.y + this.y;
+    if(this.component.naming === 'A') {
+	   // console.log(this.component);
+
+    }
 
     if(this.bus) {
         context.lineWidth = 2;

@@ -37,18 +37,18 @@ export const FileMenu = function(menu, main) {
             }
 
             if(options.export === 'both' || options.export === 'import') {
-                fileHtml += '<li><a class="file-import"><span class="icons-cl icons-cl-arrowthickstop-1-n"></span>Import</a></li>';
+                fileHtml += '<li><a class="cs-file-import"><span class="icons-cl icons-cl-arrowthickstop-1-n"></span>Import</a></li>';
             }
 
             if(options.export === 'both' || options.export === 'export') {
-                fileHtml += '<li><a class="file-export"><span class="icons-cl icons-cl-arrowthickstop-1-s"></span>Export</a></li>';
+                fileHtml += '<li><a class="cs-file-export"><span class="icons-cl icons-cl-arrowthickstop-1-s"></span>Export</a></li>';
             }
         }
 
-        // if(options.imports.length > 0) {
-        //     fileHtml += '<li class="menu-divider">&nbsp;</li>' +
-        //         '<li><a class="file-import-tab"><span class="icons-cl icons-cl-arrowthickstop-1-n"></span>Import Tab</a></li>';
-        // }
+        if(options.imports.length > 0) {
+	        fileHtml += optionalSeparator(fileHtml) +
+	            `<li><a class="cs-file-import-tab"><span class="icons-cl icons-cl-arrowthickstop-1-s"></span>Import Tab</a></li>`;
+        }
 
         if(options.exit !== null) {
             if(fileHtml.length > 0) {
@@ -65,12 +65,20 @@ export const FileMenu = function(menu, main) {
         }
     }
 
+    const optionalSeparator = function(fileHtml) {
+	    if(fileHtml.length > 0) {
+		    return '<li class="menu-divider">&nbsp;</li>';       // Separator
+	    }
+
+	    return '';
+    }
+
     this.activate = function() {
-        menu.click('.file-import', (event) => {
+        menu.click('.cs-file-import', (event) => {
 	        main.import();
         });
 
-	    menu.click('.file-export', (event) => {
+	    menu.click('.cs-file-export', (event) => {
 		    main.export();
 	    });
 
@@ -86,8 +94,8 @@ export const FileMenu = function(menu, main) {
 		    main.open();
 	    });
 
-	    menu.click('.file-import-tab', (event) => {
-		    main.import_tab();
+	    menu.click('.cs-file-import-tab', (event) => {
+		    main.importTab();
 	    });
 
 	    menu.click('.file-exit', (event) => {
@@ -95,5 +103,24 @@ export const FileMenu = function(menu, main) {
 	    		window.location.href = options.exit;
 		    }
 	    })
+    }
+
+    this.opening = function() {
+	    // We enable the Import Tab menu option
+	    // only if we are in a tab that we can import into
+	    let enable = false;
+	    const circuit = main.currentView().circuit;
+	    if(circuit !== null) {
+		    const name = circuit.name;
+		    for(let i=0; i<main.options.imports.length; i++) {
+			    const importer = main.options.imports[i];
+			    if(importer.into === name) {
+				    enable = true;
+				    break;
+			    }
+		    }
+	    }
+
+	    menu.enable(".cs-file-import-tab", enable);
     }
 }

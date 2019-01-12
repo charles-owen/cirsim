@@ -143,7 +143,7 @@ export const Tabs = function(main) {
         }
     }
 
-    /**
+    /*
      * Determine if the tabs differ from the current circuit collection.
      * @returns true if we need a new sync operation.
      */
@@ -198,8 +198,6 @@ export const Tabs = function(main) {
 
         Tools.addClass(tab.li, 'selected');
         Tools.addClass(tab.pane, 'selected');
-        //tab.li.addClass('selected');
-        //tab.pane.addClass('selected');
 
         tab.view.draw();
         main.model.getSimulation().setView(tab.view);
