@@ -12,7 +12,7 @@ export const AboutDialog = function(main) {
         this.buttonCancel = null;
 
         // Dialog box contents
-        let content = `<figure><img src="img/logo-icon.png" alt="Cirsim Logo"></figure>
+        let content = `<figure><img src="cirsim/img/logo-icon.png" alt="Cirsim Logo"></figure>
 <h1>Cirsim Circuit Simulator</h1>
 <p>Version: ${main.cirsim.version}</p>
 <p>Written by: Charles B. Owen</p>`;

@@ -21,11 +21,11 @@
   "author": "Charles B. Owen",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.2.0",
+    "@babel/core": "^7.2.2",
     "@babel/plugin-transform-runtime": "^7.2.0",
-    "@babel/preset-env": "^7.2.0",
+    "@babel/preset-env": "^7.2.3",
     "@babel/runtime": "^7.2.0",
-    "babel-loader": "^8.0.4",
+    "babel-loader": "^8.0.5",
     "clean-webpack-plugin": "^0.1.19",
     "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^0.28.11",
@@ -46,14 +46,14 @@
     "sass-loader": "^7.1.0",
     "style-loader": "^0.21.0",
     "uglifyjs-webpack-plugin": "^1.3.0",
-    "webpack": "^4.27.1",
-    "webpack-cli": "^3.1.2",
+    "webpack": "^4.28.4",
+    "webpack-cli": "^3.2.1",
     "webpack-dev-server": "^3.1.14",
-    "webpack-merge": "^4.1.5"
+    "webpack-merge": "^4.2.1"
   },
   "dependencies": {
     "buckets-js": "^1.98.2",
-    "dialog-cl": "~1.0.1",
+    "dialog-cl": "^1.0.2",
     "dompurify": "^1.0.8",
     "icons-cl": "~1.0.5",
     "promise-polyfill": "^8.1.0",
