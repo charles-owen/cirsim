@@ -159,6 +159,12 @@ div.cirsim {
     div.dialog-content {
       padding: 1em;
     }
+
+    figure {
+      img {
+        box-shadow: none;
+      }
+    }
   }
 
   &.help {
