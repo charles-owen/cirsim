@@ -6,4 +6,10 @@ import {Cirsim} from './Cirsim/Cirsim';
 import './_cirsim.scss';
 
 export {Cirsim};
-export {Cirsim as default};
+
+let Export = function() {
+}
+
+Export.Cirsim = Cirsim;
+
+export {Export as default};
