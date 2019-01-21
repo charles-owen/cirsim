@@ -136,13 +136,13 @@ export const Test = function(main) {
     
             function testOne() {
                 if(testNum >= 0) {
-                    var t = test.test[testNum];
+                    const t = test.test[testNum];
     
                     // Ensure the last test passed
-                    for(var i=0; i<outputs.length && (i + inputs.length)<t.length; i++) {
+                    for(let i=0; i<outputs.length && (i + inputs.length)<t.length; i++) {
                         // What is expected?
-                        var expected = t[i + inputs.length];
-    
+                        let expected = t[i + inputs.length];
+
                         // Handle don't care, either a null or '?'
                         if(expected === null || expected === '?') {
                             continue;
@@ -155,7 +155,7 @@ export const Test = function(main) {
                         // bitslop: is the bitslop option prefix.
                         // Bitslop means we expect the result to be
                         // within one bit of the expected value.
-                        var bitslop = false;
+                        let bitslop = false;
                         var any = false;
                         do {
                             any = false;
@@ -169,19 +169,19 @@ export const Test = function(main) {
     
                         // What is expected? Use a Value component to
                         // allow things like hex and floating point values
-                        var value = new Value();
+                        const value = new Value();
                         value.type = Value.BINARY;
                         value.setAsString(expected);
-    
-                        // Get the result
-                        var actual = outputs[i].getAsString();
-                        var good = true;        // Until we know otherwise
-    
+
+	                    // Get the result
+                        let actual = outputs[i].getAsString();
+                        let good = true;        // Until we know otherwise
+
                         if(bitslop) {
                             expected = value.getAsInteger();
     
                             value.setAsBinary(actual);
-                            var actual = value.getAsInteger();
+                            actual = value.getAsInteger();
                             if(actual === '?')  {
                                 good = false;
                             } else if(actual < (expected-1) || (actual > expected+1)) {
@@ -190,7 +190,6 @@ export const Test = function(main) {
                         } else {
                             // The normal (binary) comparison case
                             expected = value.getAsBinary();
-    
                             if(isString(expected)) {
                                 // j and k index the last letters in actual and expected
                                 var j = actual.length - 1;

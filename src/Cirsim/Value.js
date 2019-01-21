@@ -115,13 +115,14 @@ Value.prototype.getAsString = function() {
 
 
 Value.prototype.setAsString = function(str, parseonly) {
-    str = Sanitize.sanitize(str);
 
     if(!((typeof str === 'string' || str instanceof String))) {
         str = str.toString();
     }
 
-    // Trim any leading or trailing space
+	str = Sanitize.sanitize(str);
+
+	// Trim any leading or trailing space
     str = str.replace(/^\s+|\s+$/gm,'');
     str = str.toLowerCase();
 
@@ -129,7 +130,7 @@ Value.prototype.setAsString = function(str, parseonly) {
         return this.setAsFloat16(str, parseonly);
     }
 
-    var prefix = str.substr(0, 2);
+    const prefix = str.substr(0, 2);
     if(prefix === '0x') {
         return this.setAsHex(str.substr(2), parseonly);
     }
@@ -455,13 +456,13 @@ Value.prototype.getAsBinary = function() {
 /**
  * Set the value from a binary string
  * @param str String to parse
- * @param parseonly True if parse, but don't set (error check)
- * @return true if successful
+ * @param parseOnly True if parse, but don't set (error check)
+ * @return {boolean} true if successful
  */
-Value.prototype.setAsBinary = function(str, parseonly) {
-    var value = [];
-    for(var i=str.length-1; i>=0;  i--) {
-        var c = str.substr(i, 1);
+Value.prototype.setAsBinary = function(str, parseOnly) {
+    const value = [];
+    for(let i=str.length-1; i>=0;  i--) {
+        const c = str.substr(i, 1);
         if(c === ' ') {
             if(value.length > 0) {
                 // End when we hit any leading spaces
@@ -490,7 +491,7 @@ Value.prototype.setAsBinary = function(str, parseonly) {
         }
     }
 
-    if(!parseonly) {
+    if(!parseOnly) {
         this.value = value;
     }
 
