@@ -1,5 +1,5 @@
 
-import In from '../../src/Cirsim/In.js';
+import {In} from '../../src/Cirsim/In';
 
 describe('In', function() {
     it('Construct', function() {

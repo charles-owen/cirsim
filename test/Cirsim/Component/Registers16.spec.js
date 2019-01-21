@@ -1,5 +1,5 @@
-import '../../../src/app.modules.js';
-import Cirsim from '../../../src/Cirsim/Cirsim.js';
+import '../../../index';
+import {Cirsim} from '../../../src/Cirsim/Cirsim';
 
 describe('Registers16', function() {
     // inject the HTML fixture for the tests

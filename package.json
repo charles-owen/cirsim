@@ -2,8 +2,8 @@
   "name": "cirsim",
   "version": "2.1.2",
   "description": "Cirsim Circuit Simulator",
-  "main": "dist/cirsim.js",
-  "module": "src/app.modules.js",
+  "main": "dist/cirsim.min.js",
+  "module": "index.js",
   "private": false,
   "scripts": {
     "build:dev": "npx webpack --config webpack.dev.js",

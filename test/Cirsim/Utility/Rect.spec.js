@@ -1,5 +1,5 @@
 
-import Rect from '../../../src/Cirsim/Utility/Rect.js';
+import {Rect} from '../../../src/Cirsim/Utility/Rect';
 
 describe('Rect', function() {
     it('Should construct', function() {

@@ -1,5 +1,5 @@
-import '../../src/app.modules.js';
-import {Cirsim} from '../../src/Cirsim/Cirsim.js';
+import '../../index';
+import {Cirsim} from '../../src/Cirsim/Cirsim';
 
 describe('Cirsim no-window', function() {
 

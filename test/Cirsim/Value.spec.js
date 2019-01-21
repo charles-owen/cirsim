@@ -2,10 +2,9 @@
 import Value from '../../src/Cirsim/Value.js';
 
 describe('Value', function() {
-   var v = new Value(Value.AUTO)
 
     it('is set Binary', function() {
-        var v = new Value([true, false, false, true, true]);
+        const v = new Value([true, false, false, true, true]);
         expect(v.getAsBinary()).toBe("11001");
 
         v.set([false, true, true, false, false]);
@@ -30,11 +29,23 @@ describe('Value', function() {
 
         testBinary("0000000000", "0000000000");
         testBinary("    01011  ", "01011");
+
+        v.setAsString(0);
+	    expect(v.getAsBinary()).toBe("0");
+
+	    v.setAsString(1);
+	    expect(v.getAsBinary()).toBe("1");
+
+	    v.setAsString("0");
+	    expect(v.getAsBinary()).toBe("0");
+
+	    v.setAsString("1");
+	    expect(v.getAsBinary()).toBe("1");
     });
 
     it('is doing Conversions', function () {
-        var expected = "01?001?";
-        var v = new Value();
+        const expected = "01?001?";
+        const v = new Value();
         v.type = Value.BINARY;
         v.setAsString(expected);
         expect(v.getAsBinary()).toBe('01?001?');
@@ -44,7 +55,7 @@ describe('Value', function() {
     });
 
     it('is set Hex', function() {
-        var v = new Value([true, false, false, true, true]);
+        const v = new Value([true, false, false, true, true]);
         expect(v.getAsHex()).toBe('19');
 
         expect(v.setAsBinary("11101010")).toBeTruthy();
@@ -68,10 +79,10 @@ describe('Value', function() {
 
     it('is set Float', function() {
 
-        var f = new Value();
+        const f = new Value();
 
         // -1
-        var t = [false, false, false, false, false, false, false, false, false, false,
+        let t = [false, false, false, false, false, false, false, false, false, false,
             true, true, true, true, false,
             true];
         f.set(t);
@@ -89,9 +100,9 @@ describe('Value', function() {
         expect(f.getAsFloat16()).toBe('1.500e+0');
 
         function test(t, expected) {
-            var f = new Value();
+            const f = new Value();
             f.setAsFloat16(t);
-            var t1 = f.getAsFloat16();
+            const t1 = f.getAsFloat16();
 
             // console.log("" + t + "/" + t1);
             expect(t1).toBe(expected);
@@ -106,7 +117,7 @@ describe('Value', function() {
         test(99999, "inf");
         test(-99999, "-inf");
 
-        var g = new Value();
+        const g = new Value();
 
         expect(g.setAsString("inf")).toBeTruthy();
         expect(g.getAsFloat16()).toBe('inf');
@@ -119,7 +130,7 @@ describe('Value', function() {
     });
 
     it('is Error checking', function() {
-        var f = new Value();
+        const f = new Value();
         expect(f.setAsString("x", true)).not.toBeTruthy();
     });
 

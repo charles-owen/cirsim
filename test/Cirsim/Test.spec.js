@@ -1,4 +1,4 @@
-import '../../src/app.modules';
+import '../../index';
 import {Cirsim} from '../../src/Cirsim/Cirsim';
 
 describe('Testing in full system', function() {

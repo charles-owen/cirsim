@@ -1,5 +1,5 @@
 
-import Connector from '../../src/Cirsim/Connector.js';
+import {Connector} from '../../src/Cirsim/Connector';
 
 describe('Connector', function() {
     it('Construct', function() {

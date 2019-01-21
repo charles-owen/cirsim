@@ -1,4 +1,4 @@
-import Bend from '../../src/Cirsim/Bend.js';
+import {Bend} from '../../src/Cirsim/Bend';
 
 describe('Bend', function() {
    it('Construct', function() {

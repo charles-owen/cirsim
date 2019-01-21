@@ -1,5 +1,5 @@
 
-import OutInv from '../../src/Cirsim/OutInv.js';
+import {OutInv} from '../../src/Cirsim/OutInv';
 
 describe('OutInv', function() {
     it('Construct', function() {

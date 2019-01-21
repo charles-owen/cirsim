@@ -1,5 +1,5 @@
-import '../../src/app.modules';
-import Cirsim from '../../src/Cirsim/Cirsim';
+import '../../index';
+import {Cirsim} from '../../src/Cirsim/Cirsim';
 
 describe('Cirsim', function() {
     // inject the HTML fixture for the tests
@@ -16,6 +16,6 @@ describe('Cirsim', function() {
 
     it('version', function() {
         var cirsim = new Cirsim('#cirsim');
-        expect(cirsim.version).toBe('2.0.9');
+        expect(cirsim.version).toBe('2.1.2');
     });
 });
