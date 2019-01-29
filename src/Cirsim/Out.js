@@ -59,7 +59,7 @@ Out.prototype.set = function(value) {
     if(diff) {
         this.value = value;
         for(let i=0; i<this.to.length; i++) {
-            var inp = this.to[i].to;
+            const inp = this.to[i].to;
             if(inp !== null) {
                 inp.set();
             }

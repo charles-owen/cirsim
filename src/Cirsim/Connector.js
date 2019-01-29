@@ -204,7 +204,6 @@ Connector.prototype.draw = function(context, view) {
             context.moveTo(x, y + 0.5);
             context.lineTo(x + this.len, y + 0.5);
             context.fillRect(x + this.len - 1, y - 1, 3, 3);
-
             if(this.component.circuit.circuits.model.main.options.showOutputStates) {
                 context.font = "11px Times";
                 context.textAlign = "left";

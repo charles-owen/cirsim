@@ -52,12 +52,9 @@ CircuitRef.prototype.compute = function(state) {
 /**
  * Advance the animation for this component by delta seconds
  * @param delta Time to advance in seconds
- * @returns true if animation needs to be redrawn
+ * @returns {boolean} true if animation needs to be redrawn
  */
 CircuitRef.prototype.advance = function(delta) {
-    for(let i=0; i<this.ins.length && i < this.circuitIns.length; i++) {
-        this.circuitIns[i].set(this.ins[i].get());
-    }
 
     if(this.circuitRef !== null) {
         this.circuitRef.advance(delta);

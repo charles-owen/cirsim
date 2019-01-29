@@ -120,7 +120,7 @@ InPin.prototype.touch = function(x, y) {
  * @param value true for on
  */
 InPin.prototype.set = function(value) {
-    this.value = value;
+	this.value = value;
     this.outs[0].set(value);
 };
 

@@ -113,18 +113,20 @@ export const Test = function(main) {
             model.backup();
 
             // The current test number
-            var testNum = -1;
-    
+            let testNum = -1;
+
+            let inputs, outputs;
+
             try {
                 //
                 // Find the inputs
                 //
-                var inputs = findInputs(test);
+                inputs = findInputs(test);
     
                 //
                 // Find the outputs
                 //
-                var outputs = findOutputs(test);
+                outputs = findOutputs(test);
             } catch(exception) {
                 if(exception instanceof TestException) {
                     failure(exception.msg);
@@ -155,13 +157,13 @@ export const Test = function(main) {
                         // bitslop: is the bitslop option prefix.
                         // Bitslop means we expect the result to be
                         // within one bit of the expected value.
-                        let bitslop = false;
-                        var any = false;
+                        let bitSlop = false;
+                        let any = false;
                         do {
                             any = false;
     
                             if(isString(expected) && expected.substr(0, 8) === "bitslop:") {
-                                bitslop = true;
+                                bitSlop = true;
                                 expected = expected.substr(8);
                                 any = true;
                             }
@@ -177,7 +179,7 @@ export const Test = function(main) {
                         let actual = outputs[i].getAsString();
                         let good = true;        // Until we know otherwise
 
-                        if(bitslop) {
+                        if(bitSlop) {
                             expected = value.getAsInteger();
     
                             value.setAsBinary(actual);
@@ -243,11 +245,11 @@ export const Test = function(main) {
                 testNum++;
     
                 if(testNum < test.test.length) {
-                    var t = test.test[testNum];
+                    const t = test.test[testNum];
     
-                    for(var i=0; i<inputs.length && i<t.length; i++) {
+                    for(let i=0; i<inputs.length && i<t.length; i++) {
                         if(t[i] !== null) {
-                            var result = inputs[i].command(t[i]);
+                            const result = inputs[i].command(t[i]);
                             if(result !== null) {
                                 if(!result.ok) {
                                     failure('<p>This test is failing. ' + result.msg + '</p>');
@@ -265,8 +267,8 @@ export const Test = function(main) {
                     }
     
                     // Churn one second worth
-                    var simulation = model.getSimulation();
-                    for(var i=0; i<100;  i++) {
+                    const simulation = model.getSimulation();
+                    for(let i=0; i<100;  i++) {
                         if(!simulation.advance(0.010)) {
                             break;
                         }

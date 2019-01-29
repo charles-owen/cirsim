@@ -35,23 +35,24 @@ export const Simulation = function() {
         this.view = view;
         if(this.view !== null && !pendingAnimationFrame) {
             pendingAnimationFrame = true;
-            requestAnimationFrame(mainloop);
+            requestAnimationFrame(mainLoop);
         }
     };
 
     //
     // Animation main loop
     //
-    var pendingAnimationFrame = false;
-    var lastAnimationFrameTime = null;
 
-    const mainloop = (time) => {
+    let pendingAnimationFrame = false;
+    let lastAnimationFrameTime = null;
+
+    const mainLoop = (time) => {
         pendingAnimationFrame = false;
         if(lastAnimationFrameTime === null) {
             lastAnimationFrameTime = time;
         }
 
-        var delta = (time - lastAnimationFrameTime) * 0.001;
+        let delta = (time - lastAnimationFrameTime) * 0.001;
         lastAnimationFrameTime = time;
 
         // If the system is idle or very slow, there may be
@@ -68,7 +69,7 @@ export const Simulation = function() {
              * This ensures we have no time step greater than
              * 30ms;
              */
-            var useDelta = delta;
+            let useDelta = delta;
             if(useDelta > 0.03) {
                 useDelta = 0.03;
             }
@@ -84,7 +85,7 @@ export const Simulation = function() {
 
         if(this.view !== null) {
             pendingAnimationFrame = true;
-            requestAnimationFrame(mainloop);
+            requestAnimationFrame(mainLoop);
         }
     }
 
@@ -97,7 +98,7 @@ export const Simulation = function() {
  * @param state Array of input state
  */
 Simulation.prototype.queue = function(component, delay, state) {
-    var ns = delay * 0.000000001;
+    const ns = delay * 0.000000001;
     this.priorityQueue.add({time: this.time + ns, order: this.order, component: component, state: state});
     this.order++;
 };
@@ -107,7 +108,7 @@ Simulation.prototype.queue = function(component, delay, state) {
  * @param delta Amount of time to advance (seconds)
  */
 Simulation.prototype.advance = function(delta) {
-    var any = false;
+    let any = false;
     while(!this.priorityQueue.isEmpty() &&
             this.priorityQueue.peek().time <= this.time + delta) {
         var event = this.priorityQueue.dequeue();

@@ -44,7 +44,7 @@ DFF.description = '<h2>D Flip-Flop</h2><p>D Flip-Flop.</p>';
  */
 DFF.prototype.compute = function(state) {
     if(state[1] && !this.lastClk) {
-        var q = state[0];
+        const q = state[0];
         this.outs[0].set(q);
         this.outs[1].set(q);
     }

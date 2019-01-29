@@ -94,6 +94,10 @@ export const Cirsim = function(sel, options) {
             }
 
             if(mains.length === 1) {
+	            if(this.options.global !== null) {
+		            global[this.options.global] = mains[0];
+	            }
+
                 return mains[0];
             }
         } else {
@@ -110,6 +114,7 @@ export const Cirsim = function(sel, options) {
     /**
      * Get all active instances of Cirsim that are running.
      * @returns {Array} Array of objects of type Main.
+     * @deprecated This is going away
      */
     this.getInstances = function() {
         return mains;

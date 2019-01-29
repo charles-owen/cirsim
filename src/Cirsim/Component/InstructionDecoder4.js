@@ -205,6 +205,9 @@ InstructionDecoder4.prototype.setAsString = function(value, set) {
 
         case 'sla':
             return operation("110");
+
+        default:
+            return 'invalid opcode';
     }
 
     return null;

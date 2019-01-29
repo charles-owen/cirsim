@@ -366,7 +366,7 @@ Component.prototype.properties = function (main) {
 /**
  * Advance the animation for this component by delta seconds
  * @param delta Time to advance in seconds
- * @returns true if animation needs to be redrawn
+ * @returns {boolean} true if animation needs to be redrawn
  */
 Component.prototype.advance = function (delta) {
     return false;

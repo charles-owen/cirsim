@@ -89,6 +89,11 @@ export const Options = function(options) {
     /// with this link in it.
     this.exit = null;
 
+    /// If set to a name, a global variable will be created with that name
+    /// that points to the Cirsim Main object. This allows Javascript in a
+    /// page script tag to control a Cirsim instance.
+    this.global = null;
+
     /// Indication of what components are included in the palette.
     /// This can be:
     /// A string with a palette name
@@ -109,7 +114,7 @@ export const Options = function(options) {
     /// Display all output states
     this.showOutputStates = false;
 
-    for(var property in options) {
+    for(const property in options) {
         if(options.hasOwnProperty(property)) {
             if(!this.hasOwnProperty(property)) {
                 throw new Error("Invalid option " + property);
