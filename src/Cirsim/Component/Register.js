@@ -42,7 +42,7 @@ Register.order = 310;
  */
 Register.prototype.compute = function(state) {
     if(state[1] && !this.lastClk) {
-        var q = state[0];
+        const q = state[0];
         this.outs[0].set(q);
     }
 

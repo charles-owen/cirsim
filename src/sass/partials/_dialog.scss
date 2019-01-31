@@ -47,6 +47,10 @@ div.cirsim {
       position: relative;
       margin: 0 0 1em 0;
 
+      div.left {
+        text-align: left;
+      }
+
       label {
         display: block;
         font-style: italic;

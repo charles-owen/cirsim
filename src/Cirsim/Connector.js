@@ -307,3 +307,18 @@ Connector.prototype.draw = function(context, view) {
 
     context.lineWidth = 1;
 }
+
+/**
+ * Determine a length automatically so that the end of the
+ * connector will be on the grid, but be at least 12 pixels long
+ */
+Connector.prototype.autoLen = function() {
+    switch(this.orientation) {
+        case 's':
+            this.len = Math.floor(this.y / 8) * 8 + 8 - this.y;
+            while(this.len < 12) {
+                this.len += 8;
+            }
+            break;
+    }
+}

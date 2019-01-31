@@ -14,6 +14,8 @@ export const LEDBar = function() {
     this.height = 50;
     this.width = 20;
     this.leds = [];
+    this.horz = false;      // Horizontal option
+    this.bus = false;       // Bus input?
 
     this.color = "blue";
     this.lastState = [];
@@ -30,7 +32,8 @@ LEDBar.label = "LED Bar";           ///< Label for the palette
 LEDBar.desc = "LED Indicator Bar";       ///< Description for the palette
 LEDBar.img = "ledbar.png";         ///< Image to use for the palette
 LEDBar.description = `<h2>LED Bar</h2><p>The LED Bar component displays from two to 
-sixteen LEDs in a vertical bar that are lighted by values on discrete inputs. </p>`;
+sixteen LEDs in a vertical or horizontal bar that are lighted by values on discrete inputs
+or a single bus input. </p>`;
 LEDBar.order = 110;
 LEDBar.help = 'ledbar';
 
@@ -44,7 +47,16 @@ LEDBar.prototype.setSize = function(size) {
  * @param state
  */
 LEDBar.prototype.compute = function(state) {
-    this.lastState = state;
+    if(this.bus) {
+	    this.lastState = state[0];
+
+	    if(this.lastState === undefined) {
+		    this.lastState = [];
+	    }
+    } else {
+	    this.lastState = state;
+    }
+
 };
 
 /**
@@ -52,8 +64,10 @@ LEDBar.prototype.compute = function(state) {
  * @returns {LEDBar}
  */
 LEDBar.prototype.clone = function() {
-    var copy = new LEDBar();
+    const copy = new LEDBar();
     copy.size = this.size;
+    copy.horz = this.horz;
+    copy.bus = this.bus;
     copy.ensureIO();
     copy.copyFrom(this);
     return copy;
@@ -65,7 +79,13 @@ LEDBar.prototype.clone = function() {
  */
 LEDBar.prototype.load = function(obj) {
     this.color = Sanitize.sanitize(obj["color"]);
-    this.setSize(obj["size"]);
+    if(obj["horz"] !== undefined) {
+        this.horz = obj['horz'] === true;
+    }
+    if(obj['bus'] !== undefined) {
+        this.bus = obj['bus'] === true;
+    }
+	this.setSize(obj["size"]);
     Component.prototype.load.call(this, obj);
 };
 
@@ -78,6 +98,8 @@ LEDBar.prototype.save = function() {
     var obj = Component.prototype.save.call(this);
     obj.size = this.size;
     obj.color = this.color;
+    obj.horz = this.horz;
+    obj.bus = this.bus;
     return obj;
 };
 
@@ -88,39 +110,151 @@ LEDBar.prototype.save = function() {
 LEDBar.prototype.ensureIO = function() {
     let spacing = 16;
 
-    this.height = this.size * spacing;
-    if(this.height < 50) {
-        this.height = 50;
+    // Input counter
+    let i = 0;
+	this.leds = [];
+
+	if(this.ins.length > 0) {
+	    //
+	    // Test if we switched input types
+        // If so, disconnect everything and zero the inputs
+        //
+        if(this.ins[0].bus !== this.bus) {
+	        for(i=0; i<this.ins.length; i++) {
+		        this.ins[i].clear();
+	        }
+
+	        this.ins = [];
+        }
     }
 
-    let startY = this.size / 2 * spacing - 8;
-    let pinLen = 24 - this.width/2;
+    if(this.horz) {
+        //
+        // Horizontal configuration
+        //
+	    this.width = this.size * spacing;
+	    if(this.width < 50) {
+		    this.width = 50;
+	    }
+	    this.height = 20;
 
-    let i=0;
-    this.leds = [];
+	    let startX = this.size / 2 * spacing - 8;
 
-    for( ; i<this.size; i++) {
-        let pinY = startY - i * spacing;
-        this.leds.push(new Led(0, pinY, this.width, spacing));
+	    for(i=0; i<this.size; i++) {
+		    let pinX = startX - i * spacing;
+		    this.leds.push(new Led(pinX, 0, spacing, this.height));
+	    }
 
-        if(i < this.ins.length) {
-            this.ins[i].x = -this.width / 2;
-            this.ins[i].y = pinY;
-            this.ins[i].len = pinLen;
+	    if(!this.bus) {
+		    for(i=0; i<this.size; i++) {
+			    let pinX = startX - i * spacing;
+			    let pinLen = 24 - this.height/2;
+
+			    let inp = null;
+			    if(i < this.ins.length) {
+				    inp = this.ins[i];
+
+				    inp.y = this.height / 2;
+				    inp.x = pinX;
+				    inp.len = pinLen;
+			    } else {
+				    // Add any new pins
+				    inp = this.addIn(pinX, -this.height / 2, pinLen);
+			    }
+
+			    if(inp !== null) {
+				    inp.orientation = 's';
+				    inp.bus = false;
+			    }
+		    }
         } else {
-            // Add any new pins
-            this.addIn(-this.width / 2, pinY, pinLen);
+		    let inp = null;
+		    if(i < this.ins.length) {
+			    inp = this.ins[i];
+
+			    inp.x = -this.width / 2;
+			    inp.y = 0;
+			    inp.len = 16;
+		    } else {
+			    // Add any new pins
+			    inp = this.addIn(-this.width / 2, 0, 16);
+		    }
+
+		    inp.orientation = 'w';
+		    inp.bus = true;
+		    inp.autoLen();
+	    }
+
+    } else {
+        //
+        // Vertical configuration
+        //
+	    this.height = this.size * spacing;
+	    if(this.height < 50) {
+		    this.height = 50;
+	    }
+	    this.width = 20;
+
+	    let startY = this.size / 2 * spacing - 8;
+
+	    for(i=0; i<this.size; i++) {
+		    let pinY = startY - i * spacing;
+		    this.leds.push(new Led(0, pinY, this.width, spacing));
         }
+
+	    if(!this.bus) {
+		    for(i=0; i<this.size; i++) {
+			    let pinY = startY - i * spacing;
+			    let pinLen = 24 - this.width/2;
+
+			    let inp = null;
+			    if(i < this.ins.length) {
+				    inp = this.ins[i];
+
+				    inp.x = -this.width / 2;
+				    inp.y = pinY;
+				    inp.len = pinLen;
+			    } else {
+				    // Add any new pins
+				    inp = this.addIn(-this.width / 2, pinY, pinLen);
+			    }
+
+			    if(inp !== null) {
+				    inp.orientation = 'w';
+				    inp.bus = false;
+			    }
+		    }
+        } else {
+		    let inp = null;
+		    if(i < this.ins.length) {
+			    inp = this.ins[i];
+
+			    inp.x = 0;
+			    inp.y = this.height / 2;
+			    inp.len = 16;
+		    } else {
+			    // Add any new pins
+			    inp = this.addIn(0, this.height / 2, 16);
+		    }
+
+            inp.orientation = 's';
+            inp.bus = true;
+            inp.autoLen();
+        }
+
     }
 
-    // Delete pins that have ceased to exist
-    if(i < this.ins.length) {
-        for( ; i<this.ins.length; i++) {
-            this.ins[i].clear();
-        }
+    if(!this.bus) {
+	    // Delete pins that have ceased to exist
+	    if(i < this.ins.length) {
+		    for( ; i<this.ins.length; i++) {
+			    this.ins[i].clear();
+		    }
 
-        this.ins.splice(this.size);
+		    this.ins.splice(this.size);
+	    }
     }
+
 }
 
 
@@ -135,6 +269,7 @@ LEDBar.prototype.draw = function(context, view) {
     // Ensure the state is current
     //
     let i=0;
+
     for( ; i<this.lastState.length && i<this.leds.length;  i++) {
         let led = this.lastState[i];
         this.leds[i].color = led === undefined ? 'undefined' : (led ? this.color : 'black');
@@ -144,7 +279,6 @@ LEDBar.prototype.draw = function(context, view) {
         this.leds[i].color = 'undefined';
     }
 
-    let spacing = 16;
     let background = '#444444';
 
     this.selectStyle(context, view);
@@ -163,15 +297,29 @@ LEDBar.prototype.draw = function(context, view) {
 };
 
 LEDBar.prototype.properties = function(main) {
-    var dlg = new ComponentPropertiesDlg(this, main);
-    var sizeId = dlg.uniqueId();
+    const dlg = new ComponentPropertiesDlg(this, main);
+    const sizeId = dlg.uniqueId();
     let html = `<div class="control1 center"><label for="${sizeId}">Size: </label>
 <input class="number" type="text" name="${sizeId}" id="${sizeId}" value="${this.size}"></div>`;
 
-    var colorId = dlg.uniqueId();
+    const colorId = dlg.uniqueId();
     html += Led.colorSelector(colorId, this.color);
 
-    dlg.extra(html, () => {
+    html += '<div class="control center"><div class="left" style="display: inline-block">';
+
+	const horzId = dlg.uniqueId();
+    html += `
+<input type="radio" name="${horzId}" ${!this.horz ? 'checked' : ''} value="0"> Vertical<br>
+<input type="radio" name="${horzId}"  ${this.horz ? 'checked' : ''} value="1"> Horizontal<br><br>`;
+
+    const busId = dlg.uniqueId();
+	html += `
+<input type="radio" name="${busId}"  ${this.bus ? 'checked' : ''} value="1"> Bus Input<br>
+<input type="radio" name="${busId}" ${!this.bus ? 'checked' : ''} value="0"> Single Bit Input`;
+
+	html += '</div></div>';
+
+	dlg.extra(html, () => {
         const size = parseInt(document.getElementById(sizeId).value);
         if(isNaN(size) || size < 2 || size > 16) {
             return "Size must be an integer from 2 to 16";
@@ -179,8 +327,10 @@ LEDBar.prototype.properties = function(main) {
         return null;
     }, () => {
         this.color = Sanitize.sanitize(document.getElementById(colorId).value);
+		this.horz = document.querySelector(`input[name=${horzId}]:checked`).value === '1';
+		this.bus = document.querySelector(`input[name=${busId}]:checked`).value === '1';
         this.setSize(parseInt(document.getElementById(sizeId).value));
-    });
+	});
 
     dlg.open();
 };

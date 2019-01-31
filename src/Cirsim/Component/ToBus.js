@@ -155,5 +155,5 @@ ToBus.prototype.properties = function(main) {
     });
 
     dlg.open();
-    $('#' + id).select();
+	document.getElementById(id).select();
 };
