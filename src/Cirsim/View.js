@@ -29,13 +29,10 @@ export const View = function(main, canvas, circuit) {
 
     canvas.addEventListener('drop', (event) => {
         event.preventDefault();
-	    var data = event.dataTransfer.getData("text/plain");
-	    console.log(data);
-        console.log(event);
+	    // const data = event.dataTransfer.getData("text/plain");
     });
 
     this.initialize = () => {
-
         this.setSize();
 
         main.dragAndDrop.droppable(this, (paletteItem, x, y) => {
@@ -181,9 +178,7 @@ export const View = function(main, canvas, circuit) {
         }
 
         let mouseUpListener = (event) => {
-            event.preventDefault();
             canvas.removeEventListener('mousemove', mouseMoveListener);
-            //canvasJ.off("mousemove");
             upListener(event.pageX, event.pageY, false);
         }
 
@@ -205,7 +200,6 @@ export const View = function(main, canvas, circuit) {
 
         let body = document.querySelector('body');
         body.addEventListener('mouseup', mouseUpListener);
-
 
         // Install touch handlers
         canvas.addEventListener('touchstart', touchStartListener);

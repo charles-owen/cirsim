@@ -159,17 +159,17 @@ Clock.prototype.draw = function(context, view) {
     context.strokeStyle = save;
 
     this.drawIO(context, view);
-};
+}
 
 Clock.prototype.properties = function(main) {
-    var dlg = new ComponentPropertiesDlg(this, main);
-    var freqId = dlg.uniqueId();
-    var sliderId = dlg.uniqueId();
+    const dlg = new ComponentPropertiesDlg(this, main);
+    const freqId = dlg.uniqueId();
+    const sliderId = dlg.uniqueId();
 
 	let html = `<div class="control"><label for="${freqId}">Frequency (Hz)</label>
 <input type="text" id="${freqId}" value="${this.freq}"></div>
 <div class="control slider"><label for="${sliderId}">Duty Cycle</label>
-<input type="range" min="100" max="900" value="${this.period * 1000}" class="" id="${sliderId}">
+<input type="range" min="100" max="900" class="" value="${this.period * 1000}" id="${sliderId}">
 </div>`;
 
     dlg.extra(html, () => {
@@ -187,4 +187,4 @@ Clock.prototype.properties = function(main) {
     });
 
     dlg.open();
-};
+}

@@ -1,5 +1,7 @@
 import buckets from 'buckets-js';
 
+let instance = 0;
+
 /**
  * Simulation management object
  * @constructor
@@ -10,6 +12,7 @@ export const Simulation = function() {
     this.time = 1;
     this.view = null;
     this.speed = 0.000001;      ///< Animation speed (1 million'th of real time)
+this.instance = ++instance;
 
     //
     // If the same component request multiple times during
@@ -45,6 +48,7 @@ export const Simulation = function() {
 
     let pendingAnimationFrame = false;
     let lastAnimationFrameTime = null;
+    let killed = false;
 
     const mainLoop = (time) => {
         pendingAnimationFrame = false;
@@ -83,12 +87,19 @@ export const Simulation = function() {
             delta -= useDelta;
         }
 
-        if(this.view !== null) {
+        if(this.view !== null && !killed) {
             pendingAnimationFrame = true;
             requestAnimationFrame(mainLoop);
         }
     }
 
+    /**
+     * Kill the simulation when the enclosing Cirsim element
+     * is destroyed, so it does not continue to run in the background.
+     */
+    this.kill = function() {
+        killed = true;
+    }
 };
 
 /**

@@ -66,8 +66,6 @@ export const Main = function(cirsim, element, tests) {
             Tools.addClass(element, 'cirsim');
             element.innerHTML = '';
 
-	        // el.show();
-
             switch(options.display) {
                 case 'full':
 	                Tools.addClass(element, 'cirsim-full');
@@ -95,6 +93,21 @@ export const Main = function(cirsim, element, tests) {
             }
 
             this.dragAndDrop = new DragAndDrop(this);
+
+            //
+	        // Install a mutation observer so we can know if the
+	        // element that contains Cirsim is removed from the
+	        // DOM.
+	        //
+	        const observer = new MutationObserver(() => {
+		        if (!document.body.contains(element)) {
+			        observer.disconnect();
+			        this.model.kill();
+		        }
+
+	        });
+
+	        observer.observe(document.body, {childList: true});
         }
 
 
@@ -195,7 +208,7 @@ export const Main = function(cirsim, element, tests) {
         // If open is specified with a single name, we
         // automatically open the file when we start.
         //
-        var open = this.options.getAPI('open');
+        const open = this.options.getAPI('open');
         if(open !== null && open.url !== undefined && open.name !== undefined) {
             this.filename = open.name;
             var dlg = new OpenDialog(open.name, this.options, this.toast);

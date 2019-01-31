@@ -76,7 +76,7 @@ Circuits.prototype.advance = function(delta) {
 }
 
 Circuits.prototype.newTab = function() {
-    for(var i=0; i<this.circuits.length; i++) {
+    for(let i=0; i<this.circuits.length; i++) {
         this.circuits[i].newTab();
     }
 }

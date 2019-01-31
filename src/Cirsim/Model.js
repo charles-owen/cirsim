@@ -88,3 +88,10 @@ Model.prototype.replaceCircuit = function(circuit) {
     this.circuits.replaceCircuit(circuit);
 }
 
+/**
+ * Kill any active simulation when the model is destroyed
+ */
+Model.prototype.kill = function() {
+    this.getSimulation().kill();
+}
+

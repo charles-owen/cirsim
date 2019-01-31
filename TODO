@@ -1,8 +1,3 @@
-FIXME: You can drag an input on an OutPin to move than one output and it will connect
-FIXME: Process seems to continue running even after window is destroyed
-FIXME: When you switch to a different tab and back to a current tab it is not recalculating
-
-FIXME: Clock period slider not working on Firefox
 
 FIXME: CircuitRef behavior when tab deleted
 FIXME: CircuitRef behavior when tab is renamed

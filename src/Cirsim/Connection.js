@@ -130,8 +130,8 @@ Connection.prototype.getCircuit = function() {
 Connection.prototype.drop = function() {
     if(this.from !== null && this.to === null) {
         // Dropping the end on an output?
-        var circuit = this.from.component.circuit;
-        var inObj = circuit.touchIn(this.x, this.y);
+        const circuit = this.from.component.circuit;
+        const inObj = circuit.touchIn(this.x, this.y);
         if(inObj !== null && this.from.bus === inObj.bus) {
             inObj.setConnection(this);
         } else {
@@ -139,13 +139,23 @@ Connection.prototype.drop = function() {
         }
     } else if(this.from === null && this.to !== null) {
         // Dropping the end of an input?
-        var circuit = this.to.component.circuit;
-        var outObj = circuit.touchOut(this.x, this.y);
+        const circuit = this.to.component.circuit;
+        const outObj = circuit.touchOut(this.x, this.y);
         if(outObj !== null && this.to.bus === outObj.bus) {
-            this.from = outObj;
-            outObj.add(this);
-            this.to.set();
+            // Clear any connections currently to the destination In
+            this.to.clear();
 
+            // Add ourselves back in...
+            this.to.from = [this];
+
+            // Set where we come from
+            this.from = outObj;
+
+            // Add to the Out object
+            outObj.add(this);
+
+            // Force recalculation
+            this.to.set();
         } else {
             this.to.remove(this);
         }

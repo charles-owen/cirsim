@@ -189,8 +189,6 @@ export const Tabs = function(main) {
         tabs.forEach((tab) => {
             Tools.removeClass(tab.li, 'selected');
             Tools.removeClass(tab.pane, 'selected');
-           // tab.li.removeClass('selected');
-           // tab.pane.removeClass('selected');
         });
 
         this.active = num;
