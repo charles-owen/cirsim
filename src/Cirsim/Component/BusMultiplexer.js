@@ -2,8 +2,9 @@ import {Component} from '../Component';
 import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
 
 /**
- * Component: n-to-1 Bus multiplexer
-
+ * Component: n-to-1 Multiplexer
+ *
+ * Works for both busses and single-bit inputs.
  * @constructor
  */
 export const BusMultiplexer = function() {
@@ -15,12 +16,13 @@ export const BusMultiplexer = function() {
     // Number of inputs
     this.size = 2;
     this.lastIn = null;
+    this.bus = true;
 
     // Size inputs and one output
     this.circuitIns = [];
     this.addOut(this.width/2, 0, 8, "O").bus = true;
-    var i = this.addIn(0, -this.height / 2 + 10, 13, "");
-    i.orientation = "n";
+    const inp = this.addIn(0, -this.height / 2 + 10, 13, "");
+    inp.orientation = "n";
 
     this.ensureIO();
 };
@@ -32,12 +34,15 @@ BusMultiplexer.prototype.prefix = null;
 BusMultiplexer.prototype.indent = 10;
 
 BusMultiplexer.type = "Multiplexer";            ///< Name to use in files
-BusMultiplexer.label = "Bus Multiplexer";           ///< Label for the palette
-BusMultiplexer.desc = "Bus Multiplexer";       ///< Description for the palette
+BusMultiplexer.label = "Multiplexer";           ///< Label for the palette
+BusMultiplexer.desc = "Multiplexer";       ///< Description for the palette
 BusMultiplexer.img = "multiplexer.png";         ///< Image to use for the palette
-BusMultiplexer.description = `<h2>Multiplexer</h2><p>Multiplexes two or more input buses to a single output bus.</p>
-<p>The value of the input pin or bus determines which input is routed to O.</p>`;
-BusMultiplexer.order = 109;
+BusMultiplexer.description = `<h2>Multiplexer</h2><p>Multiplexes 2 to 16 inputs to a single output. The 
+inputs and outputs and can be configured as buses or single bits.</p>
+<p>The value of the input pin or bus determines which input is routed to O. The input will be a single
+bit if there are two choices (binary) or a bus if there are more than 2 choices. </p>`;
+BusMultiplexer.order = 402;
+BusMultiplexer.help = 'multiplexer';
 
 /**
  * Compute the gate result
@@ -82,8 +87,9 @@ BusMultiplexer.prototype.compute = function(state) {
  * @returns {BusMultiplexer}
  */
 BusMultiplexer.prototype.clone = function() {
-    var copy = new BusMultiplexer();
+    const copy = new BusMultiplexer();
     copy.size = this.size;
+    copy.bus = this.bus;
     copy.ensureIO();
     copy.copyFrom(this);
     return copy;
@@ -95,6 +101,7 @@ BusMultiplexer.prototype.clone = function() {
  */
 BusMultiplexer.prototype.load = function(obj) {
     this.size = obj["size"];
+    this.bus = obj["bus"] !== false;
     this.ensureIO();
     Component.prototype.load.call(this, obj);
 };
@@ -107,6 +114,7 @@ BusMultiplexer.prototype.load = function(obj) {
 BusMultiplexer.prototype.save = function() {
     var obj = Component.prototype.save.call(this);
     obj.size = this.size;
+    obj.bus = this.bus;
     return obj;
 };
 
@@ -116,7 +124,19 @@ BusMultiplexer.prototype.save = function() {
  * defined bus size.
  */
 BusMultiplexer.prototype.ensureIO = function() {
-    var spacing = 16;
+    if(this.bus !== this.outs[0].bus) {
+        this.outs[0].clear();
+        this.outs[0].bus = this.bus;
+
+        // Clear the inputs after the first one (selector)
+        for(i=1; i<this.ins.length; i++) {
+            this.ins[i].clear();
+        }
+
+        this.ins.splice(1, this.ins.length-1);
+    }
+
+    const spacing = 16;
 
     this.height = this.size * spacing + 16;
     if(this.height < 48) {
@@ -146,7 +166,7 @@ BusMultiplexer.prototype.ensureIO = function() {
 
     // Add any new pins
     for(; i<this.size; i++) {
-        this.addIn(-x, startY - i * spacing, 8, "I" + i).bus = true;
+        this.addIn(-x, startY - i * spacing, 8, "I" + i).bus = this.bus;
     }
 
     // Delete pins that have ceased to exist
@@ -170,14 +190,14 @@ BusMultiplexer.prototype.draw = function(context, view) {
     this.drawTrap(context, 0, this.indent);
 
     if(this.lastIn !== null) {
-        var spacing = 16;
+        const spacing = 16;
 
-        var x1 = this.x - 4;
-        var x2 = this.x + 4;
-        var y2 = this.y - 1;
+        const x1 = this.x - 4;
+        const x2 = this.x + 4;
+        const y2 = this.y - 1;
 
-        var startY = this.y + this.size / 2 * spacing - 10;
-        var y1 = startY - this.lastIn * 16;
+        const startY = this.y + this.size / 2 * spacing - 10;
+        const y1 = startY - this.lastIn * 16;
 
         this.jaggedLine(context, x1, y1, x2, y2, 0.5);
     }
@@ -188,23 +208,31 @@ BusMultiplexer.prototype.draw = function(context, view) {
 
 
 BusMultiplexer.prototype.properties = function(main) {
-    var that = this;
-
-    var dlg = new ComponentPropertiesDlg(this, main);
-    var id = dlg.uniqueId();
-    var html = `<div class="control1 center gap"><label for="${id}">Number of inputs: </label>
+    const dlg = new ComponentPropertiesDlg(this, main);
+    const id = dlg.uniqueId();
+    let html = `<div class="control1 center gap"><label for="${id}">Number of inputs: </label>
 <input class="number" type="text" name="${id}" id="${id}" value="${this.size}"></div>`;
 
-    dlg.extra(html, function() {
-        var size = parseInt(document.getElementById(id).value);
+    html += '<div class="control center"><div class="choosers">';
+
+    const busId = dlg.uniqueId();
+    html += `
+<label><input type="radio" name="${busId}"  ${this.bus ? 'checked' : ''} value="1"> Bus</label>
+<label><input type="radio" name="${busId}" ${!this.bus ? 'checked' : ''} value="0"> Single Bit</label>`;
+
+    html += '</div></div>';
+
+    dlg.extra(html, () => {
+        const size = parseInt(document.getElementById(id).value);
         if(isNaN(size) || size < 2 || size > 16) {
 	        document.getElementById(id).select();
             return "Must be an integer from 2 to 16";
         }
         return null;
-    }, function() {
-        that.size = parseInt(document.getElementById(id).value);
-        that.ensureIO();
+    }, () => {
+        this.size = parseInt(document.getElementById(id).value);
+        this.bus = document.querySelector(`input[name=${busId}]:checked`).value === '1';
+        this.ensureIO();
     });
 
     dlg.open();

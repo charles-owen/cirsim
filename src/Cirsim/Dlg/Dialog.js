@@ -34,7 +34,7 @@ Dialog.prototype.contents = function( html, title) {
  */
 Dialog.prototype.open = function() {
     let form = document.createElement('form');
-    let div = Tools.createClassedDiv('dialog-content');
+    let div = Tools.createClassedDiv('cirsim-dlg-content');
     form.appendChild(div);
 
     let dlg = `${this.html}<p class="error"></p>

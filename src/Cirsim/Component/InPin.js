@@ -31,7 +31,7 @@ InPin.type = "InPin";        ///< Name to use in files
 InPin.label = "In Pin";          ///< Label for the palette
 InPin.desc = "Input Pin";    ///< Description for the palette
 InPin.img = "inpin.png";       ///< Image to use for the palette
-InPin.order = 1;             ///< Order of presentation in the palette
+InPin.order = 2;             ///< Order of presentation in the palette
 InPin.description = '<h2>Input Pin</h2><p>An IN pin serves as input ' +
     'for a circuit. Clicking the LED toggles the output true or false.</p>';
 InPin.help = 'inpin';
@@ -156,12 +156,15 @@ InPin.prototype.properties = function(main) {
     const dlg = new ComponentPropertiesDlg(this, main);
     const id = dlg.uniqueId();
 
-    const html = '<input type="radio" id="' + id + '" value="1" name="' + id + '"' +
+
+    let html = '<div class="control center"><div class="choosers">' +
+        '<label><input type="radio" id="' + id + '" value="1" name="' + id + '"' +
         (this.value ? " checked" : "") +
-        '> true (1)' +
-        '<br><input type="radio" id="' + id + '" value="0" name="' + id + '"' +
+        '> true (1)</label>' +
+        '<label><input type="radio" id="' + id + '" value="0" name="' + id + '"' +
         (this.value ? "" : " checked") +
-        '> false (0)';
+        '> false (0)</label>' +
+        '</div></div>';
 
     dlg.extra(html, () => {
         return null;

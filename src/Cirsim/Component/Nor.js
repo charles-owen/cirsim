@@ -19,7 +19,7 @@ Nor.type = "Nor";            ///< Name to use in files
 Nor.label = "NOR";           ///< Label for the palette
 Nor.desc = "NOR gate";       ///< Description for the palette
 Nor.img = "nor.png";         ///< Image to use for the palette
-Nor.order = 16;               ///< Order of presentation in the palette
+Nor.order = 30;               ///< Order of presentation in the palette
 Nor.description = `<h2>NOR Gate</h2><p>The output of a NOR gate is <em>false</em> if either or both 
  inputs are true. Otherwise, it is true.</p>`;
 Nor.help = 'nor';

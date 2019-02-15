@@ -29,7 +29,6 @@ export const View = function(main, canvas, circuit) {
 
     canvas.addEventListener('drop', (event) => {
         event.preventDefault();
-	    // const data = event.dataTransfer.getData("text/plain");
     });
 
     this.initialize = () => {
@@ -104,8 +103,8 @@ export const View = function(main, canvas, circuit) {
             canvas.parentNode.addEventListener('scroll', scrollListener);
         };
 
-        let scrollListener = (event) => {
-	        var offset = Tools.offset(canvas); // canvasJ.offset();
+        let scrollListener = () => {
+	        const offset = Tools.offset(canvas); // canvasJ.offset();
 	        mouse.x = lastPage.x - offset.left;
 	        mouse.y = lastPage.y - offset.top;
 	        this.selection.mouseMove(mouse.x, mouse.y, mouse.x - lastMouse.x, mouse.y - lastMouse.y);

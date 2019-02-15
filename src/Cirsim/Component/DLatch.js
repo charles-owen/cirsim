@@ -29,7 +29,7 @@ DLatch.type = "DLatch";            ///< Name to use in files
 DLatch.label = "D  Latch";           ///< Label for the palette
 DLatch.desc = "D Latch";       ///< Description for the palette
 //DLatch.img = "d.png";         ///< Image to use for the palette
-DLatch.order = 19;               ///< Order of presentation in the palette
+DLatch.order = 202;               ///< Order of presentation in the palette
 DLatch.description = `<h2>D Latch</h2>
 <p>A D latch passes the input D to the outputs Q and Q' when the clock input CLK is true, but
 latches the value when CLK is false.</p>`;

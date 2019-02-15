@@ -286,6 +286,7 @@ export const Main = function(cirsim, element, tests) {
 	 */
 	this.save = (singleOnly, silent) => {
         const api = this.options.getAPI('save');
+
         if(api === null) {
         	// Save is not supported
         	return;
@@ -349,12 +350,12 @@ export const Main = function(cirsim, element, tests) {
 
 
     this.export = function() {
-        var dlg = new ExportDlg(model);
+        const dlg = new ExportDlg(model);
         dlg.open();
     };
 
     this.import = function() {
-        var dlg = new ImportDlg(this, model);
+        const dlg = new ImportDlg(this, model);
         dlg.open();
     };
 
@@ -377,7 +378,7 @@ export const Main = function(cirsim, element, tests) {
         tabs.create(divWork, model);
     }
 
-    var dockedHelp = false;
+    let dockedHelp = false;
 
 
     this.isHelpDocked = function() {

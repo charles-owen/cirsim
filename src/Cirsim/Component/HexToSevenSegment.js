@@ -61,7 +61,7 @@ HexToSevenSegment.img = null;                       ///< Image to use for the pa
 HexToSevenSegment.description = '<h2>Hex to Seven Segement</h2>' +
     '<p>Decodes hexadecimal into the correct outputs for a seven-segment display. Accepts either' +
     ' single bit lines or bus input.</p>';
-HexToSevenSegment.order = 305;
+HexToSevenSegment.order = 506;
 
 /**
  * Compute the gate result

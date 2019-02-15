@@ -14,6 +14,17 @@ import DOMPurify from 'dompurify';
 export const Component = function () {
     Selectable.call(this);
 
+    let circuit = null;
+
+    Object.defineProperty(this, 'circuit', {
+       get: function() {
+           return circuit;
+       },
+       set: function(value) {
+           circuit = value;
+       }
+    });
+
     this.height = 10;
     this.width = 10;
     this.prev = null;
@@ -61,11 +72,11 @@ Component.prototype.copyFrom = function (component) {
     //
     // Copy input and output states
     //
-    for (var i = 0; i < this.ins.length; i++) {
+    for (let i = 0; i < this.ins.length; i++) {
         this.ins[i].copyFrom(component.ins[i]);
     }
 
-    for (var i = 0; i < this.outs.length; i++) {
+    for (let i = 0; i < this.outs.length; i++) {
         this.outs[i].copyFrom(component.outs[i]);
     }
 };
@@ -126,9 +137,10 @@ Component.prototype.added = function (circuit) {
  * @param x Relative X location
  * @param y Relative Y location
  * @param len Length of the line to draw for the input
+ * @return {In}
  */
 Component.prototype.addIn = function (x, y, len, name) {
-    var inObj = new In(this, x, y, len, name);
+    const inObj = new In(this, x, y, len, name);
     inObj.index = this.ins.length;
     this.ins.push(inObj);
     return inObj;
@@ -142,7 +154,7 @@ Component.prototype.addIn = function (x, y, len, name) {
  * @return Created output object
  */
 Component.prototype.addOut = function (x, y, len, name, inv) {
-    var outObj = new Out(this, x, y, len, name, inv);
+    const outObj = new Out(this, x, y, len, name, inv);
     outObj.index = this.outs.length;
     this.outs.push(outObj);
     return outObj;
@@ -526,12 +538,10 @@ Component.prototype.drawTrap = function (context, indentL, indentR) {
 Component.prototype.command = function (value) {
     if ((typeof value === 'string' || value instanceof String) &&
         value.substr(0, 5) === "type:") {
-        var expected = value.substr(5);
+        const expected = value.substr(5);
         if (expected !== this.constructor.type) {
-            //
-            // TODO: This use of getComponent will have to be fixed
-            //
-            var expectedType = getComponent(expected);
+
+            let expectedType = this.circuit.circuits.model.main.components.get(expected);
             if (expectedType !== null) {
                 expectedType = expectedType.label;
             } else {

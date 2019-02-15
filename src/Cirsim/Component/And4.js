@@ -25,7 +25,7 @@ And4.prototype.constructor = And4;
 And4.type = "And4";            ///< Name to use in files
 And4.label = "AND";           ///< Label for the palette
 And4.desc = "4-Input AND gate";       ///< Description for the palette
-And4.order = 11.6;               ///< Order of presentation in the palette
+And4.order = 13;               ///< Order of presentation in the palette
 And4.description = '<h2>AND Gate</h2><p>The output of a four-input AND ' +
     'gate is <em>true</em> if all four' +
     ' inputs are true.</p>';

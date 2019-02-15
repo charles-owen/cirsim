@@ -28,7 +28,7 @@ Clock.type = "Clock";            ///< Name to use in files
 Clock.label = "Clock";           ///< Label for the palette
 Clock.desc = "Clock";            ///< Description for the palette
 Clock.img = "clock.png";         ///< Image to use for the palette
-Clock.order = 41;               ///< Order of presentation in the palette
+Clock.order = 104;               ///< Order of presentation in the palette
 Clock.description = '<h2>Clock</h2><p>A clock generates a sequence of pulses' +
     ' over time. The duty cycle is the width of the true period of the pulse as a percentage.</p>';
 

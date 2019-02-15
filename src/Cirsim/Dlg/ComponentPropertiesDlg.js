@@ -12,16 +12,16 @@ export const ComponentPropertiesDlg = function(component, main) {
     this.resize = 'both';
 
     // A unique ID for the component name input control
-    var nameId = null;
+    let nameId = null;
 
-    var extraHTML = '';
-    var extraCreate = function() {};
-    var extraValidate = function() {return null;};
-    var extraTake = function() {return null;};
+    let extraHTML = '';
+    let extraCreate = function() {};
+    let extraValidate = function() {return null;};
+    let extraTake = function() {return null;};
 
     this.open = () => {
         // Create the dialog box form
-        var description = '';
+        let description = '';
         if('help' in component.constructor) {
             description += '<a class="helper">help</a>';
         }
@@ -33,15 +33,15 @@ export const ComponentPropertiesDlg = function(component, main) {
 
 
         // Does this component have a naming?
-        var name = '';
+        let name = '';
         if(component.naming !== null) {
             name = component.naming;
         } else {
             if(component.prefix !== null) {
                 // Does not have a name. Create one
-                for(var i=1; ; i++) {
+                for(let i=1; ; i++) {
                     name = component.prefix + i;
-                    var existing = component.circuit.getComponentByNaming(name);
+                    let existing = component.circuit.getComponentByNaming(name);
                     if(existing === null) {
                         break;
                     }
@@ -50,7 +50,7 @@ export const ComponentPropertiesDlg = function(component, main) {
         }
 
 
-        var dlg = '';
+        let dlg = '';
 
         if(component.prefix !== null) {
             nameId = Unique.uniqueName();

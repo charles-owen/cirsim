@@ -71,7 +71,13 @@ CircuitRef.prototype.advance = function(delta) {
 
 CircuitRef.prototype.getCircuitRef = function() {
     if (this.circuitRef !== null) {
+	    this.circuitRef.circuits = this.circuit.circuits;
         return this.circuitRef;
+    }
+
+    const circuit = this.circuit.circuits.getCircuit(this.circuitName);
+    if(circuit === null) {
+    	return null;
     }
 
     this.circuitRef = this.circuit.circuits.getCircuit(this.circuitName).copy_clone();
@@ -324,6 +330,11 @@ CircuitRef.prototype.clone = function() {
 	    clone.component = copy;
 	    copy.outs.push(clone);
     }
+
+	if(this.circuitRef !== null) {
+		copy.circuitRef = this.circuitRef.copy_clone();
+		copy.ensureIO();
+	}
 
     copy.copyFrom(this);
 

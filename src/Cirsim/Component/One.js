@@ -27,7 +27,7 @@ One.type = "One";           ///< Name to use in files
 One.label = "1";            ///< Label for the palette
 One.desc = "1 (true)";      ///< Description for the palette
 One.description = '<h2>One</h2><p>A simple true value.</p>';
-One.order = 0.5;            ///< Order of presentation in the palette
+One.order = 1;            ///< Order of presentation in the palette
 One.help = 'one';           ///< Help page is available
 
 /**

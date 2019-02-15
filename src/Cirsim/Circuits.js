@@ -53,8 +53,8 @@ Circuits.prototype.getCircuits = function() {
  * @returns Circuit object or null
  */
 Circuits.prototype.getCircuit = function(name) {
-    for(var i=0; i<this.circuits.length; i++) {
-        var circuit = this.circuits[i];
+    for(let i=0; i<this.circuits.length; i++) {
+        const circuit = this.circuits[i];
         if(circuit.name === name) {
             return circuit;
         }
@@ -64,9 +64,9 @@ Circuits.prototype.getCircuit = function(name) {
 };
 
 Circuits.prototype.advance = function(delta) {
-    var ret = false;
-    for(var i=0; i<this.circuits.length; i++) {
-        var circuit = this.circuits[i];
+    let ret = false;
+    for(let i=0; i<this.circuits.length; i++) {
+        const circuit = this.circuits[i];
         if(circuit.advance(delta)) {
             ret = true;
         }
@@ -75,9 +75,115 @@ Circuits.prototype.advance = function(delta) {
     return ret;
 }
 
+/**
+ * Determine if a circuit can be deleted.
+ * @param ndx Index into the circuits.
+ */
+Circuits.prototype.canDelete = function(ndx) {
+    if(ndx === 0) {
+        // The main circuit (first) cannot be deleted
+        return false;
+    }
+
+    // Do any circuits to the left refer to this one?
+    const circuit = this.circuits[ndx];
+    for(let i=0; i<ndx; i++) {
+        const references = this.circuits[i].references(circuit);
+        if(references.length > 0) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+/**
+ * Determine if a circuit can be moved left as a tab.
+ * @param ndx Index into the circuits.
+ * @returns {boolean} True if can be moved left
+ */
+Circuits.prototype.canMoveLeft = function(ndx) {
+    // First two tabs cannot be moved left at all
+    if(ndx < 2) {
+        return false;
+    }
+
+    // Does the circuit to the left refer to this one?
+    const circuit = this.circuits[ndx];
+    const references = this.circuits[ndx-1].references(circuit);
+    return references.length === 0;
+}
+
+/**
+ * Determine if a circuit can be moved right as a tab
+ * @param ndx Index into the circuits.
+ * @returns {boolean} True if can be move right
+ */
+Circuits.prototype.canMoveRight = function(ndx) {
+    // First tab cannot be moved at all. Last tab can't
+    // move to the right.
+    if(ndx === 0 || ndx === this.circuits.length-1) {
+        return false;
+    }
+
+    // What does this circuit refer to?
+    const right = this.circuits[ndx+1].name;
+    const references = this.circuits[ndx].references();
+    for(let reference of references) {
+        if(reference.circuitName === right) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+Circuits.prototype.moveLeft = function(ndx) {
+    if(this.canMoveLeft(ndx)) {
+        const t = this.circuits[ndx-1];
+        this.circuits[ndx-1] = this.circuits[ndx];
+        this.circuits[ndx] = t;
+        console.log(this.circuits.length);
+        return true;
+    }
+
+    return false;
+}
+
+Circuits.prototype.moveRight = function(ndx) {
+    if(this.canMoveRight(ndx)) {
+        const t = this.circuits[ndx+1];
+        this.circuits[ndx+1] = this.circuits[ndx];
+        this.circuits[ndx] = t;
+        return true;
+    }
+
+    return false;
+}
+
+Circuits.prototype.rename = function(ndx, name) {
+    const circuit = this.circuits[ndx];
+
+    // Rename any references to this circuit
+    for(let i=0; i<ndx; i++) {
+        const references = this.circuits[i].references(circuit);
+        for(let reference of references) {
+            reference.circuitName = name;
+        }
+    }
+
+    circuit.setName(name);
+}
+
 Circuits.prototype.newTab = function() {
     for(let i=0; i<this.circuits.length; i++) {
         this.circuits[i].newTab();
+    }
+}
+
+Circuits.prototype.recompute = function() {
+    for(let i=0; i<this.circuits.length; i++) {
+        this.circuits[i].recompute();
     }
 }
 

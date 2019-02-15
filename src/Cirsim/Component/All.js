@@ -45,59 +45,71 @@ import {Memory16} from './Memory16';
 import {Decoder3} from './Decoder3';
 import {InstructionDecoder4} from './InstructionDecoder4';
 import {Alu16} from './Alu16';
-
+import {Counter} from './Counter';
 
 /**
  * Add all components into the system.
  */
 export const All = function(components) {
+    // Comments are the order values
+    components.add(Zero);       // 0
+    components.add(One);        // 1
+    components.add(InPin);      // 2
+    components.add(OutPin);     // 3
 
-    components.add(Zero);
-    components.add(One);
-    components.add(InPin);
-    components.add(OutPin);
-    components.add(Clock);
-    components.add(Button);
-    components.add(LED);
-    components.add(Or);
-    components.add(Or3);
-    components.add(Or4);
-    components.add(Nor);
-    components.add(And);
-    components.add(And3);
-    components.add(And4);
-    components.add(Nand);
-    components.add(Inverter);
-    components.add(Xor);
-    components.add(InPinBus);
-    components.add(OutPinBus);
-    components.add(BusOr);
-    components.add(BusSelector);
-    components.add(BusDecoder);
-    components.add(BusMultiplexer);
-    components.add(LEDBar);
-    components.add(Text);
-    components.add(TrafficLight);
-    components.add(HexToSevenSegment);
-    components.add(SevenSeg);
-    components.add(FmBus);
-    components.add(ToBus);
-    components.add(DFF);
-    components.add(DFFsr);
-    components.add(JKFF);
-    components.add(DLatch);
-    components.add(SRLatch);
-    components.add(Letters16);
-    components.add(Register);
-    components.add(BusConstant);
-    components.add(Alu4);
-    components.add(Registers16);
-    components.add(Pad);
-    components.add(Pc16);
-    components.add(Memory16);
-    components.add(Decoder3);
-    components.add(InstructionDecoder4);
-    components.add(Alu16);
+    components.add(And);        // 11
+    components.add(And3);       // 12
+    components.add(And4);       // 13
+    components.add(Nand);       // 16
+
+    components.add(Or);         // 20
+    components.add(Or3);        // 21
+    components.add(Or4);        // 22
+    components.add(Nor);        // 30
+
+    components.add(Xor);        // 40
+    components.add(Inverter);   // 50
+
+    components.add(Button);     // 100
+    components.add(LED);        // 102
+    components.add(Clock);      // 104
+    components.add(Text);       // 106
+
+    components.add(SRLatch);    // 200
+    components.add(DLatch);     // 202
+    components.add(DFF);        // 204
+    components.add(DFFsr);      // 206
+    components.add(JKFF);       // 208
+
+    components.add(InPinBus);       // 300
+    components.add(BusConstant);    // 301
+    components.add(OutPinBus);      // 302
+    components.add(FmBus);          // 305
+    components.add(ToBus);          // 306
+    components.add(BusOr);          // 308
+    components.add(BusSelector);    // 310
+
+    components.add(BusDecoder);     // 400
+    components.add(BusMultiplexer); // 402
+    components.add(Register);       // 404
+    components.add(Counter);        // 406
+
+    components.add(Pad);            // 500
+    components.add(LEDBar);         // 502
+    components.add(TrafficLight);   // 504
+    components.add(HexToSevenSegment);  // 506
+    components.add(SevenSeg);       // 508
+    components.add(Letters16);      // 510
+
+    components.add(InstructionDecoder4);    // 600
+    components.add(Alu4);           // 602
+
+    components.add(Registers16);    // 700
+    components.add(Pc16);           // 702
+    components.add(Memory16);       // 704
+    components.add(Alu16);          // 706
+
+    components.add(Decoder3);       // 1000
 
     components.addPalette('combinatorial',
         [Or, And, Inverter, Xor, Nand, Nor]);
@@ -114,11 +126,10 @@ export const All = function(components) {
             Inverter, Xor,
             DFF, DFFsr, JKFF, DLatch, SRLatch,
             InPinBus, OutPinBus, BusConstant, BusOr, BusDecoder, BusSelector,
-            Decoder3,
             BusMultiplexer,
             TrafficLight, HexToSevenSegment, SevenSeg, FmBus,
             ToBus, Register,
             Letters16, Alu4, Registers16, Pc16, Memory16, InstructionDecoder4, Pad,
-            Alu16 ]
+            Alu16, Counter ]
     )
 }

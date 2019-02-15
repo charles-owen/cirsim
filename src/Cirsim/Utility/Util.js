@@ -12,12 +12,28 @@ export const Util = function() {
  * @returns {string} Converted result.
  */
 Util.toHex = function(d, len) {
-    var hex = Number(d).toString(16);
+    let hex = Number(d).toString(16);
     while(hex.length < len) {
         hex = '0' + hex;
     }
 
     return hex;
+}
+
+
+/**
+ * Convert a value to Binary
+ * @param d Value to convert
+ * @param len Number of digits to convert to.
+ * @returns {string} Converted result.
+ */
+Util.toBinary = function(d, len) {
+	let bin = Number(d).toString(2);
+	while(bin.length < len) {
+		bin = '0' + bin;
+	}
+
+	return bin;
 }
 
 /**

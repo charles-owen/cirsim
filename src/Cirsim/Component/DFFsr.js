@@ -38,7 +38,7 @@ DFFsr.type = "DFFsr";            ///< Name to use in files
 DFFsr.label = "D Flip-Flop SR";           ///< Label for the palette
 DFFsr.desc = "D Flip-Flop with Set/Reset";       ///< Description for the palette
 DFFsr.img = "dffsr.png";         ///< Image to use for the palette
-DFFsr.order = 20.5;               ///< Order of presentation in the palette
+DFFsr.order = 206;               ///< Order of presentation in the palette
 DFFsr.description = '<h2>D Flip-Flop with Set/Reset</h2><p>D Flip-Flop with Set and Reset.' +
     ' Set and Reset can be safely left unconnected.</p>';
 

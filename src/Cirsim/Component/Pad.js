@@ -16,17 +16,15 @@ export const Pad = function() {
     this.height = 150;
     this.width = 150;
     this.value = new Value();
+    this.bus = true;
+    this.bits = 4;
 
     // The type of pad, null until we define it
     this.pad = null;
 
-    var len = 11;
-    this.addOut(this.width/2, -16, len).bus = true;
-    this.addOut(this.width/2, 16, len);
-
     this.setType(16);
     this.setAsInteger(0);
-    this.outs[1].set(false);
+    this.setPressedOut(false);
 };
 
 Pad.prototype = Object.create(Component.prototype);
@@ -40,13 +38,17 @@ Pad.label = "Pad";          ///< Label for the palette
 Pad.desc = "Configurable Keypad";    ///< Description for the palette
 Pad.img = 'pad.png';
 Pad.description = `<h2>Configurable Keypad</h2>
-<p>Presents a keypad with from 4 to 16 buttons. There are two outputs. The bus output (top) is the 
-most recently pressed button value. The clock output (bottom) is true when the button is pressed.</p>`;
-Pad.order = 50;
+<p>Presents a keypad with from 4 to 16 buttons. If configured as a bus output, there are two outputs. 
+The top output is the bus output and is the 
+most recently pressed button value. If configured for single bit output, there will be 2-4 output bits
+the represent the most recently pressed button. 
+The bottom output is the clock and is true when the button is pressed.</p>`;
+Pad.order = 500;
 Pad.help = 'pad';
 
 Pad.prototype.setType = function(pad) {
     if(this.pad === pad) {
+        this.ensureIO();
         return;
     }
 
@@ -227,32 +229,69 @@ Pad.prototype.setType = function(pad) {
             break;
     }
 
-    this.outs[0].x = this.width/2;
-    this.outs[1].x = this.width/2;
+    this.ensureIO();
 }
 
-
-
 /**
- * Compute the gate result
- * @param state
+ * Ensure the actual number of outputs matches the
+ * defined bus size.
  */
-Pad.prototype.compute = function(state) {
-    if(Array.isArray(state[0])) {
-        var v = state[0];
-        if(v[0] === undefined || v[1] === undefined || v[2] === undefined || v[3] === undefined) {
-            this.value = undefined;
-        } else {
-            this.value = (v[0] ? 1 : 0) + (v[1] ? 2 : 0) + (v[2] ? 4 : 0) + (v[3] ? 8 : 0);
-        }
-    } else {
-        this.value = undefined;
-    }
-};
+Pad.prototype.ensureIO = function() {
+    let spacing = 16;
 
-Pad.prototype.get = function(i) {
-    return this.ins[0].value[i];
-};
+    let i=0;
+
+    if(this.outs.length > 0) {
+        //
+        // Test if we switched output types or size
+        // If so, disconnect everything
+        //
+        let clear = false;
+        if(this.outs[0].bus !== this.bus) {
+            // Changed bus status
+            clear = true;
+        }
+
+        if(!this.bus && this.outs.length !== this.bits + 1) {
+            // Changed number of bits required
+            clear = true;
+        }
+
+        if(!clear) {
+            // Ensure positions are correct...
+            for(let out of this.outs) {
+                out.x = this.width/2;
+            }
+
+            return; // We're good!
+        }
+    }
+
+    // Clear all outputs
+    for(i=0; i<this.outs.length; i++) {
+        this.outs[i].clear();
+    }
+
+    this.outs = [];
+
+    let startY = 0;
+    const len = 11;
+
+    if(this.bus) {
+        this.addOut(this.width/2, -16, len).bus = true;
+    } else {
+        for(i=0; i<this.bits; i++) {
+            let pinY = startY - i * spacing;
+
+            // Add any new pins
+            this.addOut(this.width / 2, pinY, len);
+        }
+    }
+
+    this.addOut(this.width/2, 32, len);
+    this.setOuts();
+    this.setPressedOut(false);
+}
 
 
 /**
@@ -260,8 +299,10 @@ Pad.prototype.get = function(i) {
  * @returns {Pad}
  */
 Pad.prototype.clone = function() {
-    var copy = new Pad();
-    copy.value = this.value;
+    const copy = new Pad();
+    copy.value = this.value.clone();
+    copy.bus = this.bus;
+    copy.setType(this.pad);
     copy.copyFrom(this);
     return copy;
 };
@@ -273,9 +314,7 @@ Pad.prototype.clone = function() {
  */
 Pad.prototype.draw = function(context, view) {
     const leftX = this.x - this.width/2 - 0.5;
-    const rightX = this.x + this.width/2 + 0.5;
     const topY = this.y - this.height/2 - 0.5;
-    const botY = this.y + this.height/2 + 0.5;
 
     // Select the style
     const saveUS = this.unselectedStyle;
@@ -329,7 +368,7 @@ Pad.prototype.touch = function(x, y) {
 
         if(button.touch(x - this.x, y - this.y)) {
             this.setAsInteger(button.value, 4);
-            this.outs[1].set(true);
+            this.setPressedOut(true);
         }
     }
 
@@ -342,13 +381,13 @@ Pad.prototype.touch = function(x, y) {
  */
 Pad.prototype.set = function(value) {
     this.value.set(value);
-    this.outs[0].set(this.value.get());
+    this.setOuts();
     this.updateUI();
 };
 
 Pad.prototype.setAsInteger = function(value) {
     this.value.setAsInteger(value, this.bits);
-    this.outs[0].set(this.value.get());
+    this.setOuts();
     this.updateUI();
 }
 
@@ -364,7 +403,29 @@ Pad.prototype.updateUI = function() {
 Pad.prototype.setAsString = function(value, parseonly) {
     this.value.setAsString(value, parseonly);
     if (!parseonly) {
+        this.setOuts();
+    }
+}
+
+Pad.prototype.setOuts = function() {
+    if(this.bus) {
         this.outs[0].set(this.value.get());
+    } else {
+        for(let b=0; b<this.bits; b++) {
+            this.outs[b].set(this.value.getBit(b));
+        }
+    }
+}
+
+/**
+ * Set the button pressed output to a given value.
+ * @param value Value to set
+ */
+Pad.prototype.setPressedOut = function(value) {
+    if(this.bus) {
+        this.outs[1].set(value);
+    } else {
+        this.outs[this.bits].set(value);
     }
 }
 
@@ -374,7 +435,7 @@ Pad.prototype.mouseUp = function() {
         button.untouch();
     });
 
-    this.outs[1].set(false);
+    this.setPressedOut(false);
 };
 
 
@@ -383,9 +444,10 @@ Pad.prototype.mouseUp = function() {
  * @returns {*}
  */
 Pad.prototype.save = function() {
-    var obj = Component.prototype.save.call(this);
+    const obj = Component.prototype.save.call(this);
     this.value.save(obj);
     obj.pad = this.pad;
+    obj.bus = this.bus;
     return obj;
 };
 
@@ -395,6 +457,7 @@ Pad.prototype.save = function() {
  */
 Pad.prototype.load = function(obj) {
     this.value.load(obj);
+    this.bus = obj.bus !== false;
     this.setType(obj.pad);
     Component.prototype.load.call(this, obj);
 };
@@ -403,18 +466,30 @@ Pad.prototype.properties = function(main) {
     const dlg = new ComponentPropertiesDlg(this, main);
     const id = dlg.uniqueId();
 
-    const html = `<div class="control">
+    let html = '<div class="control center"><div class="choosers">';
+
+    html += `
 <label><input type="radio" name="${id}" value="16" ${this.pad === 16 ? 'checked' : ''}> 16 Buttons (Hex)</label>
 <label><input type="radio" name="${id}" value="10" ${this.pad === 10 ? 'checked' : ''}> 10 Buttons </label>
 <label><input type="radio" name="${id}" value="8" ${this.pad === 8 ? 'checked' : ''}> 8 Buttons </label>
 <label><input type="radio" name="${id}" value="4" ${this.pad === 4 ? 'checked' : ''}> 4 Buttons </label>
 <label><input type="radio" name="${id}" value="12" ${this.pad === 12 ? 'checked' : ''}> Phone (12 buttons)</label>
-</div>`;
+`;
+
+    html += '<br>';
+
+    const busId = dlg.uniqueId();
+    html += `
+<label><input type="radio" name="${busId}"  ${this.bus ? 'checked' : ''} value="1"> Bus Output</label>
+<label><input type="radio" name="${busId}" ${!this.bus ? 'checked' : ''} value="0"> Single Bit Outputs</label>`;
+
+    html += '</div></div>';
 
     dlg.extra(html, () => {
         return null;
     }, () => {
-        this.setType(document.querySelector(`input[name=${id}]:checked`).value);  // $(`input[name=${id}]:checked`).val());
+        this.bus = document.querySelector(`input[name=${busId}]:checked`).value === '1';
+        this.setType(document.querySelector(`input[name=${id}]:checked`).value);
     });
 
     dlg.open();

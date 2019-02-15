@@ -34,7 +34,7 @@ LED.type = "LED";        ///< Name to use in files
 LED.label = "LED";          ///< Label for the palette
 LED.desc = "Light Emitting Diode";    ///< Description for the palette
 LED.img = "led.png";       ///< Image to use for the palette
-LED.order = 31;             ///< Order of presentation in the palette
+LED.order = 102;             ///< Order of presentation in the palette
 LED.description = '<h2>LED</h2><p>An LED indicates if the input is true (color), false ' +
     '(black), or undefined (?). The LED color can be set using the component properties dialog' +
     ' box.</p>';

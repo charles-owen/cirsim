@@ -14,7 +14,7 @@ export const PaletteImage = function(width, height) {
     this.height = height;
     this.scale = width / 60;
 
-    var canvasHeight = height / this.scale;
+    const canvasHeight = height / this.scale;
 
     this.element = document.createElement('canvas');
     this.element.style.width = '60px';
@@ -90,11 +90,11 @@ PaletteImage.prototype.io = function(x, y, dir, cnt, dy) {
     x += this.width/2;
     y += this.height/2;
 
-    for(var i=0; i<cnt; i++) {
+    for(let i=0; i<cnt; i++) {
         this.context.beginPath();
         this.context.moveTo(x, y);
 
-        var len = 6 * this.scale;
+        const len = 6 * this.scale;
         switch(dir) {
             case 'w':
             case 'W':
@@ -121,6 +121,27 @@ PaletteImage.prototype.io = function(x, y, dir, cnt, dy) {
 
         y += dy;
     }
+}
+
+PaletteImage.prototype.clock = function(x, y, dir) {
+    this.io(x, y, dir);
+    this.context.beginPath();
+
+    const wid = 3;
+
+    x += this.width/2;
+    y += this.height/2;
+
+    switch(dir) {
+        case 'n':
+        case 'N':
+            this.context.moveTo(x - wid, y);
+            this.context.lineTo(x, y + wid);
+            this.context.lineTo(x + wid, y);
+            break;
+    }
+
+    this.context.stroke();
 }
 
 /**

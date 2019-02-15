@@ -37,7 +37,7 @@ BusConstant.description = '<h2>Bus Constant Value</h2><p>A Bus Constant is' +
     'values.</p>' +
     '<p>The display and input format is selectable. Auto format will display values ' +
     'with eight or fewer digits as binary and larger values in hex.</p>';
-BusConstant.order = 105;
+BusConstant.order = 301;
 
 
 /**

@@ -37,7 +37,7 @@ TrafficLight.desc = "Traffic Light";    ///< Description for the palette
 TrafficLight.img = "trafficlight.png";       ///< Image to use for the palette
 TrafficLight.description = `<h2>Traffic Light</h2><p>The Traffic Light component has indicators 
 for Red, Yellow, and Green as in a conventional traffic light.</p>`;
-TrafficLight.order = 300;
+TrafficLight.order = 504;
 TrafficLight.help = 'trafficlight';
 
 

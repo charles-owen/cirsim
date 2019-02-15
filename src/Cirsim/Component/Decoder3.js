@@ -2,6 +2,7 @@ import {Component} from '../Component';
 
 /**
  * Component: 3-8 decoder
+ * @deprecated - use BusDecoder
  */
 export const Decoder3 = function() {
     Component.call(this);
@@ -29,7 +30,7 @@ Decoder3.desc = "3-to-8 Decoder";       ///< Description for the palette
 Decoder3.img = "decoder3.png";         ///< Image to use for the palette
 Decoder3.description = `<h2>3-to-8 decoder</h2>
 <p>Converts a 3-bit binary value on <strong>In</strong> to a true on one of eight output lines.</p>`;
-Decoder3.order = 309;
+Decoder3.order = 1000;
 
 /**
  * Compute the gate result

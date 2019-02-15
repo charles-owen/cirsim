@@ -52,6 +52,7 @@ Alu16.description = '<h2>16-bit ALU</h2><p>Simple example 16-bit ALU. A and ' +
     '<p>If Cin is not connected, it is assumed to be false.</p>' +
     '<p>The status bits in CPSR are: 0:N, 1:Z, 2:C, 3:V</p>';
 Alu16.help = 'alu16';
+Alu16.order = 706;
 
 /**
  * Compute the gate result

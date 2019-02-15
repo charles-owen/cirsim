@@ -11,21 +11,21 @@ export const Pc16 = function() {
 
     this.height = 128;
     this.width = 64;
-    var w2 = this.width / 2;
-    var h2 = this.height / 2;
+    const w2 = this.width / 2;
+    const h2 = this.height / 2;
 
     this.value = 0;
 
     this.lastClk = false;
     this.ba = 0;
 
-    var clk = this.addIn(0, -h2, 8);
+    const clk = this.addIn(0, -h2, 8);
     clk.orientation = 'n';
     clk.clock = true;
 
     this.addIn(-w2, -32, 16, "BA").bus = true;
     this.addIn(-w2, 32, 16, "B");
-    var res = this.addIn(0, h2, 8, "R");
+    const res = this.addIn(0, h2, 8, "R");
     res.orientation = 's';
 
     this.addOut(w2, -32, 16, "PC").bus = true;
@@ -41,10 +41,9 @@ Pc16.type = "Pc16";            ///< Name to use in files
 Pc16.label = "Program Counter";           ///< Label for the palette
 Pc16.desc = "Program Counter";       ///< Description for the palette
 Pc16.img = "pc16.png";         ///< Image to use for the palette
-Pc16.description = `<h2>Program Counter</h2><p>Simple 16-bit program counter (PC). Each clock rising 
-edge increments the PC by 2 bytes (16 bits). If B is true when the clock edge falls, the signed value 
-in BA (branch address) plus 2 is added to the PC.</p>`;
-Pc16.order = 705;
+Pc16.description = `<h2>Program Counter</h2><p>Simple 16-bit program counter (PC). If B is true when 
+the clock edge rises, the signed value in BA (branch address) plus 2 is added to the PC.</p>`;
+Pc16.order = 702;
 Pc16.help = 'pc16';
 
 /**
@@ -61,8 +60,8 @@ Pc16.prototype.compute = function(state) {
             // Store the branch offset
             this.ba = Connector.busValueToDecimal(state[1]);
             this.value += 2;
-        } else if(!state[0] && this.lastClk) {
-            // Trailing edge
+
+            // Clock in BA if the B input is set
             if(state[2]) {
                 if(this.ba !== null) {
                     // Branching!
@@ -74,9 +73,9 @@ Pc16.prototype.compute = function(state) {
 
     this.value &= 0xffff;
 
-    var o = this.value;
-    var data = [];
-    for(var i=0; i<16; i++) {
+    let o = this.value;
+    let data = [];
+    for(let i=0; i<16; i++) {
         data.push((o & 1) == 1);
         o >>= 1;
     }

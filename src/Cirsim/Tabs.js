@@ -12,7 +12,7 @@ export const Tabs = function(main) {
     this.active = -1;
 
     // The collection of tabs
-    var tabs = [];
+    let tabs = [];
 
     //
     // The structure: <div class="tabs"><ul></ul><div class="panes"></div></div>
@@ -22,6 +22,10 @@ export const Tabs = function(main) {
     //
 
     let tabsDiv = null, ul = null, panesDiv = null;
+
+    this.size = function() {
+        return tabs.length;
+    }
 
 	/**
      * Create the tabs system
@@ -191,7 +195,7 @@ export const Tabs = function(main) {
             Tools.removeClass(tab.pane, 'selected');
         });
 
-        this.active = num;
+        this.active = +num;
         let tab = tabs[this.active];
 
         Tools.addClass(tab.li, 'selected');
@@ -276,8 +280,7 @@ export const Tabs = function(main) {
     }
 
     this.rename = function(name) {
-        let circuit = this.currentCircuit();
-        circuit.setName(name);
+        main.model.circuits.rename(this.active, name);
         this.sync();
     }
 

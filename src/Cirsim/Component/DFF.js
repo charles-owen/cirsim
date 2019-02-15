@@ -35,7 +35,7 @@ DFF.prototype.constructor = DFF;
 DFF.type = "DFF";            ///< Name to use in files
 DFF.label = "D Flip-Flop";           ///< Label for the palette
 DFF.desc = "D Flip-Flop";       ///< Description for the palette
-DFF.order = 20;               ///< Order of presentation in the palette
+DFF.order = 204;               ///< Order of presentation in the palette
 DFF.description = '<h2>D Flip-Flop</h2><p>D Flip-Flop.</p>';
 
 /**

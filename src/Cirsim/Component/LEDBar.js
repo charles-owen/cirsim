@@ -34,7 +34,7 @@ LEDBar.img = "ledbar.png";         ///< Image to use for the palette
 LEDBar.description = `<h2>LED Bar</h2><p>The LED Bar component displays from two to 
 sixteen LEDs in a vertical or horizontal bar that are lighted by values on discrete inputs
 or a single bus input. </p>`;
-LEDBar.order = 110;
+LEDBar.order = 502;
 LEDBar.help = 'ledbar';
 
 LEDBar.prototype.setSize = function(size) {
@@ -95,7 +95,7 @@ LEDBar.prototype.load = function(obj) {
  * @returns {*}
  */
 LEDBar.prototype.save = function() {
-    var obj = Component.prototype.save.call(this);
+    const obj = Component.prototype.save.call(this);
     obj.size = this.size;
     obj.color = this.color;
     obj.horz = this.horz;
@@ -153,16 +153,15 @@ LEDBar.prototype.ensureIO = function() {
 			    let inp = null;
 			    if(i < this.ins.length) {
 				    inp = this.ins[i];
-
-				    inp.y = this.height / 2;
-				    inp.x = pinX;
-				    inp.len = pinLen;
 			    } else {
 				    // Add any new pins
-				    inp = this.addIn(pinX, -this.height / 2, pinLen);
+				    inp = this.addIn(pinX, this.height / 2, pinLen);
 			    }
 
 			    if(inp !== null) {
+			    	inp.x = pinX;
+			    	inp.y = this.height / 2;
+			    	inp.len = pinLen;
 				    inp.orientation = 's';
 				    inp.bus = false;
 			    }
@@ -290,32 +289,34 @@ LEDBar.prototype.draw = function(context, view) {
     }
 
     this.drawBox(context, 'none');
-
-
-    //this.drawName(context, -2, 5);
     this.drawIO(context, view);
 };
 
 LEDBar.prototype.properties = function(main) {
     const dlg = new ComponentPropertiesDlg(this, main);
+
+    // Size
     const sizeId = dlg.uniqueId();
     let html = `<div class="control1 center"><label for="${sizeId}">Size: </label>
 <input class="number" type="text" name="${sizeId}" id="${sizeId}" value="${this.size}"></div>`;
 
+    // Color
     const colorId = dlg.uniqueId();
     html += Led.colorSelector(colorId, this.color);
 
-    html += '<div class="control center"><div class="left" style="display: inline-block">';
+    html += '<div class="control center"><div class="choosers">';
 
 	const horzId = dlg.uniqueId();
     html += `
-<input type="radio" name="${horzId}" ${!this.horz ? 'checked' : ''} value="0"> Vertical<br>
-<input type="radio" name="${horzId}"  ${this.horz ? 'checked' : ''} value="1"> Horizontal<br><br>`;
+<label><input type="radio" name="${horzId}" ${!this.horz ? 'checked' : ''} value="0"> Vertical</label>
+<label><input type="radio" name="${horzId}"  ${this.horz ? 'checked' : ''} value="1"> Horizontal</label>`;
+
+    html += '<br>';
 
     const busId = dlg.uniqueId();
 	html += `
-<input type="radio" name="${busId}"  ${this.bus ? 'checked' : ''} value="1"> Bus Input<br>
-<input type="radio" name="${busId}" ${!this.bus ? 'checked' : ''} value="0"> Single Bit Input`;
+<label><input type="radio" name="${busId}"  ${this.bus ? 'checked' : ''} value="1"> Bus Input</label>
+<label><input type="radio" name="${busId}" ${!this.bus ? 'checked' : ''} value="0"> Single Bit Inputs</label>`;
 
 	html += '</div></div>';
 

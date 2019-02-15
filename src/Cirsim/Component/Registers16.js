@@ -10,8 +10,8 @@ export const Registers16 = function() {
 
     this.height = 176;
     this.width = 128;
-    var w2 = this.width / 2;
-    var h2 = this.height / 2;
+    const w2 = this.width / 2;
+    const h2 = this.height / 2;
 
     this.values = [0, 0, 0, 0, 0, 0, 0, 0];
 
@@ -23,7 +23,7 @@ export const Registers16 = function() {
     this.alu = 0;
 
 
-    var clk = this.addIn(0, -h2, 8);
+    const clk = this.addIn(0, -h2, 8);
     clk.orientation = 'n';
     clk.clock = true;
 
@@ -32,7 +32,7 @@ export const Registers16 = function() {
     this.addIn(-w2, 48, 16, "Be").bus = true;
     this.addIn(-w2, -32, 16, "ALUe").bus = true;
 
-    var reset = this.addIn(0, this.height / 2, 8, "R");
+    const reset = this.addIn(0, this.height / 2, 8, "R");
     reset.orientation = 's';
 
     this.addIn(-w2, -16, 16, 'W');
@@ -57,9 +57,9 @@ Registers16.description = `<h2>Registers</h2>
 the A and B outputs. ALU is the input from the ALU. ALUe chooses which register to write. 
 A register will only be written if W (write enable) is high.</p><p>R is a reset input and is optional. 
 The R input (reset) sets all registers to zero.</p>
-<p>The register file latches in the ALU result on the clock <em>leading edge</em> and sets the 
-register on the clock trailing edge.</p>`;
-Registers16.order = 701;
+<p>The register file sets the 
+register on the clock <em>leading edge.</em></p>`;
+Registers16.order = 700;
 Registers16.help = 'registers16';
 
 /**
@@ -75,10 +75,9 @@ Registers16.prototype.compute = function(state) {
     this.lastW = state[6];  // W
 
     if(state[0] && !this.lastClk) {
-        // Leading edge
+        // Clock leading edge
         this.alu = Connector.busValueToDecimal(state[1]);
-    } else if(!state[0] && this.lastClk) {
-        // Trailing edge
+
         if(this.lastALU !== null && this.lastW) {
             this.values[this.lastALU] = this.alu;
         }
@@ -90,9 +89,9 @@ Registers16.prototype.compute = function(state) {
     }
 
     if(this.lastA !== null) {
-        var o = this.values[this.lastA];
-        var data = [];
-        for(var i=0; i<16; i++) {
+        let o = this.values[this.lastA];
+        const data = [];
+        for(let i=0; i<16; i++) {
             data.push((o & 1) == 1);
             o >>= 1;
         }
@@ -104,9 +103,9 @@ Registers16.prototype.compute = function(state) {
 
 
     if(this.lastB !== null) {
-        var o = this.values[this.lastB];
-        var data = [];
-        for(var i=0; i<16; i++) {
+        let o = this.values[this.lastB];
+        const data = [];
+        for(let i=0; i<16; i++) {
             data.push((o & 1) == 1);
             o >>= 1;
         }
@@ -117,15 +116,16 @@ Registers16.prototype.compute = function(state) {
     }
 
     this.lastClk = state[0];
-};
+}
 
 /**
  * Clone this component object.
  * @returns {Registers16}
  */
 Registers16.prototype.clone = function() {
-    var copy = new Registers16();
+    const copy = new Registers16();
     copy.copyFrom(this);
+    copy.values = this.values.slice();
     return copy;
 };
 
@@ -176,7 +176,11 @@ Registers16.prototype.draw = function(context, view) {
     this.drawIO(context, view);
 };
 
-
+/**
+ * Set the register as a string.
+ * This is used for testing/validation of register contents
+ * @param value
+ */
 Registers16.prototype.setAsString = function(value) {
     if(value === null) {
         return;
@@ -186,14 +190,14 @@ Registers16.prototype.setAsString = function(value) {
         this.values = [0, 0, 0, 0, 0, 0, 0, 0];
         this.pending();
     } else if(value.substr(0, 1) === 'r') {
-        var reg = parseInt(value.substr(1, 1));
+        const reg = parseInt(value.substr(1, 1));
         if(reg < 0 || reg > 7) {
             throw "Invalid register indicated in test " + value;
         }
-        var expected = parseInt(value.substr(3));
+        const expected = parseInt(value.substr(3));
         if(expected != this.values[reg]) {
-            throw "Incorrect register values. Register r" + reg + " expected=" +
-                Util.toHex(expected, 4) + " actual=" +
+            throw "Incorrect register values. Register r" + reg + " expected=0x" +
+                Util.toHex(expected, 4) + " actual=0x" +
                 Util.toHex(this.values[reg], 4);
         }
     }

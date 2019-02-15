@@ -151,9 +151,13 @@ Circuit.prototype.newTab = function() {
         // we have selected a new tab. This is
         // important for the reference component.
         component.newTab();
+    }
+}
 
+Circuit.prototype.recompute = function() {
+    for(let i=0;  i<this.components.length; i++) {
         // Ensure everything get recomputed
-        component.pending();
+        this.components[i].pending();
     }
 }
 
@@ -453,4 +457,28 @@ Circuit.prototype.moveToFront = function(component) {
 			break;
 		}
 	}
+}
+
+/**
+ * Return all CircuitRef components that refer to a circuit
+ * @param circuit Circuit we are testing. If omitted, all CircuitRef components are returned.
+ * @return array of CircuitRef components.
+ */
+Circuit.prototype.references = function(circuit) {
+    let references = [];
+
+    for(let component of this.components) {
+        if(component instanceof CircuitRef) {
+            if(circuit !== undefined) {
+                if(component.circuitName === circuit.name) {
+                    references.push(component);
+                }
+            } else {
+                references.push(component);
+            }
+
+        }
+    }
+
+    return references;
 }

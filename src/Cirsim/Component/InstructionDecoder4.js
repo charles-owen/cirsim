@@ -36,6 +36,7 @@ InstructionDecoder4.img = "insdecoder4.png";         ///< Image to use for the p
 InstructionDecoder4.description = '<h2>Instruction Decoder</h2><p>Simple example' +
     ' instruction decoder. Decodes assembly statements into register and ALU operations.</p>';
 InstructionDecoder4.help = 'instructiondecoder4';
+InstructionDecoder4.order = 600;
 
 /**
  * Compute the gate result

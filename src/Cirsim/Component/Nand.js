@@ -18,7 +18,7 @@ Nand.prototype.constructor = Nand;
 Nand.type = "Nand";            ///< Name to use in files
 Nand.label = "NAND";           ///< Label for the palette
 Nand.desc = "NAND gate";       ///< Description for the palette
-Nand.order = 12;               ///< Order of presentation in the palette
+Nand.order = 16;               ///< Order of presentation in the palette
 Nand.description = '<h2>NAND Gate</h2><p>The output of a NAND ' +
     'gate is <em>false</em> if and only if both' +
     ' inputs are true.</p>';

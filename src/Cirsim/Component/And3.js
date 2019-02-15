@@ -26,7 +26,7 @@ And3.prototype.constructor = And3;
 And3.type = "And3";            ///< Name to use in files
 And3.label = "AND";           ///< Label for the palette
 And3.desc = "3-Input AND gate";       ///< Description for the palette
-And3.order = 11.5;               ///< Order of presentation in the palette
+And3.order = 12;               ///< Order of presentation in the palette
 And3.description = '<h2>AND Gate</h2><p>The output of a three-input AND ' +
     'gate is <em>true</em> if all three' +
     ' inputs are true.</p>';

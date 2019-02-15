@@ -41,7 +41,7 @@ Or.type = "Or";            ///< Name to use in files
 Or.label = "OR";           ///< Label for the palette
 Or.desc = "OR gate";       ///< Description for the palette
 // Or.img = "or.png";         ///< Image to use for the palette
-Or.order = 15;               ///< Order of presentation in the palette
+Or.order = 20;               ///< Order of presentation in the palette
 Or.description = `<h2>OR Gate</h2><p>The output of an OR gate is <em>true</em> 
 if either or both inputs are true. Otherwise, it is false.</p>`;
 Or.help = 'or';

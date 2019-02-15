@@ -48,7 +48,7 @@ to the letters indicated in this table:</p>
 <tr><td>f</td><td>W</td></tr>
 </table>
 `;
-Letters16.order = 500;
+Letters16.order = 510;
 
 
 /**

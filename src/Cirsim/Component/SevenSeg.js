@@ -47,7 +47,7 @@ SevenSeg.type = "7seg";        ///< Name to use in files
 SevenSeg.label = "7 SEG";          ///< Label for the palette
 SevenSeg.desc = "7 Segment Display";    ///< Description for the palette
 SevenSeg.img = "7seg.png";       ///< Image to use for the palette
-SevenSeg.order = 40;             ///< Order of presentation in the palette
+SevenSeg.order = 508;             ///< Order of presentation in the palette
 SevenSeg.description = '<h2>7 Seg</h2><p>A 7 segment display has seven different display' +
     ' positions that can be set independently to make numbers and other characters. The en (enable) pin' +
     ' enables the display if true or if not connected.</p>';

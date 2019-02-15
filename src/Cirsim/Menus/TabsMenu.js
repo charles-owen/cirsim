@@ -16,6 +16,8 @@ export const TabsMenu = function(menu, main) {
 <li><a class="tabs-properties"><span class="icons-cl icons-cl-wrench"></span>Properties...</a></li>
 <li><a class="tabs-add"><span class="icons-cl icons-cl-play"></span>Add...</a></li>
 <li><a class="tabs-delete"><span class="icons-cl icons-cl-close"></span>Delete...</a></li>
+<li><a class="tabs-left"><span class="icons-cl icons-cl-arrowthick-1-w"></span>Move Left</a></li>
+<li><a class="tabs-right"><span class="icons-cl icons-cl-arrowthick-1-e"></span>Move Right</a></li>
 </ul>
 </li>`;
     }
@@ -35,18 +37,35 @@ export const TabsMenu = function(menu, main) {
 
 
     this.activate = function() {
-	    menu.click('.tabs-add', (event) => {
+	    menu.click('.tabs-add', () => {
 		    let dlg = new TabAddDlg(main.tabs);
 		    dlg.open();
 	    });
 
-	    menu.click('.tabs-delete', (event) => {
+	    menu.click('.tabs-delete', () => {
             del();
 	    });
 
-	    menu.click('.tabs-properties', (event) => {
+	    menu.click('.tabs-properties', () => {
 		    let dlg = new TabPropertiesDlg(main.tabs);
 		    dlg.open();
+	    });
+
+	    menu.click('.tabs-left', () => {
+		    const tabs = main.tabs;
+
+		    if(main.model.circuits.moveLeft(tabs.active)) {
+				tabs.sync();
+		    }
+	    });
+
+
+	    menu.click('.tabs-right', () => {
+		    const tabs = main.tabs;
+
+		    if(main.model.circuits.moveRight(tabs.active)) {
+			    tabs.sync();
+		    }
 	    });
     }
 
@@ -55,7 +74,12 @@ export const TabsMenu = function(menu, main) {
      * Set the state of the menu so it will be valid when shown.
      */
     this.opening = function() {
-        menu.enable('.tabs-delete', main.tabs.active > 0);
+    	const tabs = main.tabs;
+		const circuits = main.model.circuits;
+
+	    menu.enable('.tabs-delete', circuits.canDelete(tabs.active));;
+        menu.enable('.tabs-left', circuits.canMoveLeft(tabs.active));;
+        menu.enable('.tabs-right', circuits.canMoveRight(tabs.active));;
     }
 
 }

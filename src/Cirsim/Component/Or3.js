@@ -42,7 +42,7 @@ Or3.type = "Or3";            ///< Name to use in files
 Or3.label = "OR";           ///< Label for the palette
 Or3.desc = "OR gate";       ///< Description for the palette
 //Or3.img = "or3.png";         ///< Image to use for the palette
-Or3.order = 15.3;               ///< Order of presentation in the palette
+Or3.order = 21;               ///< Order of presentation in the palette
 Or3.description = '<h2>OR Gate</h2><p>The output of a three-input OR ' +
     'gate is <em>true</em> if any of of the' +
     ' inputs are true. Otherwise, it is false.</p>';

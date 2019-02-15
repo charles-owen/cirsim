@@ -13,7 +13,45 @@ Be determines what register is enabled to bus B or if the immediate output is
 	<li>nop - No operation</li>
 	<li>mov rd, rs - Mov content from register rs to register rd</li>
 	<li>mov rd, #value - Move immediate value to register rd</li>
-	<li>add rd, ra, rb - rd = ra + rb</li>
+</ul>
 
+<p>There are five outputs:</p>
+<ul>
+	<li>Ae - What register to enable onto the A bus</li>
+	<li>Be - What register to enable onto the B bus</li>
+	<li>ALUe - What register to write from the ALU bus</li>
+	<li>Im - Any immediate value in the instruction</li>
+	<li>C - The command to the ALU - what operation to perform</li>
+</ul>
+<p>The supported instructions are:</p>
+<table>
+	<tr><th>Ins</th><th>Usage</th><th>Description</th><th>C</th></tr>
+	<tr><td>nop</td><td>nop</td><td>Does nothing</td><td>111</td></tr>
+	<tr><td>mov</td><td>mov rd, rs</td><td>rd &larr; rs</td><td>000</td></tr>
+	<tr><td>mov</td><td>mov rd, #value </td><td>rd &larr; value</td><td>000</td></tr>
+	<tr><td>add</td><td>add rd, ra, rb</td><td>rd &larr; ra + rb</td><td>001</td></tr>
+	<tr><td>sub</td><td>sub rd, ra, rb</td><td>rd &larr; ra - rb</td><td>010</td></tr>
+	<tr><td>and</td><td>and rd, ra, rb</td><td>rd &larr; ra & rb</td><td>011</td></tr>
+	<tr><td>or</td><td>or rd, ra, rb</td><td>rd &larr; ra | rb</td><td>100</td></tr>
+	<tr><td>sll</td><td>sll rd, ra, rb</td><td>rd &larr; ra << rb (logical)</td><td>101</td></tr>
+	<tr><td>sla</td><td>sla rd, ra, rb</td><td>rd &larr; ra << rb (arithmetic)</td><td>110</td></tr>
+</table>
 
+<p>The nop command has no arguments. The mov command has two arguments and all other commands have three arguments. The third argument (second for a mov) can be a register or immediate value (signed decimal, only). </p>
+
+<p>Suppose you enter this instruction: add r1,r2,r3 The output pins for this instruction are set to:</p>
+<ul>
+	<li>Ae: 10 - This indicates that register r2 should be sent to the A bus</li>
+	<li>Be: 011 - This indicates that register r3 should be sent to the B bus</li>
+	<li>ALUe: 001 - This indicates the ALU result should be written to register r1. </li>
+	<li>Im - There is no immediate value for this instruction so this is ignored.</li>
+	<li>C: 001 - This is the binary code for ADD. </li>
+</ul>
+<p>For this instruction: sub r0,r2,#5, the outputs are set to:</p>
+<ul>
+	<li>Ae: 10 - This indicates that register r2 should be sent to the A bus</li>
+	<li>Be: 100 - This indicates that the immediate value (5) should be sent to the B bus</li>
+	<li>ALUe: 000 - This indicates the ALU result should be written to register r0. </li>
+	<li>Im: 0101 - This is the immediate value from the instruction.</li>
+	<li>C: 010 - This is the binary code for SUB. </li>
 </ul>

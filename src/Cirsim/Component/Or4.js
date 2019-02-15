@@ -44,7 +44,7 @@ Or4.type = "Or4";            ///< Name to use in files
 Or4.label = "OR";           ///< Label for the palette
 Or4.desc = "OR gate";       ///< Description for the palette
 //Or4.img = "or4.png";         ///< Image to use for the palette
-Or4.order = 15.5;               ///< Order of presentation in the palette
+Or4.order = 22               ///< Order of presentation in the palette
 Or4.description = '<h2>OR Gate</h2><p>The output of a four-input OR ' +
     'gate is <em>true</em> if any of of the' +
     ' inputs are true. Otherwise, it is false.</p>';

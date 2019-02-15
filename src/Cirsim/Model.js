@@ -25,6 +25,8 @@ Model.prototype.undo = function() {
     if(this.circuits.prev !== null) {
         this.circuits = this.circuits.prev;
     }
+
+   // this.recompute();
 };
 
 Model.prototype.backup = function() {
@@ -47,6 +49,11 @@ Model.prototype.getSimulation = function() {
 
 Model.prototype.newTab = function() {
     this.circuits.newTab();
+    this.recompute();
+}
+
+Model.prototype.recompute = function() {
+    this.circuits.recompute();
 }
 
 Model.prototype.addCircuit = function(name) {

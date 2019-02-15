@@ -28,7 +28,7 @@ OutPin.type = "OutPin";        ///< Name to use in files
 OutPin.label = "Out Pin";          ///< Label for the palette
 OutPin.desc = "Output Pin";    ///< Description for the palette
 OutPin.img = "outpin.png";       ///< Image to use for the palette
-OutPin.order = 2;             ///< Order of presentation in the palette
+OutPin.order = 3;             ///< Order of presentation in the palette
 OutPin.description = '<h2>Ouput Pin</h2><p>An OUT pin serves as output ' +
     'for a circuit. The LED indicates if the input is true (green), false ' +
     '(black), or undefined (?).</p>';

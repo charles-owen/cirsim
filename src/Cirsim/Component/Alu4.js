@@ -55,7 +55,7 @@ supported are:<p>
 <p>For the shift operations, negative values for B result in a right shift.<p>
 <p>The CPSR bits are VCZN (N is the lsb).</p>`;
 
-Alu4.order = 601;
+Alu4.order = 602;
 
 /**
  * Compute the gate result

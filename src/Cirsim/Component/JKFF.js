@@ -39,7 +39,7 @@ JKFF.type = "JKFF";            ///< Name to use in files
 JKFF.label = "JK Flip-Flop";           ///< Label for the palette
 JKFF.desc = "JK Flip-Flop";       ///< Description for the palette
 JKFF.img = "jk.png";         ///< Image to use for the palette
-JKFF.order = 21;               ///< Order of presentation in the palette
+JKFF.order = 208;               ///< Order of presentation in the palette
 JKFF.description = '<h2>JK Flip-Flop</h2><p>JK Flip-Flop.</p>';
 
 /**

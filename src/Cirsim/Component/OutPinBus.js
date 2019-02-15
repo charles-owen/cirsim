@@ -26,10 +26,10 @@ OutPinBus.prototype.prefix = "O";
 OutPinBus.prototype.nameRequired = true;
 
 OutPinBus.type = "OutPinBus";         ///< Name to use in files
-OutPinBus.label = "Bus Out";          ///< Label for the palette
+OutPinBus.label = "Bus Output";          ///< Label for the palette
 OutPinBus.desc = "Bus Output Pin";    ///< Description for the palette
 OutPinBus.img = "outpinbus.png";      ///< Image to use for the palette
-OutPinBus.order = 101;                ///< Order of presentation in the palette
+OutPinBus.order = 302;                ///< Order of presentation in the palette
 OutPinBus.description = `<h2>Bus Output Pin</h2>
 <p>An Bus Out pin serves as output for a bus in a circuit.</p>
 <p>The output format is selectable. Auto format will display values 

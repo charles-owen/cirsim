@@ -32,7 +32,7 @@ Button.type = "Button";        ///< Name to use in files
 Button.label = "Button";          ///< Label for the palette
 Button.desc = "Push Button";    ///< Description for the palette
 Button.img = "button.png";       ///< Image to use for the palette
-Button.order = 30;             ///< Order of presentation in the palette
+Button.order = 100;             ///< Order of presentation in the palette
 Button.description = '<h2>Push Button</h2><p>Clicking the button turns on' +
     ' the output (true), while releasing turns it off.</p>';
 

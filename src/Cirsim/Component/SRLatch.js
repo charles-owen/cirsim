@@ -28,7 +28,7 @@ SRLatch.type = "SRLatch";            ///< Name to use in files
 SRLatch.label = "SR Latch";           ///< Label for the palette
 SRLatch.desc = "SR Latch";       ///< Description for the palette
 //SRLatch.img = "sr.png";         ///< Image to use for the palette
-SRLatch.order = 18;               ///< Order of presentation in the palette
+SRLatch.order = 200;               ///< Order of presentation in the palette
 SRLatch.description = '<h2>SR Latch</h2><p>Set/Reset latch. The S input sets the output. The R input resets the output.</p>';
 
 /**

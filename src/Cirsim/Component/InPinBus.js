@@ -32,7 +32,7 @@ InPinBus.type = "InPinBus";         ///< Name to use in files
 InPinBus.label = "Bus Input";       ///< Label for the palette
 InPinBus.desc = "Bus Input Pin";    ///< Description for the palette
 InPinBus.img = "inpinbus.png";      ///< Image to use for the palette
-InPinBus.order = 100;               ///< Order of presentation in the palette
+InPinBus.order = 300;               ///< Order of presentation in the palette
 InPinBus.description = '<h2>Bus Input Pin</h2><p>A Bus Input pin serves as input ' +
     'for a circuit from a bus. Double-click to set the value.</p>' +
     '<p>Values can be preceeded by 0x or 0b for hexadecimal or binary ' +

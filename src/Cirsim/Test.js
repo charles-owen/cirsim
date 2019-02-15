@@ -8,8 +8,6 @@ import {TestException} from './TestException';
  * @param main The Test object
  */
 export const Test = function(main) {
-    var that = this;
-
     /// The main object
     this.main = main;
 
@@ -194,8 +192,8 @@ export const Test = function(main) {
                             expected = value.getAsBinary();
                             if(isString(expected)) {
                                 // j and k index the last letters in actual and expected
-                                var j = actual.length - 1;
-                                var k = expected.length - 1;
+                                let j = actual.length - 1;
+                                let k = expected.length - 1;
     
                                 // Test from the right end of both results so we
                                 // ensure we are testing the same bits.
@@ -230,13 +228,25 @@ export const Test = function(main) {
                             // Success
                         } else { 
                             // Failure
-                            console.log("Test: " + testNum + " Actual: " + actual + " Expected: "
+                            console.log(test);
+                            console.log("Test: " + testNum + " Output " + outputs[i].component.naming + " Actual: " + actual + " Expected: "
                                 + expected);
-                            failure('<p>This test is failing. Some output is not what is currently' +
-                                ' expected by the test. The circuit is left in the state it was' +
-                                ' in when the test failed. No additional detail will be provided about why ' +
-                                'the test is failed. It is your responsibility to create a ' +
-                                'circuit that works as expected.</p>');
+                            if(test.quiet === true) {
+                                failure('<div class="cirsim-test-result"><p>This test is failing. Some output is not what is currently' +
+                                    ' expected by the test. The circuit is left in the state it was' +
+                                    ' in when the test failed. No additional detail will be provided about why ' +
+                                    'the test is failed. It is your responsibility to create a ' +
+                                    'circuit that works as expected.</p></div>');
+                            } else {
+
+                                failure(`<div class="cirsim-test-result"><p>This test is failing. An output value is 
+not what is currently expected by the test. The circuit is left in the state it was 
+in when the test failed.<p>
+<p class="cs-result">Output ${outputs[i].component.naming} expected: ${expected} actual: ${actual}</p>
+<p class="cs-info">Test ${testNum}</p></div>
+`);
+                            }
+
                             return;
                         }
                     }
@@ -259,7 +269,8 @@ export const Test = function(main) {
                                 try {
                                     inputs[i].setAsString(t[i]);
                                 } catch(msg) {
-                                    failure('<p>This test is failing. ' + msg + '</p>');
+                                    failure(`<div class="cirsim-test-result"><p>This test is failing.${msg}</p>
+<p class="cs-info">Test ${testNum}</p></div>`);
                                     return;
                                 }
                             }

@@ -19,7 +19,8 @@ export const ImportTabDialog = function(importer, options, toast) {
         Dialog.prototype.open.call(this);
 
         const open = options.getAPI('import');
-        const extra = open.extra;
+        const extra = {};
+        Object.assign(extra, open.extra);
         Object.assign(extra, importer.extra);
 
         if(open !== null) {

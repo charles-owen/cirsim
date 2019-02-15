@@ -24,7 +24,7 @@ Inverter.prototype.constructor = Inverter;
 Inverter.type = "Inverter";            ///< Name to use in files
 Inverter.label = "Inverter";           ///< Label for the palette
 Inverter.desc = "Inverter gate";       ///< Description for the palette
-Inverter.order = 13;               ///< Order of presentation in the palette
+Inverter.order = 50;               ///< Order of presentation in the palette
 Inverter.description = `<h2>Inverter</h2><p>The output of an Inverter gate is <em>true</em> if the 
  input is false and <em>false</em> if the input is true.</p>`;
 Inverter.help = 'inverter';

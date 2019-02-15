@@ -52,6 +52,7 @@ export const Options = function(options) {
      * result: A results selector
      * circuit: A circuit selector
      * success: A value to set the results selector to on a success
+     * quiet: If true, don't provide actual/expected results
      *
      * If result is set, any element that matches that selector will
      * be set to 0 or the value of 'success' depending on the test failure/success
@@ -109,7 +110,7 @@ export const Options = function(options) {
 
     /// List of components that are always included even if specific components are
     /// specified in this.components.
-    this.always = ['Zero', 'One', 'InPin', 'OutPin', 'Clock', 'Button', 'LED'];
+    this.always = ['Zero', 'One', 'InPin', 'OutPin', 'Clock', 'Button', 'LED', 'Text'];
 
     /// Display all output states
     this.showOutputStates = false;
@@ -139,7 +140,7 @@ export const Options = function(options) {
             if(this.api[mode] !== undefined) {
  
                 // Mode is explicitly specified
-                var modeObj = this.api[mode];
+                const modeObj = this.api[mode];
                 if(modeObj.url === undefined) {
                     // Mode is not supported
                     return null;

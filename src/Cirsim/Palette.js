@@ -38,8 +38,13 @@ export const Palette = function(main, work) {
 			    if(palette !== null) {
 				    components = components.concat(palette);
 			    } else {
+			    	// Some component aliases
 			    	if(component.toLowerCase() === 'not') {
 			    		component = 'Inverter';
+				    }
+
+			    	if(component.toLowerCase() === 'decoder') {
+			    		component = 'BusDecoder';
 				    }
 				    
 				    components.push(component);

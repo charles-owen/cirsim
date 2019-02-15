@@ -1,4 +1,3 @@
-
 import {Sanitize} from './Utility/Sanitize';
 
 /**
@@ -35,11 +34,24 @@ Value.HEX = 2;    ///< Hexadecimal
 Value.FLOAT16 = 3;    ///< 16-bit Half Float
 
 /**
- * Get the current value from a binary array of (true/false)
+ * Get the current value as a binary array of (true/false)
  * @returns {*}
  */
 Value.prototype.get = function() {
     return this.value;
+}
+
+/**
+ * Get a single bit of the current binary value from the array.
+ * @param b
+ * @returns {*}
+ */
+Value.prototype.getBit = function(b) {
+    if(this.value.length <= b) {
+        return undefined;
+    }
+
+    return this.value[b];
 }
 
 /**
@@ -59,7 +71,7 @@ Value.prototype.set = function(val) {
 
 Value.prototype.setZero = function(size) {
     this.value = [];
-    for(var i=0; i<size; i++) {
+    for(let i=0; i<size; i++) {
         this.value.push(false);
     }
 }
@@ -343,7 +355,7 @@ Value.prototype.getAsInteger = function() {
  * @param size Number of bits
  */
 Value.prototype.setAsInteger = function(v, size) {
-    var value = [];
+    const value = [];
     for(let i=0; i<size; i++) {
         if(value.push((v & 1) === 1));
         v >>= 1;
@@ -364,7 +376,7 @@ Value.prototype.getAsHex = function() {
         return "?";
     }
 
-    var str = '';
+    let str = '';
 
     for(var i=0;  i<this.value.length;  i+=4) {
         var p = 1;

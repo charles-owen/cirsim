@@ -4,8 +4,9 @@ import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
 import {PaletteImage} from '../Graphics/PaletteImage';
 
 /**
- * Component: General purpose BUS decoder
-
+ * Component: General purpose decoder.
+ *
+ * Supports bus or single-bit inputs.
  * @constructor
  */
 export const BusDecoder = function() {
@@ -13,13 +14,33 @@ export const BusDecoder = function() {
 
     this.height = 100;
     this.width = 52;
-    this.lastOut = null;
+    this.value = null;
+
+    let bus = true;
+
+    Object.defineProperty(this,"bus",{
+        get: function() { return bus; },
+        set: function(value) {
+            if(bus !== value) {
+                if(this.ins[0].bus !== value) {
+                    for(let i=0; i<this.ins.length; i++) {
+                        this.ins[i].clear();
+                    }
+
+                    this.ins = [];
+                }
+
+                bus = value;
+                this.ensureIO();
+            }
+
+        }
+    });
 
     this.setSize(3);
 
     // Size output and one input
     this.circuitOuts = [];
-    this.addIn(-this.width/2, 0, 16, "In").bus = true;
     this.ensureIO();
 };
 
@@ -29,13 +50,13 @@ BusDecoder.prototype.constructor = BusDecoder;
 BusDecoder.prototype.prefix = 'U';
 
 BusDecoder.type = "BusDecoder";            ///< Name to use in files
-BusDecoder.label = "Bus Decoder";           ///< Label for the palette
-BusDecoder.desc = "Configurable Bus Decoder";       ///< Description for the palette
-BusDecoder.description = `<h2>Bus Decoder</h2>
-<p>The Bus Decoder component converts a 2 to 4-bit binary value on <strong>In</strong> 
+BusDecoder.label = "Decoder";           ///< Label for the palette
+BusDecoder.desc = "Configurable Decoder";       ///< Description for the palette
+BusDecoder.description = `<h2>Decoder</h2>
+<p>The Decoder component converts a 2 to 4-bit binary value on <strong>In</strong> 
 to a true on one of four to sixteen output lines. The number of outputs is determined 
 by the bit size and is configurable.</p>`;
-BusDecoder.order = 109;
+BusDecoder.order = 400;
 BusDecoder.help = 'busdecoder';
 
 BusDecoder.prototype.setSize = function(size) {
@@ -53,28 +74,56 @@ BusDecoder.prototype.setSize = function(size) {
  * @param state
  */
 BusDecoder.prototype.compute = function(state) {
-    if(Array.isArray(state[0])) {
+    if(this.bus) {
+        if(Array.isArray(state[0])) {
+            let c = 0;
+            let pow = 1;
+            for(let i=0; i<state[0].length; i++) {
+                c += (state[0][i] ? pow : 0);
+                pow *= 2;
+            }
+
+            this.set(c);
+        } else {
+            this.set(null);
+        }
+    } else {
         let c = 0;
         let pow = 1;
-        for(let i=0; i<state[0].length; i++) {
-            c += (state[0][i] ? pow : 0);
+        let undef = false;
+        for(let i=0; i<state.length; i++) {
+            if(state[i] === undefined) {
+                undef = true;
+                break;
+            }
+
+            c += (state[i] ? pow : 0);
             pow *= 2;
         }
 
+        this.set(undef ? null : c);
+    }
+
+};
+
+/**
+ * Set the value of this component.
+ * @param c Value to set.
+ */
+BusDecoder.prototype.set = function(c) {
+    if(c !== null && c !== undefined) {
+        c = c & (this.outputs - 1);
         for(let i=0; i<this.outputs; i++) {
             this.outs[i].set(i == c);
         }
-
-        this.lastOut = c;
-
     } else {
-        for(var i=0; i<this.outputs; i++) {
+        for(let i=0; i<this.outputs; i++) {
             this.outs[i].set(undefined);
         }
-
-        this.lastOut = null;
     }
-};
+
+    this.value = c;
+}
 
 
 
@@ -83,7 +132,8 @@ BusDecoder.prototype.compute = function(state) {
  * @returns {BusDecoder}
  */
 BusDecoder.prototype.clone = function() {
-    var copy = new BusDecoder();
+    const copy = new BusDecoder();
+    copy.bus = this.bus;
     copy.setSize(this.size);
     copy.copyFrom(this);
     return copy;
@@ -95,18 +145,78 @@ BusDecoder.prototype.clone = function() {
  * defined bus size.
  */
 BusDecoder.prototype.ensureIO = function() {
-    var spacing = 16;
+    const spacing = 16;
+    const pinLen = 14;
+    let i;
+    let recompute = false;
 
     this.height = this.outputs * spacing + 26;
     if(this.height < 80) {
         this.height = 80;
     }
 
-    var x = this.width / 2;
+    //
+    // Inputs
+    //
+    if(this.ins.length > 0) {
+        //
+        // Test if we switched input types
+        // If so, disconnect everything and zero the inputs
+        //
+        if(this.ins[0].bus !== this.bus) {
+            for(i=0; i<this.ins.length; i++) {
+                this.ins[i].clear();
+            }
 
-    var startY = this.outputs / 2 * spacing - 8;
+            this.ins = [];
+        }
+    }
 
-    for(var i=0; i<this.outputs; i++) {
+    if(this.bus) {
+        if(this.ins.length < 1) {
+            this.addIn(-this.width / 2, 0, pinLen, "In").bus = true;
+            recompute = true;
+        }
+    } else {
+        let startY = this.size / 2 * spacing - 8;
+
+        for(i=0; i<this.size; i++) {
+            let pinY = startY - i * spacing;
+
+            let inp = null;
+            if(i < this.ins.length) {
+                inp = this.ins[i];
+
+                inp.x = -this.width / 2;
+                inp.y = pinY;
+                inp.len = pinLen;
+            } else {
+                // Add any new pins
+                inp = this.addIn(-this.width / 2, pinY, pinLen, "I" + i);
+                recompute = true;
+                inp.orientation = 'w';
+            }
+        }
+
+        // Delete pins that have ceased to exist
+        if(i < this.ins.length) {
+            for( ; i<this.ins.length; i++) {
+                this.ins[i].clear();
+            }
+
+            this.ins.splice(this.size);
+        }
+    }
+
+
+    //
+    // Outputs
+    //
+    let x = this.width / 2;
+
+    let startY = this.outputs / 2 * spacing - 8;
+
+    for(i=0; i<this.outputs; i++) {
         if(i >= this.outs.length) {
             break;
         }
@@ -114,12 +224,13 @@ BusDecoder.prototype.ensureIO = function() {
         this.outs[i].name = "O" + i;
         this.outs[i].x = x;
         this.outs[i].y = startY - i * spacing;
-        this.outs[i].len = 16;
+        this.outs[i].len = pinLen;
     }
 
     // Add any new pins
     for(; i<this.outputs; i++) {
-        this.addOut(x, startY - i * spacing, 16, "O" + i);
+        this.addOut(x, startY - i * spacing, pinLen, "O" + i);
+        recompute = true;
     }
 
     // Delete pins that have ceased to exist
@@ -129,6 +240,10 @@ BusDecoder.prototype.ensureIO = function() {
         }
 
         this.outs.splice(this.outputs);
+    }
+
+    if(recompute) {
+        this.set(this.value);
     }
 }
 
@@ -151,9 +266,9 @@ BusDecoder.prototype.draw = function(context, view) {
     context.textAlign = "center";
     context.fillText("decoder", this.x, this.y + this.height/2 - 2);
 
-    if(this.lastOut !== null && this.lastOut >= 0 && this.lastOut < this.outputs) {
-        let y = this.outs[this.lastOut].y;
-        let rx = this.lastOut >= 10 ? 26 : 19;
+    if(this.value !== null && this.value >= 0 && this.value < this.outputs) {
+        let y = this.outs[this.value].y;
+        let rx = this.value >= 10 ? 26 : 19;
         this.jaggedLine(context, leftX + 15, this.y, rightX - rx, this.y + y, 0.5);
     }
 
@@ -167,6 +282,7 @@ BusDecoder.prototype.draw = function(context, view) {
  * @param obj Object from JSON
  */
 BusDecoder.prototype.load = function(obj) {
+    this.bus = obj["bus"] !== false;
     this.setSize(obj["size"]);
     Component.prototype.load.call(this, obj);
 };
@@ -177,25 +293,36 @@ BusDecoder.prototype.load = function(obj) {
  * @returns {*}
  */
 BusDecoder.prototype.save = function() {
-    var obj = Component.prototype.save.call(this);
+    const obj = Component.prototype.save.call(this);
     obj.size = this.size;
+    obj.bus = this.bus;
     return obj;
 };
 
 BusDecoder.prototype.properties = function(main) {
-    var dlg = new ComponentPropertiesDlg(this, main);
-    var id = dlg.uniqueId();
-    var html = `<div class="control1 center"><label for="${id}">Size (bits): </label>
+    const dlg = new ComponentPropertiesDlg(this, main);
+    const id = dlg.uniqueId();
+    let html = `<div class="control1 center"><label for="${id}">Size (bits): </label>
 <input class="number" type="text" name="${id}" id="${id}" value="${this.size}"></div>`;
 
+    html += '<div class="control center"><div class="choosers">';
+
+    const busId = dlg.uniqueId();
+    html += `
+<label><input type="radio" name="${busId}"  ${this.bus ? 'checked' : ''} value="1"> Bus Input</label>
+<label><input type="radio" name="${busId}" ${!this.bus ? 'checked' : ''} value="0"> Single Bit Inputs</label>`;
+
+    html += '</div></div>';
+
     dlg.extra(html, function() {
-        var size = parseInt(document.getElementById(id).value);
+        const size = parseInt(document.getElementById(id).value);
         if(isNaN(size) || size < 2 || size > 4) {
             return "Size must be an integer from 2 to 4";
         }
         return null;
     }, () => {
         this.setSize(document.getElementById(id).value);
+        this.bus = document.querySelector(`input[name=${busId}]:checked`).value === '1';
     });
 
     dlg.open();
@@ -205,7 +332,7 @@ BusDecoder.prototype.properties = function(main) {
  * Create a PaletteImage object for a the component
  */
 BusDecoder.paletteImage = function() {
-    var pi = new PaletteImage(60, 44);
+    const pi = new PaletteImage(60, 44);
 
     pi.box(20, 42);
     pi.io(10, -17.5, 'e', 8, 5);

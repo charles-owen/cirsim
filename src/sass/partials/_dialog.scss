@@ -1,6 +1,6 @@
 div.cirsim {
 
-  div.dialog-content {
+  div.cirsim-dlg-content{
     position: relative;
     padding: 0.5em;
     font-size: 0.95em;
@@ -98,6 +98,12 @@ div.cirsim {
       textarea {
         width: 100%;
       }
+
+      // Items that left align like radio buttons or checkboxes
+      div.choosers {
+        display: inline-block;
+        text-align: left;
+      }
     }
 
     // Controls with label to the left
@@ -141,7 +147,7 @@ div.cirsim {
       margin: 0 0 0.5em 0;
     }
 
-    p {
+    p, li {
       color: $secondary-text;
     }
 
@@ -160,7 +166,7 @@ div.cirsim {
       height: 75px;
     }
 
-    div.dialog-content {
+    div.cirsim-dlg-content {
       padding: 1em;
     }
 

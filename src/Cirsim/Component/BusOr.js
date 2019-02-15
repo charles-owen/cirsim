@@ -30,7 +30,7 @@ BusOr.img = "busor.png";         ///< Image to use for the palette
 BusOr.description = `<h2>Bus OR Gate</h2><p>The output of an OR gate is <em>true</em> 
 if either or both  inputs are true. Otherwise, it is false. This version works for 
 buses. The size determines the number of inputs.</p>`;
-BusOr.order = 107;
+BusOr.order = 308;
 
 
 /**

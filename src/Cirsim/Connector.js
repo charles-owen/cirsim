@@ -31,16 +31,15 @@ export const Connector = function(component, x, y, len, name, inv) {
     // If this is a CircuitRef connector, this will be set
     // to the ID of the referenced component
     this.reference = null;
+
+    /// Is this connector a clock? This applies to
+    /// inputs only. Clocks draw as a triangle instead of a label
+    this.clock = false;
 };
 
 /// Orientation of the input (n, s, e, or w)
 /// "w" means the connection is to the left of x,y
 Connector.prototype.orientation = "w";
-
-/// Is this connector a clock? This applies to
-/// inputs only. Clocks draw as a triangle instead of a label
-Connector.clock = false;
-
 
 Connector.prototype.single = function() {
     return true;

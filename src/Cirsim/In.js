@@ -8,6 +8,7 @@ import {Connector} from './Connector';
  * @param len Length in pixels to draw the connector
  * @param name Name to draw next to the connector
  * @param inv True (optional) if connector has a circle (inverse)
+ * @implements Connector
  * @constructor
  */
 export const In = function(component, x, y, len, name, inv) {

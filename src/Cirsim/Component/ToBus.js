@@ -32,7 +32,7 @@ ToBus.type = "ToBus";            ///< Name to use in files
 ToBus.label = "To Bus";           ///< Label for the palette
 ToBus.desc = "Single bits to a Bus";       ///< Description for the palette
 ToBus.img = "tobus.png";         ///< Image to use for the palette
-ToBus.order = 47;               ///< Order of presentation in the palette
+ToBus.order = 306;               ///< Order of presentation in the palette
 ToBus.description = '<h2>To Bus</h2><p>Converts single bit inputs into a ' +
     'bus output to simplify circuits</p>';
 

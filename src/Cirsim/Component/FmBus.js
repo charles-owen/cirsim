@@ -32,8 +32,8 @@ FmBus.type = "FmBus";            ///< Name to use in files
 FmBus.label = "Fm Bus";           ///< Label for the palette
 FmBus.desc = "Bus to Single bits";       ///< Description for the palette
 FmBus.img = "fmbus.png";         ///< Image to use for the palette
-FmBus.order = 48;               ///< Order of presentation in the palette
-FmBus.description = '<h2>To Bus</h2><p>Converts a bus input into single bit ' +
+FmBus.order = 305;               ///< Order of presentation in the palette
+FmBus.description = '<h2>From Bus</h2><p>Converts a bus input into single bit ' +
     'outputs. This allows for simpler circuits.</p>';
 
 /**

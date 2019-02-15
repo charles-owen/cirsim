@@ -15,8 +15,8 @@ export const Memory16 = function() {
 
     this.height = 132;
     this.width = 64;
-    var w2 = this.width / 2;
-    var h2 = this.height / 2;
+    const w2 = this.width / 2;
+    const h2 = this.height / 2;
 
     this.lastClk = false;
 
@@ -28,7 +28,7 @@ export const Memory16 = function() {
 
     this.addIn(-w2, -32, 16, "A").bus=true;
     this.addIn(-w2, 32, 16, "W").bus=true;
-    var clk = this.addIn(0, -h2, 14);
+    const clk = this.addIn(0, -h2, 14);
     clk.orientation = 'n';
     clk.clock = true;
     this.addOut(w2, -32, 16, "R").bus=true;
@@ -48,7 +48,7 @@ output. The component implements 16-bit memory,
 so all accesses are considered to be multiples of two and retrieve two bytes. Memory is retrieved in little-endian
 mode (first byte is the least significant byte).</p>
 <p>A clock cycle on the clock input writes the memory component with the value on the W (write) input.</p>`;
-Memory16.order = 706;
+Memory16.order = 704;
 Memory16.help = 'memory16';
 
 

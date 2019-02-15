@@ -29,7 +29,7 @@ Text.type = "Text";        ///< Name to use in files
 Text.label = "Text";          ///< Label for the palette
 Text.desc = "Arbitrary Text";    ///< Description for the palette
 Text.img = "text.png";       ///< Image to use for the palette
-Text.order = 45;             ///< Order of presentation in the palette
+Text.order = 106;             ///< Order of presentation in the palette
 Text.description = `<h2>Text</h2><p>Arbitrary text for diagrams. Allows for notations that help
 describe parts of diagrams. The text size in pixels can be specified, as can the colors from a 
 limited palette.</p><p>The color selection is overridden by the selection color (red) when the 

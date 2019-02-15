@@ -37,8 +37,9 @@ BusSelector.description = `<h2>Bus Selector</h2><p>A Bus Selector chooses some
 range of bits from an input bus and feeds them to an output bus. This is a  tool 
 to use to select fields from a bus.</p>
 <p>If configured as 4 to 8 (8:4 on the symbol), bits 4-8 becomes bits 0-4 on
-the output bus.</p>`;
-BusSelector.order = 108;
+the output bus. The output is a bus if more than one bit is selected and is a bit 
+if only one bit is selected.</p>`;
+BusSelector.order = 310;
 BusSelector.help = 'busselector';
 
 /**
