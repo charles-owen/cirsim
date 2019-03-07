@@ -6,6 +6,7 @@ import {Connection} from './Connection';
 import {ComponentPropertiesDlg} from './Dlg/ComponentPropertiesDlg';
 
 import DOMPurify from 'dompurify';
+import {Rect} from "./Utility/Rect";
 
 /**
  * Base object for a component in a circuit
@@ -276,6 +277,27 @@ Component.prototype.delete = function () {
 
     this.circuit.delete(this);
 };
+
+/**
+ * Compute a bounding box that completely contains the component
+ * @returns {Rect}
+ */
+Component.prototype.bounds = function() {
+    const bounds = new Rect(this.x - this.width/2,
+        this.y - this.height/2,
+        this.x + this.width/2,
+        this.y + this.height/2);
+
+    for(let ins of this.ins) {
+        bounds.expand(ins.bounds());
+    }
+
+    for(let out of this.outs) {
+        bounds.expand(out.bounds());
+    }
+
+    return bounds;
+}
 
 /**
  * Draw component object.

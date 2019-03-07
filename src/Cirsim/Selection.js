@@ -48,7 +48,7 @@ export const Selection = function(view) {
                 this.selection = [];
             }
 
-            rect = new Rect(x, y);
+            rect = new Rect(x, y, x, y);
         }
 
         for(let i=0; i<this.selection.length; i++) {

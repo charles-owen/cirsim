@@ -1,5 +1,6 @@
 import {Util} from './Utility/Util';
 import {Vector} from './Utility/Vector';
+import {Rect} from "./Utility/Rect";
 
 
 /**
@@ -186,10 +187,6 @@ Connector.prototype.getLoc = function() {
 Connector.prototype.draw = function(context, view) {
     let x = this.component.x + this.x;
     let y = this.component.y + this.y;
-    if(this.component.naming === 'A') {
-	   // console.log(this.component);
-
-    }
 
     if(this.bus) {
         context.lineWidth = 2;
@@ -320,4 +317,34 @@ Connector.prototype.autoLen = function() {
             }
             break;
     }
+}
+
+/**
+ * Get a bounding box that encloses this connector.
+ * @returns {Rect}
+ */
+Connector.prototype.bounds = function() {
+    let x = this.component.x + this.x;
+    let y = this.component.y + this.y;
+    
+    const bounds = new Rect(x, y, x, y);
+    switch(this.orientation) {
+        case 'e':
+            bounds.expandXY(x + this.len, y);
+            break;
+
+        case 'w':
+            bounds.expandXY(x - this.len, y);
+            break;
+
+        case 'n':
+            bounds.expandXY(x, y - this.len);
+            break;
+
+        case 's':
+            bounds.expandXY(x, y + this.len);
+            break;
+    }
+
+    return bounds;
 }

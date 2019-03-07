@@ -243,7 +243,7 @@ LEDBar.prototype.ensureIO = function() {
 
     }
 
-    if(!this.bus) {
+	if(!this.bus) {
 	    // Delete pins that have ceased to exist
 	    if(i < this.ins.length) {
 		    for( ; i<this.ins.length; i++) {
@@ -253,7 +253,6 @@ LEDBar.prototype.ensureIO = function() {
 		    this.ins.splice(this.size);
 	    }
     }
-
 }
 
 

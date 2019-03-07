@@ -25,8 +25,6 @@ Model.prototype.undo = function() {
     if(this.circuits.prev !== null) {
         this.circuits = this.circuits.prev;
     }
-
-   // this.recompute();
 };
 
 Model.prototype.backup = function() {

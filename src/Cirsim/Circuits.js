@@ -140,10 +140,11 @@ Circuits.prototype.canMoveRight = function(ndx) {
 
 Circuits.prototype.moveLeft = function(ndx) {
     if(this.canMoveLeft(ndx)) {
+        this.model.backup();
+
         const t = this.circuits[ndx-1];
         this.circuits[ndx-1] = this.circuits[ndx];
         this.circuits[ndx] = t;
-        console.log(this.circuits.length);
         return true;
     }
 
@@ -152,6 +153,8 @@ Circuits.prototype.moveLeft = function(ndx) {
 
 Circuits.prototype.moveRight = function(ndx) {
     if(this.canMoveRight(ndx)) {
+        this.model.backup();
+
         const t = this.circuits[ndx+1];
         this.circuits[ndx+1] = this.circuits[ndx];
         this.circuits[ndx] = t;
@@ -162,6 +165,7 @@ Circuits.prototype.moveRight = function(ndx) {
 }
 
 Circuits.prototype.rename = function(ndx, name) {
+    this.model.backup();
     const circuit = this.circuits[ndx];
 
     // Rename any references to this circuit

@@ -3,6 +3,7 @@ import {Component} from './Component';
 import {Tools} from './DOM/Tools';
 import {ImportTabDialog} from "./Dlg/ImportTabDialog";
 import {Model} from "./Model";
+import {ExportPNGDlg} from "./Dlg/ExportPNGDlg";
 
 /**
  * View of a circuit
@@ -49,6 +50,7 @@ export const View = function(main, canvas, circuit) {
 
 	        this.circuit.add(component);
 	        this.circuit.snapIt(component);
+	        this.ensureSize();
 	        this.draw();
         });
 
@@ -131,25 +133,14 @@ export const View = function(main, canvas, circuit) {
                 return;
             }
 
-	        var offset = Tools.offset(canvas);
+	        const offset = Tools.offset(canvas);
 	        lastPage = {x: pageX, y: pageY};
             mouse.x = pageX - offset.left;
             mouse.y = pageY - offset.top;
             this.selection.mouseMove(mouse.x, mouse.y, mouse.x - lastMouse.x, mouse.y - lastMouse.y);
 
-            let max = this.circuit.maxXY();
-            if(max.x > canvas.offsetWidth) {
-                //canvasJ.width(max.x);
-                canvas.style.width = max.x + 'px';
-                canvas.setAttribute("width", max.x);
-                circuit.width = max.x;
-            }
-
-            if(max.y > canvas.offsetHeight) {
-                canvas.style.height = max.y + 'px';
-                canvas.setAttribute("height", max.y);
-                circuit.height = max.y;
-            }
+            this.ensureSize();
+            
             lastMouse.x = mouse.x;
             lastMouse.y = mouse.y;
             this.draw();
@@ -232,6 +223,24 @@ export const View = function(main, canvas, circuit) {
         return this.circuit.circuits.advance(delta);
     };
 
+    this.ensureSize = function() {
+        let bounds = this.circuit.bounds();
+        let wid = bounds.right + 1;
+        let hit = bounds.bottom + 1;
+
+        if(wid > canvas.offsetWidth) {
+            //canvasJ.width(max.x);
+            canvas.style.width = wid + 'px';
+            canvas.setAttribute("width", wid);
+            circuit.width = wid;
+        }
+
+        if(hit > canvas.offsetHeight) {
+            canvas.style.height = bounds.bottom + 'px';
+            canvas.setAttribute("height", bounds.bottom);
+            circuit.height = bounds.bottom;
+        }
+    }
 
     this.setSize = function() {
         if(canvas.offsetWidth !== this.circuit.width ||
@@ -289,5 +298,13 @@ View.prototype.importTab = function(importer) {
 	        this.draw();
         }
     });
+}
+
+/**
+ * Export this view as a PNG file
+ */
+View.prototype.exportPNG = function() {
+    const dlg = new ExportPNGDlg(this);
+    dlg.open();
 }
 

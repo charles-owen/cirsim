@@ -28,10 +28,15 @@ Led.colors = {
     red: ["#ff4444", "#ff0000"],
     blue: ["#25ffff", "#15ddff"],
     purple: ["#c000ff", "#8000ff"],
-    yellow: ["#ffff00", "#ffff80"]
+    yellow: ["#ffff00", "#ffff80"],
+    none: ['#000000', '#000000']
 };
 
 Led.prototype.draw = function(context, x, y, background) {
+    if(this.color === 'none') {
+        return;
+    }
+
     let saveFill = context.fillStyle;
 
     if(background === undefined) {
@@ -91,7 +96,14 @@ Led.prototype.touch = function(x, y, touchX, touchY) {
     return (Vector.distance({x: x, y: y}, {x: touchX, y: touchY}) <= this.radius);
 };
 
-Led.colorSelector = function(id, current) {
+/**
+ * Create an HTML selector for LED colors.
+ * @param id ID to apply to the selector
+ * @param current Current value (selected)
+ * @param allowNone If true, allow the color 'none'
+ * @returns {string}
+ */
+Led.colorSelector = function(id, current, allowNone=false) {
     let html = '<div class="control1 center"><label for="' + id + '">Color: </label><select id="' + id + '">';
 
     let colors = Led.colors;
@@ -101,6 +113,10 @@ Led.colorSelector = function(id, current) {
         }
 
         if(color === 'black' || color === 'undefined') {
+            continue;
+        }
+
+        if(allowNone !== true && color === 'none') {
             continue;
         }
 
@@ -115,4 +131,3 @@ Led.colorSelector = function(id, current) {
     return html;
 }
 
-export default Led;

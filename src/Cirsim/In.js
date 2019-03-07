@@ -100,3 +100,12 @@ In.prototype.draw = function(context, view) {
     }
 };
 
+/**
+ * Get a bounding box that encloses this connector.
+ * @returns {Rect}
+ */
+In.prototype.bounds = function() {
+    const bounds = Connector.prototype.bounds.call(this);
+
+    return bounds;
+}

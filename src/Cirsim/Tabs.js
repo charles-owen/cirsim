@@ -121,14 +121,18 @@ export const Tabs = function(main) {
         //
         // Find and select the current circuit
         //
-        if(current === null) {
+        this.selectTabByCircuit(current);
+    }
+
+    this.selectTabByCircuit = function(circuit) {
+        if(circuit === null) {
             // If nothing was current before, select the
             // first tab.
             this.selectTab(0, true);
         } else {
             let any = false;
             for(let i in tabs) {
-                if(current === tabs[i].circuit) {
+                if(circuit === tabs[i].circuit) {
                     // We found were current moved, so select that
                     any = true;
                     this.selectTab(i, true);
@@ -227,9 +231,24 @@ export const Tabs = function(main) {
 
     // Implement undo for the tabs
     this.undo = function() {
+        // What is the current tab before we undo?
+        let current = this.active >= 0 ? tabs[this.active].circuit : null;
+        if(current !== null) {
+            // We need to know the undo version...
+            current = current.prev;
+        }
+
+        // Clear any 'active'
+        this.active = -1;
+
+        this.sync();
+
         tabs.forEach((tab) => {
             tab.view.undo();
         });
+
+        // Reselect the previously selected tab if it still exists
+        this.selectTabByCircuit(current);
     }
 
     this.destroy = function() {

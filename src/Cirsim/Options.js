@@ -27,6 +27,9 @@ export const Options = function(options) {
     /// Options are: 'none', 'import', 'export', 'both'
     this.export = 'both';
 
+    /// Do we include the ability to export PNG files?
+    this.exportPNG = false;
+
     /// Number of milliseconds between tests
     /// Set larger to slow the tests down
     this.testTime = 17;

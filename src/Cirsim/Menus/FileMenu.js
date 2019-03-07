@@ -45,6 +45,10 @@ export const FileMenu = function(menu, main) {
             }
         }
 
+        if(options.exportPNG) {
+	        fileHtml += '<li><a class="cs-file-export-png"><span class="icons-cl icons-cl-arrowthickstop-1-s"></span>Export PNG</a></li>';
+        }
+
         if(options.imports.length > 0) {
 	        fileHtml += optionalSeparator(fileHtml) +
 	            `<li><a class="cs-file-import-tab"><span class="icons-cl icons-cl-arrowthickstop-1-s"></span>Import Tab</a></li>`;
@@ -74,31 +78,35 @@ export const FileMenu = function(menu, main) {
     }
 
     this.activate = function() {
-        menu.click('.cs-file-import', (event) => {
+        menu.click('.cs-file-import', () => {
 	        main.import();
         });
 
-	    menu.click('.cs-file-export', (event) => {
+	    menu.click('.cs-file-export', () => {
 		    main.export();
 	    });
 
-	    menu.click('.file-saveas', (event) => {
+	    menu.click('.cs-file-export-png', (event) => {
+			main.currentView().exportPNG();
+	    });
+
+	    menu.click('.file-saveas', () => {
 		    main.saveAs();
 	    });
 
-	    menu.click('.file-save', (event) => {
+	    menu.click('.file-save', () => {
 		    main.save();
 	    });
 
-	    menu.click('.file-open', (event) => {
+	    menu.click('.file-open', () => {
 		    main.open();
 	    });
 
-	    menu.click('.cs-file-import-tab', (event) => {
+	    menu.click('.cs-file-import-tab', () => {
 		    main.importTab();
 	    });
 
-	    menu.click('.file-exit', (event) => {
+	    menu.click('.file-exit', () => {
 	    	if(options.exit !== null) {
 	    		window.location.href = options.exit;
 		    }

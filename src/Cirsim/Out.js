@@ -103,7 +103,7 @@ Out.prototype.draw = function(context, view) {
     /*
      * Draw any connections
      */
-    for(var i=0; i<this.to.length; i++) {
+    for(let i=0; i<this.to.length; i++) {
         this.to[i].draw(context, view);
     }
 
@@ -162,9 +162,22 @@ Out.prototype.touchConnections = function(x, y) {
  * @param collect Collection (array) to add items to.
  */
 Out.prototype.selectRect = function(rect, collect) {
-    for(var i=0; i<this.to.length; i++) {
+    for(let i=0; i<this.to.length; i++) {
         this.to[i].selectRect(rect, collect);
     }
 };
 
-export default Out;
+/**
+ * Get a bounding box that encloses this connector.
+ * @returns {Rect}
+ */
+Out.prototype.bounds = function() {
+    const bounds = Connector.prototype.bounds.call(this);
+
+    for(let to of this.to) {
+        bounds.expand(to.bounds());
+    }
+
+    return bounds;
+}
+

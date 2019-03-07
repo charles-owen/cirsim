@@ -2,6 +2,7 @@
 import {Selectable} from './Selectable';
 import {Bend} from './Bend';
 import {Vector} from './Utility/Vector';
+import {Rect} from "./Utility/Rect";
 
 /**
  * Connections from an In to an Out
@@ -32,6 +33,9 @@ export const Connection = function(from, to, noset) {
         this.from = null;
     }
 
+    if(to === undefined) {
+        console.log(this);
+    }
     if(to !== null) {
         this.circuit = to.component.circuit;
         this.to = to;
@@ -67,7 +71,9 @@ Connection.prototype.clone = function() {
     const to = this.to.component.prev;
     const fromNdx = this.from.index;
     const toNdx = this.to.index;
-
+if(to.ins[toNdx] === undefined) {
+    console.log(this);
+}
     const copyConn = new Connection(from.outs[fromNdx], to.ins[toNdx], true);
 
     // Copy the bends
@@ -191,6 +197,35 @@ Connection.prototype.draw = function(context, view) {
         this.bends[i].draw(context, view);
     }
 };
+
+/**
+ * Get a bounding box that encloses this connection.
+ * @returns {Rect}
+ */
+Connection.prototype.bounds = function() {
+    let bounds = null;
+
+    if(this.from !== null) {
+        const loc = this.from.getLoc();
+        bounds = new Rect(loc.x, loc.y, loc.x, loc.y);
+    } else {
+        bounds = new Rect(this.x, this.y, this.x, this.y);
+    }
+
+    // The bends...
+    for(let bend of this.bends) {
+        bounds.expandXY(bend.x, bend.y);
+    }
+
+    if(this.to !== null) {
+        const loc = this.to.getLoc();
+        bounds.expandXY(loc.x, loc.y);
+    } else {
+        bounds.expandXY(this.x, this.y);
+    }
+
+    return bounds;
+}
 
 /**
  * Determine if we have touched this connection

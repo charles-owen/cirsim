@@ -2,6 +2,7 @@
 import {CircuitRef} from './Component/CircuitRef';
 import {Connection} from './Connection';
 import {Sanitize} from './Utility/Sanitize';
+import {Rect} from "./Utility/Rect";
 
 /**
  * Construct a circuit
@@ -300,8 +301,8 @@ Circuit.prototype.load = function(obj) {
 
     // Load the connections
     for(let i=0; i<obj.connections.length; i++) {
-        var connectionObj = obj.connections[i];
-        var fmComp = compsMap[connectionObj["from"]];
+        const connectionObj = obj.connections[i];
+        const fmComp = compsMap[connectionObj["from"]];
         if(fmComp === undefined) {
             console.log("From object undefined");
             console.log(this);
@@ -309,17 +310,20 @@ Circuit.prototype.load = function(obj) {
             continue;
         }
 
-        var toComp = compsMap[connectionObj["to"]];
+        const toComp = compsMap[connectionObj["to"]];
         if(toComp === undefined) {
             console.log("To object undefined");
             console.log(this);
             console.log(connectionObj);
             continue;
         }
-        var outNdx = connectionObj["out"];
-        var inNdx = connectionObj["in"];
-        var connection = this.connect(fmComp, outNdx, toComp, inNdx);
-        connection.load(connectionObj);
+
+        const outNdx = connectionObj["out"];
+        const inNdx = connectionObj["in"];
+        const connection = this.connect(fmComp, outNdx, toComp, inNdx);
+        if(connection !== null) {
+            connection.load(connectionObj);
+        }
     }
 };
 
@@ -329,8 +333,8 @@ Circuit.prototype.load = function(obj) {
  * @returns {*}
  */
 Circuit.prototype.getComponentByNaming = function(naming) {
-    for(var i=0; i<this.components.length; i++) {
-        var component = this.components[i];
+    for(let i=0; i<this.components.length; i++) {
+        const component = this.components[i];
         if(component.naming === naming) {
             return component;
         }
@@ -365,12 +369,8 @@ Circuit.prototype.mouseUp = function() {
 };
 
 Circuit.prototype.connect = function(outObj, outNdx, inObj, inNdx) {
-    while(outObj.outs.length <= outNdx) {
-        outObj.addOut(0, 0, 50, "T");
-    }
-
-    while(inObj.ins.length <= inNdx) {
-        inObj.addIn(0, 0, 50, "T");
+    if(outObj.outs.length <= outNdx || inObj.ins.length <= inNdx) {
+        return null;
     }
 
     return new Connection(outObj.outs[outNdx], inObj.ins[inNdx]);
@@ -392,24 +392,45 @@ Circuit.prototype.getComponentsByType = function(type) {
 
 /**
  * Determine the maximum size in each dimension for this circuit.
+ * Does include an extra 16 pixel bias in each dimension to account for
+ * inputs and outputs.
  * @returns {{x: number, y: number}}
  */
 Circuit.prototype.maxXY = function() {
-    var maxX = 1;
-    var maxY = 1;
+    let maxX = 1;
+    let maxY = 1;
 
-    for(var i=0; i<this.components.length; i++) {
-        var component = this.components[i];
-        if(component.x + component.width/2 > maxX) {
-            maxX = component.x + component.width/2;
+    for(let i=0; i<this.components.length; i++) {
+        const bounds = this.components[i].bounds();
+        if(bounds.right > maxX) {
+            maxX = bounds.right;
         }
 
-        if(component.y + component.height/2 > maxY) {
-            maxY = component.y + component.height/2;
+        if(bounds.bottom > maxY) {
+            maxY = bounds.bottom;
         }
     }
 
-    return {x: maxX, y: maxY};
+    return {x: maxX+16, y: maxY+16};
+}
+
+/**
+ * Compute a bounding box that encloses all of this circuit.
+ * @returns {*}
+ */
+Circuit.prototype.bounds = function() {
+    if(this.components.length === 0) {
+        return new Rect();
+    }
+
+    const bounds = this.components[0].bounds();
+
+    for(let i=0; i<this.components.length; i++) {
+        const b = this.components[i].bounds();
+        bounds.expand(b);
+    }
+
+    return bounds;
 }
 
 Circuit.prototype.pending = function() {
