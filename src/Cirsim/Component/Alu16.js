@@ -59,15 +59,19 @@ Alu16.order = 706;
  * @param state
  */
 Alu16.prototype.compute = function(state) {
-    var a = state[0];
-    var b = state[1];
-    var c = state[2];
+    const a = state[0];
+    const b = state[1];
+    const c = state[2];
 
     // Determine the carry input
     this.cin = state[3] !== undefined && state[3];
 
     function parse(c) {
         if(c === undefined) {
+            return undefined;
+        }
+
+        if(!Array.isArray(c)) {
             return undefined;
         }
 

@@ -116,15 +116,16 @@ Connector.parseBusValue = function(str) {
 /**
  * Convert a bus value to a number.
  * @param bus The Bus value
+ * @param limit If set, any computed value is modulus the limit value
  */
-Connector.busValueToDecimal = function(bus) {
+Connector.busValueToDecimal = function(bus, limit) {
     if(bus === undefined) {
         return null;
     }
 
-    var val = 0;
-    var pow = 1;
-    for(var i in bus) {
+    let val = 0;
+    let pow = 1;
+    for(let i in bus) {
         if(bus[i] === undefined) {
             return null;
         }
@@ -134,6 +135,10 @@ Connector.busValueToDecimal = function(bus) {
         }
 
         pow *= 2;
+    }
+
+    if(limit !== undefined) {
+        val %= limit;
     }
 
     return val;

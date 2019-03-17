@@ -68,9 +68,9 @@ Registers16.help = 'registers16';
  */
 Registers16.prototype.compute = function(state) {
     // What are the addresses?
-    this.lastA = Connector.busValueToDecimal(state[2]);
-    this.lastB = Connector.busValueToDecimal(state[3]);
-    this.lastALU = Connector.busValueToDecimal(state[4]);
+    this.lastA = Connector.busValueToDecimal(state[2], 8);
+    this.lastB = Connector.busValueToDecimal(state[3], 8);
+    this.lastALU = Connector.busValueToDecimal(state[4], 8);
 
     this.lastW = state[6];  // W
 

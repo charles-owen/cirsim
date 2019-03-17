@@ -1,3 +1,4 @@
+FIXME: If you save after rearranging inputs/ouputs in a tab, the circuit may be broken
 FIXME: Grabbing the horizontal scroll bar does not work right in Firefox
 
 TODO: Undo behavior after tab changes
