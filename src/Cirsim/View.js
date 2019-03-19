@@ -13,13 +13,41 @@ import {ExportPNGDlg} from "./Dlg/ExportPNGDlg";
  * @constructor
  */
 export const View = function(main, canvas, circuit) {
-    this.main = main;
-    this.circuit = circuit;
+    //
+    // Object properties
+    //
+    Object.defineProperties(this, {
+        main: {
+            get: function() {
+                return main;
+            }
+        },
+        circuit: {
+            get: function() {
+                return circuit;
+            },
+            set: function(value) {
+                circuit = value;
+            }
+        },
+        element: {
+            get: function() {
+                return canvas;
+            }
+        },
+        model: {
+            get: function() {
+                return circuit.circuits.model;
+            }
+        }
+    });
+
+  //  this.main = main;
+ //    this.circuit = circuit;
+  //  this.element = canvas;
 
     // The selection object
     this.selection = new Selection(this);
-
-    this.element = canvas;
 
     /// The tab number for this view
     this.tabnum = -1;
@@ -41,7 +69,7 @@ export const View = function(main, canvas, circuit) {
                 return;
             }
 
-            this.backup();
+            this.model.backup();
             const component = new componentObject(paletteItem);
             component.brand();
 
@@ -206,13 +234,9 @@ export const View = function(main, canvas, circuit) {
     };
 
     this.delete = function() {
-        this.backup();
+        this.model.backup();
         this.selection.delete();
         this.draw();
-    };
-
-    this.backup = function() {
-        this.circuit.circuits.model.backup();
     };
 
     /**
@@ -284,7 +308,7 @@ View.prototype.importTab = function(importer) {
 
     const dlg = new ImportTabDialog(importer, this.main.options, this.main.toast);
     dlg.open((data) => {
-        this.backup();
+        this.model.backup();
 
         const model = new Model(this.main);
         model.fmJSON(data);

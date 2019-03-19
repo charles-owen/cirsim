@@ -35,13 +35,13 @@ export const PaletteImage = function(width, height) {
  * @param hit Box height
  */
 PaletteImage.prototype.box = function(wid, hit) {
-    var x = this.width/2;
-    var y = this.height/2;
+    const x = this.width/2;
+    const y = this.height/2;
 
-    var leftX = x - wid/2 - 0.5;
-    var rightX = x + wid/2 + 0.5;
-    var topY = y - hit/2 - 0.5;
-    var botY = y + hit/2 + 0.5;
+    const leftX = x - wid/2 - 0.5;
+    const rightX = x + wid/2 + 0.5;
+    const topY = y - hit/2 - 0.5;
+    const botY = y + hit/2 + 0.5;
 
     this.context.beginPath();
     this.context.moveTo(leftX, topY);

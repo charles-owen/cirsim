@@ -622,3 +622,12 @@ Component.prototype.jaggedLine = function (context, x1, y1, x2, y2, t) {
 Component.prototype.sanitize = function(text) {
     return DOMPurify.sanitize(text);
 }
+
+/**
+ * Update component after a circuit change.
+ * This is used by CircuitRef components to ensure
+ * references are always correct.
+ */
+Component.prototype.update = function() {
+
+}

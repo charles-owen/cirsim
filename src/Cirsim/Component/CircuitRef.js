@@ -101,6 +101,17 @@ CircuitRef.prototype.newTab = function() {
     this.circuitOuts = [];
 };
 
+/**
+ * Update component after a circuit change.
+ * This ensures all references are always correct.
+ */
+CircuitRef.prototype.update = function() {
+	this.circuitRef = null;
+	this.circuitIns = [];
+	this.circuitOuts = [];
+
+	this.ensureIO();
+}
 
 
 CircuitRef.prototype.ensureIO = function() {

@@ -1,7 +1,4 @@
-FIXME: If you save after rearranging inputs/ouputs in a tab, the circuit may be broken
 FIXME: Grabbing the horizontal scroll bar does not work right in Firefox
-
-TODO: Undo behavior after tab changes
 
 FUTURE: 7-segment configurable as bus input or a-g
 FUTURE: 7-segment decoder configurable as bus input and/or output
@@ -17,5 +14,5 @@ TODO: Javascript documentation (ongoing)
 FUTURE: ALU work for any bit size? (including 4?)
 FUTURE: ALU can be configured for fixed operation
 FUTURE: ALU can be configured for both 4 bit and 16 bit assignments
-
+FUTURE: Memory work for any bit size? (8, 16, 32)
 FUTURE: Instruction decoder and registers assignment discrete Rw line

@@ -3,6 +3,7 @@ import {CircuitRef} from './Component/CircuitRef';
 import {Connection} from './Connection';
 import {Sanitize} from './Utility/Sanitize';
 import {Rect} from "./Utility/Rect";
+import {Circuits} from "./Circuits";
 
 /**
  * Construct a circuit
@@ -130,6 +131,16 @@ Circuit.prototype.copy_clone = function() {
     return copy;
 };
 
+/**
+ * Update circuit after a circuit change.
+ * This is used by CircuitRef components to ensure
+ * references are always correct.
+ */
+Circuit.prototype.update = function() {
+    for(let component of this.components) {
+        component.update();
+    }
+}
 
 Circuit.prototype.draw = function(context, view) {
     this.components.forEach(function(component, index, array) {

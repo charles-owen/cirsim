@@ -31,6 +31,16 @@ Model.prototype.backup = function() {
     this.circuits.clone();
 };
 
+/**
+ * Update components after a circuit change.
+ * This is used by CircuitRef components to ensure
+ * references are always correct.
+ * @param circuit Update up until this circuit
+ */
+Model.prototype.update = function(circuit) {
+    this.circuits.update(circuit);
+}
+
 Model.prototype.toJSON = function() {
     return this.circuits.toJSON();
 };

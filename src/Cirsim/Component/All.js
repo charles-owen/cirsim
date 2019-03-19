@@ -46,6 +46,7 @@ import {Decoder3} from './Decoder3';
 import {InstructionDecoder4} from './InstructionDecoder4';
 import {Alu16} from './Alu16';
 import {Counter} from './Counter';
+import {Extend} from './Extend';
 
 /**
  * Add all components into the system.
@@ -88,6 +89,7 @@ export const All = function(components) {
     components.add(ToBus);          // 306
     components.add(BusOr);          // 308
     components.add(BusSelector);    // 310
+    components.add(Extend);         // 311
 
     components.add(BusDecoder);     // 400
     components.add(BusMultiplexer); // 402
@@ -125,7 +127,7 @@ export const All = function(components) {
             Or, Or3, Or4, Nor, And, And3, And4, Nand, LEDBar,
             Inverter, Xor,
             DFF, DFFsr, JKFF, DLatch, SRLatch,
-            InPinBus, OutPinBus, BusConstant, BusOr, BusDecoder, BusSelector,
+            InPinBus, OutPinBus, BusConstant, BusOr, BusDecoder, BusSelector, Extend,
             BusMultiplexer,
             TrafficLight, HexToSevenSegment, SevenSeg, FmBus,
             ToBus, Register,

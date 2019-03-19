@@ -8,16 +8,15 @@ import {Rect} from './Utility/Rect';
  * @constructor
  */
 export const Selection = function(view) {
-    var that = this;
 
     /// Maintains a list of the currently selected components
     this.selection = [];
 
-    var down = false;
-    var firstMove = false;
+    let down = false;
+    let firstMove = false;
 
     /// Rectangle for selection
-    var rect = null;
+    let rect = null;
 
     this.mouseDown = function(x, y, event) {
         down = true;
@@ -62,7 +61,7 @@ export const Selection = function(view) {
                 // If we move the mouse the first time on any
                 // selection, we need to create an undo backup
                 if(rect === null && this.selection.length > 0) {
-                    view.backup();
+                    view.model.backup();
                 }
 
                 // This is the first movement of the mouse
@@ -71,7 +70,7 @@ export const Selection = function(view) {
                 // something that might spawn a new child that
                 // we drag. This is how bending points are implemented.
                 if(this.selection.length === 1) {
-                    var spawned = this.selection[0].spawn(x, y);
+                    const spawned = this.selection[0].spawn(x, y);
                     if(spawned !== null) {
                         this.selection = [spawned];
                     }
@@ -83,10 +82,12 @@ export const Selection = function(view) {
             if(rect !== null) {
                 rect.setRightBottom(x, y);
             } else {
-                for(var i=0; i<this.selection.length; i++) {
+                for(let i=0; i<this.selection.length; i++) {
                     this.selection[i].move(dx, dy);
                 }
             }
+
+            view.model.update(view.circuit);
         }
     };
 
@@ -114,22 +115,20 @@ export const Selection = function(view) {
         view.circuit.mouseUp();
     };
 
-    function selectRect() {
+    const selectRect = () => {
         rect.normalize();
         if(!rect.isEmpty()) {
-            var inRect = view.circuit.inRect(rect);
+            const inRect = view.circuit.inRect(rect);
             if(inRect.length > 0) {
-                var newSelection = that.selection.slice();
-                for(var i=0; i<inRect.length; i++) {
-                    if(!that.isSelected(inRect[i])) {
+                const newSelection = this.selection.slice();
+                for (let i = 0; i < inRect.length; i++) {
+                    if (!this.isSelected(inRect[i])) {
                         newSelection.push(inRect[i]);
                     }
                 }
 
-                that.selection = newSelection;
+                this.selection = newSelection;
             }
-
-
         }
     }
 

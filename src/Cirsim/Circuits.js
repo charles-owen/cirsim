@@ -213,6 +213,21 @@ Circuits.prototype.clone = function() {
     return copy;
 };
 
+/**
+ * Update circuits after a circuit change.
+ * This is used by CircuitRef components to ensure
+ * references are always correct.
+ * @param circuit Update up until this circuit
+ */
+Circuits.prototype.update = function(circuit) {
+    for(let c of this.circuits) {
+        if(c === circuit) {
+            break;
+        }
+        c.update();
+    }
+}
+
 Circuits.prototype.toJSON = function() {
     return JSON.stringify(this.save());
 };

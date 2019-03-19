@@ -152,26 +152,20 @@ BusSelector.prototype.ensureIO = function() {
 }
 
 BusSelector.prototype.properties = function(main) {
-    var dlg = new ComponentPropertiesDlg(this, main);
-    var fmId = dlg.uniqueId();
-    var toId = dlg.uniqueId();
+    const dlg = new ComponentPropertiesDlg(this, main);
+    const fmId = dlg.uniqueId();
+    const toId = dlg.uniqueId();
 
     var html = `<div class="control1 center gap">
 <input class="number" type="text" name="${fmId}" id="${fmId}" value="${this.from}" spellcheck="false" onfocus="this.select()"> 
 <label for="${toId}">to </label>
 <input class="number" type="text" name="${toId}" id="${toId}" value="${this.to}" spellcheck="false" onfocus="this.select()"></div>`;
 
-    /* '<p>From:<br>' +
-        '</p>' +
-        '<p>To:<br>' +
-        '<input type="text" name="selector-to" value="' + this.to +
-        '" spellcheck="false"></p>'; */
-
     dlg.extra(html, () => {
         let fromStr = document.getElementById(fmId).value;
         let toStr = document.getElementById(toId).value;
-        var from = parseInt(fromStr);
-        var to = parseInt(toStr);
+        const from = parseInt(fromStr);
+        const to = parseInt(toStr);
         if(isNaN(from) || from < 0 || from > 32) {
 	        document.getElementById(fmId).select();
             return "Invalid from value";
