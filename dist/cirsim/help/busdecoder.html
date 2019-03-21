@@ -1,8 +1,11 @@
-<p>The Bus Decoder component converts a 2 to 4-bit binary value on <strong>In</strong>
+<p>The Decoder component converts a 2 to 4-bit binary value
 	to a true on one of four to sixteen output lines. The number of outputs is determined
-	by the bit size and is configurable.</p>
+	by the bit size and is configurable. The component can be configured for bus or single-bit inputs.</p>
 <figure class="noshadow"><img src="img/busdecoder.png" alt="Bus Decoder" width="232" height="172"></figure>
 <p>In this figure, a value of 4 (0b100) is decoded to a high on output O4, lighting the corresponding
 	LED in an <a href="ledbar.html">LED Bar.</a> The Bus Decoder will also draw a line from the input
-to the corresponding activated output. If the input is out of range or undefined, the outputs are
+to the corresponding activated output. If any input is undefined, the outputs are
 also undefined (?) and the line does not appear.</p>
+<p>When configured as a bus input, if the number of bits on the input exceeds the input size,
+additional bits are ignored. In the above example if the input pin is set as 0b1100, the output
+will still be decoded to a high on output O4. The additional high-order output bit is ignored.</p>

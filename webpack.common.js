@@ -37,6 +37,12 @@ module.exports = {
             template: 'src/html/nowindow.html',
             inject: 'head'
         }),
+        new HtmlWebpackPlugin({
+            title: 'Cirsim full screen demo',
+            filename: 'full.html',
+            template: 'src/html/full.html',
+            inject: 'head'
+        }),
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new CopyWebpackPlugin([

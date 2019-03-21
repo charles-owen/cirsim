@@ -1,5 +1,4 @@
-
-import Out from '../../src/Cirsim/Out.js';
+import {Out} from '../../src/Cirsim/Out';
 
 describe('Out', function() {
     it('Construct', function() {

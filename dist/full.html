@@ -8,48 +8,17 @@
       box-sizing: border-box;
     }
   </style>
-  <title>Cirsim</title>
+  <title>Cirsim full screen demo</title>
 <script type="text/javascript" src="cirsim.min.js"></script></head>
 <body>
-<style>
-  #cirsim {
-    width: 100%;
-    margin: 1em 0;
-  }
-</style>
-<div id="cirsim" class="cirsim-window"></div>
+<div id="cirsim"></div>
 
 <script>
     let cirsim = new Cirsim('#cirsim', {
-        display: 'window',
+        display: 'full',
         components: 'all',
 //        load: '{"grid":8,"circuits":[{"name":"main","width":1920,"height":1080,"components":[{"id":"c1001","x":120,"y":176,"name":null,"type":"CircuitRef","circuitName":"and"}],"connections":[]},{"name":"and","width":1920,"height":1080,"components":[{"id":"c1001","x":104,"y":112,"name":"A","type":"InPin","value":false},{"id":"c1002","x":104,"y":144,"name":"B","type":"InPin","value":false},{"id":"c1003","x":392,"y":128,"name":"O1","type":"OutPin"},{"id":"c1004","x":240,"y":128,"name":null,"type":"And"},{"id":"c1005","x":112,"y":232,"name":"I1","type":"InPinBus","value":[false,false,false,false]},{"id":"c1006","x":112,"y":296,"name":"I2","type":"InPinBus","value":[false,false,false,false]},{"id":"c1007","x":408,"y":256,"name":"O2","type":"OutPinBus","value":[false,false,false,false]},{"id":"c1008","x":272,"y":256,"name":"U1","type":"BusOr","size":2}],"connections":[{"from":"c1001","out":0,"to":"c1004","in":0,"bends":[]},{"from":"c1002","out":0,"to":"c1004","in":1,"bends":[]},{"from":"c1004","out":0,"to":"c1003","in":0,"bends":[]},{"from":"c1005","out":0,"to":"c1008","in":1,"bends":[]},{"from":"c1006","out":0,"to":"c1008","in":0,"bends":[]},{"from":"c1008","out":0,"to":"c1007","in":0,"bends":[]}]}],"snap":true}'
     });
-    cirsim.start();
-
-    var tst = [
-        [0, 0, 0, 0],
-        [0, 0, 1, 0],
-        [0, 1, 0, 0],
-        [0, 1, 1, 1],
-        [1, 0, 0, 1],
-        [1, 0, 1, 1],
-        [1, 1, 0, 1],
-        [1, 1, 1, 1]
-    ];
-
-    var test = {
-        'tag': 'test',
-        'name': "Test",
-        'input': ['A', 'B', 'C'],
-        'output': ['O'],
-        'test': tst
-    }
-
-    test = JSON.stringify(test);
-    test = btoa(test);
-
-    //cirsim.addTest(test);
     cirsim.start();
 </script>
 <style>

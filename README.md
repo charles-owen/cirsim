@@ -74,9 +74,59 @@ page is currently available [online](http://www.cse.msu.edu/~cbowen/cirsim/minim
 
 Pending...
 
+## Building
+
+You must install node.js to build Cirsim. To build Cirsim locally, after downloading, do:
+
+```
+npm install
+```
+
+To build a development build (not optimized):
+
+```
+npm run build:dev
+```
+
+To build a production build (optimized):
+
+```
+npm run build:prod
+```
+
+To build both:
+
+```
+npm run build:all
+```
+
+To run in the webpack development server:
+
+```
+npm run serve
+```
+
+When running as a server, the URL is http://cirsim.localhost:8080. That version
+will have all available components (other than deprecated components). Othere
+ valid URLs are http://cirsim.localhost:8080/inline.html, which demonstates 
+using Cirsim as an inline demonstrator, and http://cirsim.localhost:8080/full.html,
+which demonstrates Cirsim running full screen.
+
+To run tests:
+
+```
+npm test
+```
+
+To build the documentation in the doc folder:
+
+```
+npm run build:docs
+```
+
 ## License
 
-Copyright 2016-2018 Michigan State University
+Copyright 2016-2019 Michigan State University
 
 Cirsim is released under the MIT license.
 

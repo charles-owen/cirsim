@@ -1,4 +1,9 @@
 <p>Simple 16-bit program counter (PC). Each clock rising
-	edge increments the PC by 2 bytes (16 bits). If B is true when the clock edge falls, the signed value
-	in BA (branch address) plus 2 is added to the PC.</p>
-<figure><img src="img/pc16.png" width="293" height="306"></figure>
+edge increments the PC by 2 (16 bits). If B is true, the signed value
+in BA (branch address) plus 2 is then added to the PC. All updates occur
+on the clock leading edge.</p>
+<p>The R input is a reset. When high, the program counter is reset to
+0x0000.</p>
+<figure><img src="img/pc16.png" width="129" height="168"></figure>
+<p>The current value of the program counter is indicated on the
+component.</p>

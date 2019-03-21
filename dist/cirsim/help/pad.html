@@ -1,8 +1,13 @@
 <h2>Configurable Keypad</h2>
-<p>Presents a keypad with from 4 to 16 buttons. There are two outputs. The bus output (top) is the
-  most recently pressed button value. The clock output (bottom) is true when the button is pressed.</p>
+<p>Presents a keypad with from 4 to 16 buttons. The keypad can be configured with a bus
+  output or single-bit outputs. When configured for bus outputs, there are two outputs. The bus output (top) is the
+  most recently pressed button value. When configured for single bit outputs, there are 2-4 output bit pins
+  depending on the keypad size. The top pin is the most significant bit. In either case, the bottom output is a
+  single bit   clock output and is true when the button is pressed.</p>
 <p>When configured as a Phone keypad, the * key outputs a value of 10 (0xa) and the # key outputs a
 value of 11 (0xb).</p>
-<p>The bus output is configured as 4 bits for the 16 button, 10 button, and phone configurations,
-3 bits for the 8 button configuration, and 2 bits for the 4 button configuration.</p>
 <figure><img src="img/pad.png" height="402" width="319"></figure>
+<p>The keypad can be configured with a bus output or single-bit outputs. When configured as a bus
+  output, the output is configured as 4 bits for the 16 button, 10 button, and phone configurations,
+3 bits for the 8 button configuration, and 2 bits for the 4 button configuration. When configured
+as a </p>
