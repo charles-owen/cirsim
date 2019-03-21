@@ -238,14 +238,18 @@ export const Tabs = function(main) {
             current = current.prev;
         }
 
-        // Clear any 'active'
+        // Clear any 'active' any selections
         this.active = -1;
+
+        for(let tab of tabs) {
+            tab.view.selection.clear();
+        }
 
         this.sync();
 
-        tabs.forEach((tab) => {
-            tab.view.undo();
-        });
+        for(let tab of tabs) {
+            tab.view.draw();
+        }
 
         // Reselect the previously selected tab if it still exists
         this.selectTabByCircuit(current);

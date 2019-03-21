@@ -31,6 +31,33 @@ Model.prototype.backup = function() {
     this.circuits.clone();
 };
 
+Model.prototype.status = function() {
+    let i=0;
+    let p = this.circuits;
+
+    for(let circuit of p.circuits) {
+        let j=0;
+        let c = circuit;
+        while(c !== null) {
+            j++;
+
+            c = c.prev;
+        }
+
+        console.log('circuit depth: ' + j);
+    }
+
+    while(p !== null) {
+        i++;
+
+
+
+        p = p.prev;
+    }
+
+    console.log('circuits depth: ' + i);
+}
+
 /**
  * Update components after a circuit change.
  * This is used by CircuitRef components to ensure

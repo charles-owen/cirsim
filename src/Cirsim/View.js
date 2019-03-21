@@ -43,7 +43,7 @@ export const View = function(main, canvas, circuit) {
     });
 
   //  this.main = main;
- //    this.circuit = circuit;
+   //  this.circuit = circuit;
   //  this.element = canvas;
 
     // The selection object
@@ -282,15 +282,6 @@ export const View = function(main, canvas, circuit) {
     this.draw();
 };
 
-
-
-View.prototype.undo = function() {
-    if(this.circuit.prev !== null) {
-        this.selection.clear();
-        this.circuit = this.circuit.prev;
-        this.draw();
-    }
-};
 
 /**
  * Import a tab from another file that we load via AJAX.
