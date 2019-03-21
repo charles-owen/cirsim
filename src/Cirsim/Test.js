@@ -311,21 +311,20 @@ in when the test failed.<p>
         // Find the inputs
         //
         var inputs = [];
-        for(var i=0; i<test.input.length; i++) {
-            var input = test.input[i];
-            var search = model;
-            var tabmsg = '';
+        for(let i=0; i<test.input.length; i++) {
+            let input = test.input[i];
+            let items = input.split(':');
+            let search = model;
+            let tabmsg = '';
 
             // Test for tab specification. That's a prefix
             // like this: tab:tabname:
-            if(input.substr(0, 4) === "tab:") {
-                var tab = input.substr(4);
-                var colon = tab.indexOf(":");
-                if(colon === -1) {
+            if(items[0] === "tab") {
+                if(items.length < 3) {
                     throw new TestException('<p>Invalid input tab definition: ' + input + '</p>');
                 }
 
-                var tabname = tab.substr(0, colon);
+                const tabname = items[1];
 
                 search = model.getCircuit(tabname);
                 if(search === null) {
@@ -333,30 +332,54 @@ in when the test failed.<p>
                 }
 
                 tabmsg = ' in tab <em>' + tabname + '</em>';
-                input = tab.substr(colon+1);
+                items.splice(0, 2);
             }
 
-            if(input.substr(0, 5) === "type:") {
-                var type = input.substr(5);
-                var components = search.getComponentsByType(type);
-                if(components.length === 0) {
-                    throw new TestException('<p>The test is not able to pass because you do not have a' +
-                        ' component of type ' + type + tabmsg + '.</p>');
-                } else if(components.length > 1) {
-                    throw new TestException('<p>The test is not able to pass because you have more than' +
-                        ' one  component of type ' + type + tabmsg + '.</p>' +
-                        '<p>You are only allowed one component of that type ' +
-                        'in this circuit.</p>');
+            if(items[0] === "type") {
+                if(items.length < 2) {
+                    throw new TestException('<p>Invalid input type specification: ' + input + '</p>');
                 }
-                inputs.push(components[0]);
+
+                const type = items[1];
+                const components = search.getComponentsByType(type);
+                if(items.length > 2) {
+                    // We have specified a component name after the type
+                    // Example: type:InPin:CLK
+                    let desired = null;
+                    for(let component of components) {
+                        if(component.naming === items[2]) {
+                            desired = component;
+                            break;
+                        }
+                    }
+
+                    if(desired === null) {
+                        throw new TestException('<p>The test is not able to pass because you do not have a' +
+                            ' component named ' + items[2] + ' of type ' + type + tabmsg + '.</p>');
+                    }
+
+                    inputs.push(desired);
+                } else {
+                    if(components.length === 0) {
+                        throw new TestException('<p>The test is not able to pass because you do not have a' +
+                            ' component of type ' + type + tabmsg + '.</p>');
+                    } else if(components.length > 1) {
+                        throw new TestException('<p>The test is not able to pass because you have more than' +
+                            ' one  component of type ' + type + tabmsg + '.</p>' +
+                            '<p>You are only allowed one component of that type ' +
+                            'in this circuit.</p>');
+                    }
+                    inputs.push(components[0]);
+                }
+
             } else {
                 // Finding component by naming
-                var component = search.getComponentByNaming(input);
+                const component = search.getComponentByNaming(items[0]);
                 if(component !== null) {
                     inputs.push(component);
                 } else {
                     throw new TestException('<p>The test is not able to pass because you do not' +
-                        ' have a component named ' + input + tabmsg + '.</p>' +
+                        ' have a component named ' + items[0] + tabmsg + '.</p>' +
                         '<p>Typically, the tests are looking for an input' +
                         ' pin or a bus input pin. Input pins are labeled IN in the palette. Double-click' +
                         ' on an input pin to set the name. Names in Cirsim are case sensitive.</p>');
