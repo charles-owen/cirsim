@@ -42,10 +42,6 @@ export const View = function(main, canvas, circuit) {
         }
     });
 
-  //  this.main = main;
-   //  this.circuit = circuit;
-  //  this.element = canvas;
-
     // The selection object
     this.selection = new Selection(this);
 

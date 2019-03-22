@@ -42,6 +42,7 @@ import {Pad} from './Pad';
 import {LEDBar} from './LEDBar';
 import {Pc16} from './Pc16';
 import {Memory16} from './Memory16';
+import {Memory} from './Memory';
 import {Decoder3} from './Decoder3';
 import {InstructionDecoder4} from './InstructionDecoder4';
 import {Alu16} from './Alu16';
@@ -109,6 +110,7 @@ export const All = function(components) {
     components.add(Registers16);    // 700
     components.add(Pc16);           // 702
     components.add(Memory16);       // 704
+    components.add(Memory);         // 705
     components.add(Alu16);          // 706
 
     components.add(Decoder3);       // 1000

@@ -43,6 +43,12 @@ module.exports = {
             template: 'src/html/full.html',
             inject: 'head'
         }),
+        new HtmlWebpackPlugin({
+            title: 'Cirsim test page',
+            filename: 'test.html',
+            template: 'src/html/test.html',
+            inject: 'head'
+        }),
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new CopyWebpackPlugin([

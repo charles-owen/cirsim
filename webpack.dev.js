@@ -14,7 +14,8 @@ module.exports = merge(common, {
         publicPath: ''
     },
     devServer: {
-        host: 'cirsim.localhost',
+        host: 'localhost'
+        /*,
         proxy: [{
                 context: ['/api-demo/'],
                 target: 'http://cirsim.localhost',
@@ -23,6 +24,6 @@ module.exports = merge(common, {
                 cookieDomainRewrite: "http://cirsim.localhost",
                 headers: {origin: 'http://cirsim.localhost'}
         }]
-
+        */
     }
 });
