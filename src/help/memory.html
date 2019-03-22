@@ -1,0 +1,24 @@
+<p>The Memory component implements a simple Memory Bank.
+  Memory is an array of bytes. The A (address) input selects a memory location that is output on the R
+  output. The component can be configured for 8-, 16-, or 32-bit memory.
+</p>
+<figure><img src="img/memory16.png" width="241" height="221" alt="Memory Component"></figure>
+<p>In the 16-bit configuration,
+  all accesses are considered to be multiples of two and retrieve two bytes. Addresses with the lower bit set
+  are considered erroneous. </p>
+<p>
+  In the 32-bit configuration,
+  all accesses are considered to be multiples of four and retrieve four bytes. Addresses with any of the lower
+  two bits set are considered erroneous.</p>
+<p>Memory is retrieved in little-endian mode (first byte is the least significant byte).
+  Erroneous addresses are indicated by an X next to the A input on
+  the component.</p>
+<p>A rising edge on the clock input writes the memory component with the value on the W (write) input.</p>
+<p>Memory can be specified in the component dialog box as a sequence of Hexadecimal byte values:</p>
+<pre>12 34 a8 93 b7 00 12 9a</pre>
+<p>Spaces and new-lines are ignored. Addresses can optionally be included at the beginning of lines:</p>
+<pre>0000: 12 34 a8 93 b7 00 12 9a
+0008: 18 b7</pre>
+<p>The clock input will always write memory on the clock leading edge. The memory component
+does not have a <em>write enable</em> input. However, it is easy to make one by using an AND gate:</p>
+<figure><img src="img/memory16we.png" width="277" height="256" alt="Add a Write Enable to the Memory 16 component"></figure>

@@ -133,7 +133,7 @@ export const All = function(components) {
             BusMultiplexer,
             TrafficLight, HexToSevenSegment, SevenSeg, FmBus,
             ToBus, Register,
-            Letters16, Alu4, Registers16, Pc16, Memory16, InstructionDecoder4, Pad,
+            Letters16, Alu4, Registers16, Pc16, Memory, InstructionDecoder4, Pad,
             Alu16, Counter ]
     )
 }

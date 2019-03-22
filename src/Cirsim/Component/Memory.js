@@ -15,6 +15,7 @@ export const Memory = function() {
     Component.call(this);
 
     let size = 16;
+    let badAddr = false;
 
     Object.defineProperties(this, {
         size: {
@@ -36,11 +37,18 @@ export const Memory = function() {
                         break;
                 }
             }
+        },
+        badAddr: {
+            writable: true
+        },
+        height: {
+            value: 132
+        },
+        width: {
+            value: 64
         }
     });
 
-    this.height = 132;
-    this.width = 64;
     const w2 = this.width / 2;
     const h2 = this.height / 2;
 
@@ -48,8 +56,8 @@ export const Memory = function() {
 
     this.data = [];
 
-    this.lastAddress = 0;
-    this.lastData = 0;
+    this.lastAddress = null;
+    this.lastData = null;
     this.write = 0;
 
     this.addIn(-w2, -32, 16, "A").bus=true;
@@ -66,57 +74,83 @@ Memory.prototype.constructor = Memory;
 Memory.prototype.prefix = "M";
 Memory.type = "Memory";             ///< Name to use in files
 Memory.label = "Memory";            ///< Label for the palette
-Memory.desc = "16-bit Memory";      ///< Description for the palette
+Memory.desc = "Memory";             ///< Description for the palette
 Memory.img = null;                  ///< Image to use for the palette
 Memory.description = `<h2>Memory Bank</h2><p>The Memory component implements a simple Memory Bank.
 Memory is an array of bytes. The A (address) input selects a memory location that is output on the R
-output. The component implements 16-bit memory,
-so all accesses are considered to be multiples of two and retrieve two bytes. Memory is retrieved in little-endian
-mode (first byte is the least significant byte).</p>
+output. The component can be configured for 8-, 16-, or 32-bit memory. 
+</p>
+<p>In the 16-bit configuration,
+all accesses are considered to be multiples of two and retrieve two bytes. Addresses with the lower bit set
+are considered erroneous. </p>
+<p>In the 32-bit configuration,
+all accesses are considered to be multiples of four and retrieve four bytes. Addresses with any of the lower 
+two bits set are considered erroneous.</p>
+<p>Memory is retrieved in little-endian mode (first byte is the least significant byte). 
+Erroneous addresses are indicated by an X next to the A input on
+ the component.</p>
 <p>A clock cycle on the clock input writes the memory component with the value on the W (write) input.</p>`;
 Memory.order = 705;
-Memory.help = 'Memory';
-
+Memory.help = 'memory';
 
 /**
  * Compute the gate result
  * @param state
  */
 Memory.prototype.compute = function(state) {
+    const bytes = this.size / 8;        // How many bytes we read/write
+
     // What is the address?
-    const a = Connector.busValueToDecimal(state[0]);
-    if(a === null) {
+    const actualAddr = Connector.busValueToDecimal(state[0]);
+    let addr = actualAddr;      // Subject to correction for byte offset
+    this.badAddr = false;       // Until we know otherwise
+
+    if(addr === null) {
         this.outs[0].set(undefined);
     } else {
+        // Validate the address
+        switch(bytes) {
+            case 2:
+                this.badAddr = (addr & 1) !== 0;
+                addr &= 0xfffe;
+                break;
+
+            case 4:
+                this.badAddr = (addr & 3) !== 0;
+                addr &= 0xfffc;
+                break;
+        }
+
         if(state[2] && !this.lastClk) {
             // clock leading edge
             this.write = Connector.busValueToDecimal(state[1]);
-        } else if(!state[2] && this.lastClk) {
-            // Trailing edge
             if(this.write !== null) {
                 // Ensure the address exists...
-                while(this.data.length < (a+2)) {
+                while(this.data.length < (addr+bytes)) {
                     this.data.push(0);
                 }
 
-                var hi = this.write >> 8;
-                var lo = this.write & 0xff;
-                this.data[a] = lo;
-                this.data[a+1] = hi;
+                // Write the bytes
+                let write = this.write;
+                for(let i=0; i<bytes; i++) {
+                    this.data[addr+i] = write;
+                    write >>= 8;
+                }
             }
         }
 
-        if(a < (this.data.length - 1)) {
-            var o = this.data[a] + (this.data[a+1] << 8);
-        } else {
-            var o = 0;
+        let o = 0;
+        if(addr <= (this.data.length - bytes)) {
+            for(let i=0; i<bytes; i++) {
+                o += this.data[addr + i] << (i * 8);
+            }
         }
 
-        this.lastAddress = a;
+        this.lastAddress = actualAddr;
         this.lastData = o;
-        var data = [];
-        for(var i=0; i<16; i++) {
-            data.push((o & 1) == 1);
+        const data = [];
+        for(let i=0; i<this.size; i++) {
+            data.push((o & 1) === 1);
             o >>= 1;
         }
 
@@ -215,17 +249,48 @@ Memory.prototype.save = function() {
  * @param view View object
  */
 Memory.prototype.draw = function(context, view) {
+    const bytes = this.size / 8;
+
     this.selectStyle(context, view);
     this.drawBox(context);
 
+    const addrStr = this.lastAddress !== null ?
+        Util.toHex(this.lastAddress, 4) :
+        '????';
+
+    const dataStr = this.lastData !== null ?
+        Util.toHex(this.lastData, bytes * 2) :
+        '????????'.substr(0, bytes * 2);
+
     context.font = "12px Times";
     context.textAlign = "center";
-    context.fillText(Util.toHex(this.lastAddress, 4) + ":" +
-        Util.toHex(this.lastData, 4), this.x, this.y + this.height/2 - 18);
+
+    if(bytes < 4) {
+        context.fillText(addrStr + ":" + dataStr, this.x, this.y + this.height/2 - 18);
+    } else {
+        context.fillText(addrStr + ":", this.x, this.y + this.height/2 - 18 - 13);
+        context.fillText(dataStr, this.x, this.y + this.height/2 - 18);
+    }
+
     context.fillText("memory", this.x, this.y + this.height/2 - 5);
 
     this.drawName(context, 0, 3);
     this.drawIO(context, view);
+
+    if(this.badAddr) {
+        const savedStyle = context.strokeStyle;
+        context.strokeStyle = '#ff0000';
+        const sz = 12;
+        const x = this.x - 12;
+        const y = this.y - 33;
+        context.beginPath();
+        context.moveTo(x - sz/2, y - sz/2);
+        context.lineTo(x + sz/2, y+sz/2);
+        context.moveTo(x + sz/2, y - sz/2);
+        context.lineTo(x - sz/2, y+sz/2);
+        context.stroke();
+        context.strokeStyle = savedStyle;
+    }
 };
 
 Memory.prototype.properties = function(main) {
