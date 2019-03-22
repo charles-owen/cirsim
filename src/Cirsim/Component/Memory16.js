@@ -65,8 +65,6 @@ Memory16.prototype.compute = function(state) {
         if(state[2] && !this.lastClk) {
             // Leading edge
             this.write = Connector.busValueToDecimal(state[1]);
-        } else if(!state[2] && this.lastClk) {
-            // Trailing edge
             if(this.write !== null) {
                 // Ensure the address exists...
                 while(this.data.length < (a+2)) {
