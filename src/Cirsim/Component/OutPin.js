@@ -2,6 +2,7 @@ import {Component} from '../Component';
 import {Led} from '../Graphics/Led'
 import {ComponentPropertiesDlg} from "../Dlg/ComponentPropertiesDlg";
 import {Sanitize} from "../Utility/Sanitize";
+import {Value} from "../Value";
 
 /**
  * Component: OutPin output pin
@@ -63,6 +64,10 @@ OutPin.prototype.getAsString = function() {
             return "?";
     }
 };
+
+OutPin.prototype.getAsValue = function() {
+    return new Value(this.ins[0].value);
+}
 
 
 /**

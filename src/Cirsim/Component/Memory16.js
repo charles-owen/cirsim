@@ -9,6 +9,7 @@ import {PaletteImage} from "../Graphics/PaletteImage";
  * Component: 16-bit memory
 
  * @constructor
+ * @deprecated Use Memory instead
  */
 export const Memory16 = function() {
     Component.call(this);

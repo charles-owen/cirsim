@@ -1,6 +1,6 @@
 
-import {Value} from './Value';
-import {MessageDialog} from './Dlg/MessageDialog';
+import {Value} from '../Value';
+import {MessageDialog} from '../Dlg/MessageDialog';
 import {TestException} from './TestException';
 
 /**

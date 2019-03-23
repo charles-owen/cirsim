@@ -81,6 +81,10 @@ div.cirsim {
         width: 6em;
       }
 
+      select.auto {
+        width: auto;
+      }
+
       select.files {
         width: 100%;
       }
@@ -131,6 +135,30 @@ div.cirsim {
 
       input.tabname {
         width: 6em;
+      }
+
+      select.auto {
+        width: auto;
+      }
+    }
+
+    div.control-table {
+      margin: 0 auto;
+      display: table;
+
+      div.control {
+        display: table-row;
+        height: 2em;
+
+        label {
+          display: table-cell;
+          text-align: right;
+          padding-right: 0.5em;
+        }
+
+        select {
+          display: table-cell;
+        }
       }
     }
 
@@ -204,26 +232,7 @@ div.cirsim {
   }
 }
 
-
-
 div.cirsim-dialog {
- // position: relative;
   padding: 1em;
   font-size: 0.95em;
-
-
-
-
-
-
-}
-
-.ui-dialog-buttonset {
-  button {
-    width: 6em;
-  }
-}
-
-.ui-dialog .ui-dialog-buttonpane {
-  padding: 0;
 }

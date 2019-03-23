@@ -48,6 +48,7 @@ import {InstructionDecoder4} from './InstructionDecoder4';
 import {Alu16} from './Alu16';
 import {Counter} from './Counter';
 import {Extend} from './Extend';
+import {Alu} from './Alu';
 
 /**
  * Add all components into the system.
@@ -112,6 +113,7 @@ export const All = function(components) {
     components.add(Memory16);       // 704
     components.add(Memory);         // 705
     components.add(Alu16);          // 706
+    components.add(Alu);            // 707
 
     components.add(Decoder3);       // 1000
 
@@ -134,6 +136,6 @@ export const All = function(components) {
             TrafficLight, HexToSevenSegment, SevenSeg, FmBus,
             ToBus, Register,
             Letters16, Alu4, Registers16, Pc16, Memory, InstructionDecoder4, Pad,
-            Alu16, Counter ]
+            Alu, Counter ]
     )
 }

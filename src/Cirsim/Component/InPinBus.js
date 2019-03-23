@@ -117,7 +117,12 @@ InPinBus.prototype.outlinePath = function(context) {
  * @param value true for on
  */
 InPinBus.prototype.set = function(value) {
-    this.value.set(value);
+    if(Array.isArray(value)) {
+        this.value.set(value);
+    } else if (typeof value === 'string' || value instanceof String) {
+        this.value.setAsString(value);
+    }
+
     this.outs[0].set(this.value.get());
 };
 

@@ -120,13 +120,49 @@ InPin.prototype.touch = function(x, y) {
  * @param value true for on
  */
 InPin.prototype.set = function(value) {
-	this.value = value;
-    this.outs[0].set(value);
+    if (typeof value === 'string' || value instanceof String) {
+        this.setAsString(value);
+    } else {
+        this.value = value;
+        this.outs[0].set(value);
+    }
 };
 
+/**
+ * Set the value of an input from a string.
+ * Accepts the following possible values.
+ *
+ * For undefined: undefined, '?', 'undefined'
+ * For true: true, '1', 1, 'true'
+ * For false: false, '0', false', 0
+ *
+ * @param value
+ */
 InPin.prototype.setAsString = function(value) {
-    var v = +value === 1;
-    this.set(v);
+    switch(value) {
+        case undefined:
+        case 'undefined':
+        case '?':
+            this.set(undefined);
+            break;
+
+        case 'false':
+        case '0':
+        case false:
+            this.set(false);
+            break;
+
+        case 'true':
+        case '1':
+        case true:
+            this.set(true);
+            break;
+
+        default:
+            const v = +value === 1;
+            this.set(v);
+            break;
+    }
 }
 
 InPin.prototype.get = function() {

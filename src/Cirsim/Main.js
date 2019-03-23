@@ -7,7 +7,7 @@ import {Circuit} from './Circuit';
 import {Tabs} from './Tabs';
 import {ExportDlg} from './Dlg/ExportDlg';
 import {ImportDlg} from './Dlg/ImportDlg';
-import {Test} from './Test';
+import {Test} from './Test/Test';
 import {Toast} from './Graphics/Toast';
 import {FileSaveDialog} from './Dlg/FileSaveDialog';
 import {FileOpenDialog} from './Dlg/FileOpenDialog';

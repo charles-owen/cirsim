@@ -52,6 +52,10 @@ OutPinBus.prototype.getAsString = function() {
     return this.value.getAsString();
 };
 
+OutPinBus.prototype.getAsValue = function() {
+    return new Value(this.value);
+}
+
 /**
  * Clone this component object.
  * @returns {OutPinBus}

@@ -56,14 +56,15 @@ Value.prototype.getBit = function(b) {
 
 /**
  * Set the value of this float
- * @param val Binary array of value (true/false)
+ * @param val Can be Value, array, or string.
  */
 Value.prototype.set = function(val) {
-    if(val instanceof Value) {
-        throw "Invalid";
-    }
     if(Array.isArray(val)) {
         this.value = val.slice();
+    } else if(val instanceof Value) {
+        this.value = val.value.slice();
+    } else if (typeof val === 'string' || val instanceof String) {
+        this.setAsString(val);
     } else {
         this.value = val;
     }
@@ -88,6 +89,25 @@ Value.prototype.save = function(obj) {
     if(this.type !== Value.AUTO) {
         obj.valuetype = this.type;
     }
+}
+
+Value.prototype.equals = function(value) {
+    if(this.value === value.value) {
+        return true;
+    }
+
+    if(Array.isArray(this.value) && Array.isArray(value.value) &&
+        this.value.length === value.value.length) {
+        for(let i=0; i<this.value.length; i++) {
+            if(this.value[i] !== value.value[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    return false;
 }
 
 /**
