@@ -1,7 +1,5 @@
 import {Component} from '../Component';
-import {Util} from "../Utility/Util";
 import {ComponentPropertiesDlg} from "../Dlg/ComponentPropertiesDlg";
-import {Memory} from "./Memory";
 import {InvalidArgumentException} from "../InvalidArgumentException";
 
 

@@ -57,19 +57,20 @@ div.cirsim {
       padding: 0.25em 0.75em;
       color: #4f6b72;
 
+      a, a:link, a:visited, a:hover {
+        text-decoration:underline;
+      }
+
       a:link {
         color:#8A8A8A;
-        text-decoration:underline;
       }
 
       a:visited {
         color:#B09D5B;
-        text-decoration:underline;
       }
 
       a:hover {
         color:#3366cc;
-        text-decoration:underline;
       }
     }
   }

@@ -180,13 +180,18 @@ Circuits.prototype.rename = function(ndx, name) {
 }
 
 Circuits.prototype.newTab = function() {
-    for(let i=0; i<this.circuits.length; i++) {
+    // for(let i=0; i<this.circuits.length; i++) {
+    //     this.circuits[i].newTab();
+    // }
+
+    for(let i=this.circuits.length-1;  i>=0;  i--) {
         this.circuits[i].newTab();
     }
 }
 
 Circuits.prototype.recompute = function() {
-    for(let i=0; i<this.circuits.length; i++) {
+    //for(let i=0; i<this.circuits.length; i++) {
+    for(let i=this.circuits.length-1;  i>=0;  i--) {
         this.circuits[i].recompute();
     }
 }

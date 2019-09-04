@@ -55,7 +55,6 @@ CircuitRef.prototype.compute = function(state) {
  * @returns {boolean} true if animation needs to be redrawn
  */
 CircuitRef.prototype.advance = function(delta) {
-
     if(this.circuitRef !== null) {
         this.circuitRef.advance(delta);
     }
@@ -83,6 +82,12 @@ CircuitRef.prototype.getCircuitRef = function() {
     this.circuitRef = this.circuit.circuits.getCircuit(this.circuitName).copy_clone();
 
     this.circuitRef.circuits = this.circuit.circuits;
+
+    // Since a copy_clone will copy any ComponentRef objects in the
+	// copy circuit, we need to clear it so a fresh copy will be
+	// make instead.
+	this.circuitRef.newTab();
+
     this.circuitRef.pending();
 
     this.ensureIO();
@@ -275,7 +280,7 @@ CircuitRef.prototype.ensureIO = function() {
         for(let name in savedInputs) {
         	if(savedInputs[name] !== null) {
         		// We have an input that has been deleted!
-		        console.log(savedInputs[name]);
+		        // console.log(savedInputs[name]);
 		        savedInputs[name].clear();
 	        }
         }
