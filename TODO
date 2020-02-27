@@ -2,6 +2,9 @@ FIXME: Deleting a tab is not working correctly (does not move to another tab)
 FIXME: Grabbing the horizontal scroll bar does not work right in Firefox
 FIXME: Pressing delete in a dialog box deletes in underlying circuit
 
+TODO: Update dompurify
+TODO: Update promise-polyfill
+
 FUTURE: 7-segment configurable as bus input or a-g
 FUTURE: 7-segment decoder configurable as bus input and/or output
 FUTURE: 16 Letter display becomes general letter display (8, 7, or 4 bits)

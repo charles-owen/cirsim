@@ -33,6 +33,10 @@ Button.prototype.touch = function(x, y) {
     return false;
 }
 
+Button.prototype.setState = function(state) {
+    this.state = state;
+}
+
 Button.prototype.untouch = function() {
     if(this.state === 'pressed') {
         this.state = 'on';

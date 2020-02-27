@@ -177,11 +177,17 @@ Registers16.prototype.draw = function(context, view) {
 };
 
 /**
+ * Support for string-based testing.
+ *
  * Set the register as a string.
  * This is used for testing/validation of register contents
- * @param value
+ * Examples:
+ *     test:r0-23
+ *     test:reset
+ * @param value Test string like red=1 or yel=0
+ * @param input In object test was sent to
  */
-Registers16.prototype.setAsString = function(value) {
+Registers16.prototype.testAsString = function(value, input) {
     if(value === null) {
         return;
     }
@@ -195,10 +201,20 @@ Registers16.prototype.setAsString = function(value) {
             throw "Invalid register indicated in test " + value;
         }
         const expected = parseInt(value.substr(3));
-        if(expected != this.values[reg]) {
+        if(expected !== +this.values[reg]) {
             throw "Incorrect register values. Register r" + reg + " expected=0x" +
-                Util.toHex(expected, 4) + " actual=0x" +
-                Util.toHex(this.values[reg], 4);
+            Util.toHex(expected, 4) + " actual=0x" +
+            Util.toHex(this.values[reg], 4);
         }
     }
+}
+
+/**
+ * Set the register as a string.
+ * This is used for testing/validation of register contents. Works just
+ * like testAsString and is mainly retained for backward compatibility.
+ * @param value
+ */
+Registers16.prototype.setAsString = function(value) {
+    this.testAsString(value);
 }

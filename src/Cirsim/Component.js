@@ -349,7 +349,8 @@ Component.prototype.save = function () {
         "id": this.id,
         "x": this.x,
         "y": this.y,
-        "name": naming, "type": type
+        "name": naming,
+        "type": type
     };
 };
 
@@ -423,6 +424,14 @@ Component.prototype.pending = function () {
         this.circuit.circuits.simulation.queue(this, delay, state);
     }
 };
+
+Component.prototype.getSimulation = function() {
+    if(this.circuit !== null) {
+        return this.circuit.circuits.simulation;
+    }
+
+    return null;
+}
 
 /**
  * Determine the propagation delay for this device
@@ -591,6 +600,16 @@ Component.prototype.command = function (value) {
 Component.prototype.setAsString = function (value) {
 }
 
+
+
+/**
+ * Override in the string testable types, such as InPin and InPinBus
+ * @param value Value to set
+ * @param input In object
+ */
+Component.prototype.testAsString = function (value, input) {
+    console.log(value);
+}
 
 /**
  * Draw a jagged (stair-step) line from x1,y1 to x2,y2

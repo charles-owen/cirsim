@@ -3,6 +3,8 @@ import {Button} from '../Graphics/Button';
 import {CanvasHelper} from '../Graphics/CanvasHelper';
 import {Value} from '../Value';
 import {ComponentPropertiesDlg} from '../Dlg/ComponentPropertiesDlg';
+import {Clock} from "./Clock";
+import {DFF} from "./DFF";
 
 /**
  * Component: Pad
@@ -18,6 +20,7 @@ export const Pad = function() {
     this.value = new Value();
     this.bus = true;
     this.bits = 4;
+    this.clockDelay = 0;
 
     // The type of pad, null until we define it
     this.pad = null;
@@ -369,6 +372,7 @@ Pad.prototype.touch = function(x, y) {
         if(button.touch(x - this.x, y - this.y)) {
             this.setAsInteger(button.value, 4);
             this.setPressedOut(true);
+            break;
         }
     }
 
@@ -393,15 +397,45 @@ Pad.prototype.setAsInteger = function(value) {
 
 Pad.prototype.updateUI = function() {
     const p = this.value.getAsInteger();
+    let pressed = this.getPressedOut();
+    if(pressed === undefined) {
+        pressed = false;
+    }
+
     this.buttons.forEach((button) => {
         if(button.value !== p) {
-            button.state = 'off';
+            button.setState('off');
+        } else if(pressed) {
+            button.setState('pressed');
+        } else {
+            button.setState('on');
         }
     });
 }
 
+/**
+ * This function sets the pad state based on an input string.
+ *
+ * This accepts a simple value. It also accepts these strings:
+ *
+ *  release - Releases any currently pressed button
+ *  press:X - Presses button X
+ *
+ * @param value
+ * @param parseonly
+ */
 Pad.prototype.setAsString = function(value, parseonly) {
-    this.value.setAsString(value, parseonly);
+    if(value === 'release') {
+        this.mouseUp();
+    } else if(value.substr(0, 6) === 'press:') {
+        this.value.setAsHex(value.substr(6));
+        this.setPressedOut(true);
+        this.updateUI();
+    } else {
+        this.value.setAsString(value, parseonly);
+        this.updateUI();
+    }
+
     if (!parseonly) {
         this.setOuts();
     }
@@ -418,14 +452,74 @@ Pad.prototype.setOuts = function() {
 }
 
 /**
- * Set the button pressed output to a given value.
- * @param value Value to set
+ * Advance the animation for this component by delta seconds
+ * @param delta Time to advance in seconds
+ * @returns true if animation needs to be redrawn
  */
-Pad.prototype.setPressedOut = function(value) {
+Pad.prototype.advance = function(delta) {
+    // if(this.clockDelay > 0) {
+    //     this.clockDelay -= delta;
+    //     if(this.clockDelay < 0) {
+    //         this.clockDelay = 0;    // No pending clock
+    //         if(this.bus) {
+    //             this.outs[1].set(true);
+    //         } else {
+    //             this.outs[this.bits].set(true);
+    //         }
+    //         this.updateUI();
+    //         return true;
+    //     }
+    // }
+
+    return false;
+};
+
+/**
+ * Compute the gate result
+ * @param state
+ */
+Pad.prototype.compute = function(state) {
+    const value = state[0] === true;
     if(this.bus) {
         this.outs[1].set(value);
     } else {
         this.outs[this.bits].set(value);
+    }
+    this.updateUI();
+};
+
+/**
+ * Set the button pressed output to a given value.
+ * @param value Value to set
+ */
+Pad.prototype.setPressedOut = function(value) {
+    const simulation = this.getSimulation();
+    if(simulation !== null) {
+        simulation.queue(this, 50, [value]);
+    }
+
+    // if(value) {
+    //     // The clock rising edge output is delayed by 50ns
+    //     this.clockDelay = 0.00000004; // 0.00000005;
+    //
+    //     this.getSimulation().queue(this, 50, [1]);
+    // } else {
+    //     // Setting to zero
+    //     this.clockDelay = 0;    // No pending clock
+    //     if(this.bus) {
+    //         this.outs[1].set(value);
+    //     } else {
+    //         this.outs[this.bits].set(value);
+    //     }
+    //     this.updateUI();
+    // }
+}
+
+Pad.prototype.getPressedOut = function() {
+    if(this.bus) {
+        return this.outs[1].get();
+    } else {
+        return this.outs[this.bits].get();
     }
 }
 

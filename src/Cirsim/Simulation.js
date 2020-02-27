@@ -12,7 +12,7 @@ export const Simulation = function() {
     this.time = 1;
     this.view = null;
     this.speed = 0.000001;      ///< Animation speed (1 million'th of real time)
-this.instance = ++instance;
+    this.instance = ++instance;
 
     //
     // If the same component request multiple times during

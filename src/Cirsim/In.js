@@ -1,4 +1,5 @@
 import {Connector} from './Connector';
+import {Out} from "./Out";
 
 /**
  * In connection for a component
@@ -39,6 +40,10 @@ In.prototype.set = function() {
         this.component.pending();
     }
 };
+
+In.prototype.testAsString = function(value) {
+    this.component.testAsString(value, this);
+}
 
 /**
  * Set a connection as the from for this input.

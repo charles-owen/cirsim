@@ -1,5 +1,8 @@
 import {Component} from '../Component';
 import {Led} from '../Graphics/Led';
+import {BusConstant} from "./BusConstant";
+import {Util} from "../Utility/Util";
+import {Registers16} from "./Registers16";
 
 /**
  * Component: TrafficLight
@@ -60,6 +63,54 @@ TrafficLight.prototype.clone = function() {
     copy.copyFrom(this);
     return copy;
 };
+
+/**
+ * Support for string-based testing.
+ *
+ * Example: test:red=1;yel=0;grn=0
+ * @param value Test string like red=1 or yel=0
+ * @param input In object test was sent to
+ */
+TrafficLight.prototype.testAsString = function(value, input) {
+    if(value === null) {
+        return;
+    }
+
+    const items = value.split('=');
+    if(items[1] === '?') {
+        // For don't cares, we just return
+        return;
+    }
+
+    if(items.length < 2) {
+        throw "Invalid traffic light test validation string " + value;
+    }
+
+    let testValue;
+    switch(items[0]) {
+        case 'red':
+            testValue = this.valueR;
+            break;
+
+        case 'grn':
+        case 'green':
+            testValue = this.valueG;
+            break;
+
+        case 'yel':
+        case 'yellow':
+            testValue = this.valueY;
+            break;
+
+        default:
+            throw "Invalid traffic light test validation string " + value;
+    }
+
+    if(testValue === undefined || items[1] === '1' && !testValue || items[1] === '0' && testValue) {
+        const v = testValue === undefined ? '?' : (testValue ? '1' : '0');
+        throw "Incorrect traffic light value. Expected " + value + " but got " + items[0] + '=' + v;
+    }
+}
 
 /**
  * Draw component object.

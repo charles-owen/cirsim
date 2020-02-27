@@ -87,6 +87,7 @@ Out.prototype.setAsString = function(value) {
     }
 }
 
+
 Out.prototype.get = function() {
     return this.value;
 }
