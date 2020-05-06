@@ -400,6 +400,7 @@ export const Main = function(cirsim, element, tests) {
      */
     this.load = function(json) {
         model.fmJSON(json);
+        this.reload();
     }
 
     this.initialize();

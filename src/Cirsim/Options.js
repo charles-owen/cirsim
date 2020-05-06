@@ -16,6 +16,12 @@ export const Options = function(options) {
     /// Any content (JSON) to preload
     this.load = null;
 
+    /// Menu options to load content
+    /// Each item is an object with the keys name and json.
+    /// The name is the menu option name that will appear.
+    /// json is the actual json content to load.
+    this.loadMenu = [];
+
     /// Any additional tabs to add
     /// Do not include "main", it is always included
     this.tabs = [];
@@ -67,6 +73,7 @@ export const Options = function(options) {
 
 	/**
      * Any import options, importing from files from other assignments
+     * Creates an input tab option when a specific tab is selected
      *
      * Array of possible imports, each an object with the keys:
      * from - Tab in source we import from
@@ -117,6 +124,8 @@ export const Options = function(options) {
 
     /// Display all output states
     this.showOutputStates = false;
+
+    ////////////////////////////////////////////////////////////////////////////////////
 
     for(const property in options) {
         if(options.hasOwnProperty(property)) {

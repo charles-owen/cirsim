@@ -30,11 +30,21 @@ export const FileMenu = function(menu, main) {
                 '<li><a class="file-saveas"><span class="icons-cl icons-cl-disk"></span>Save As...</a></li>';
         }
 
+        if(options.loadMenu.length > 0) {
+			fileHtml += optionalSeparator(fileHtml);
+
+			for(let i=0; i<options.loadMenu.length; i++) {
+				const item = options.loadMenu[i];
+
+				fileHtml += '<li><a class="cs-file-load-menu" data-index="' + i +
+					'"><span class="icons-cl icons-cl-arrowthickstop-1-n"></span>' +
+					item.name + '</a></li>';
+			}
+		}
+
         // Import/Export options
         if(options.export !== 'none') {
-            if(fileHtml.length > 0) {
-                fileHtml += '<li class="menu-divider">&nbsp;</li>';       // Separator
-            }
+			fileHtml += optionalSeparator(fileHtml);
 
             if(options.export === 'both' || options.export === 'import') {
                 fileHtml += '<li><a class="cs-file-import"><span class="icons-cl icons-cl-arrowthickstop-1-n"></span>Import</a></li>';
@@ -85,6 +95,11 @@ export const FileMenu = function(menu, main) {
 	    menu.click('.cs-file-export', () => {
 		    main.export();
 	    });
+
+	    menu.click('.cs-file-load-menu', (event) => {
+	    	const index = event.target.dataset['index'];
+	    	main.load(options.loadMenu[index].json);
+		});
 
 	    menu.click('.cs-file-export-png', (event) => {
 			main.currentView().exportPNG();
