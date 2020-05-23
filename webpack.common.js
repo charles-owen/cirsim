@@ -49,26 +49,28 @@ module.exports = {
             template: 'src/html/test.html',
             inject: 'head'
         }),
-        new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
-        new CopyWebpackPlugin([
-            {
-                from: 'src/img/*.png',
-                to: 'cirsim/img',
-                flatten: true
-            },
-            {
-                from: 'src/img/*.ico',
-                to: 'cirsim/img',
-                flatten: true
-            },
-            {
-                from: 'src/help',
-                to: 'cirsim/help',
-                flatten: false
-            }
-        ])
-    ], module: {
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: 'src/img/*.png',
+                    to: 'cirsim/img',
+                    flatten: true
+                },
+                {
+                    from: 'src/img/*.ico',
+                    to: 'cirsim/img',
+                    flatten: true
+                },
+                {
+                    from: 'src/help',
+                    to: 'cirsim/help',
+                    flatten: false
+                }
+            ]
+        })
+    ],
+    module: {
         rules: [
             {
                 test: /\.js$/,

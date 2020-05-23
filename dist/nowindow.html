@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <link rel="shortcut icon" href="../img/favicon.ico" />
-  <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
-  <title>Cirsim No-window mode demo</title>
-<script type="text/javascript" src="cirsim.min.js"></script></head>
-<body>
-<div id="result"></div>
-
-
-<script>
-window.onload = function() {
+<!doctype html><html><head><link rel="shortcut icon" href="../img/favicon.ico"/><meta http-equiv="Content-type" content="text/html; charset=utf-8"/><title>Cirsim No-window mode demo</title><script src="cirsim.min.js"></script></head><body><div id="result"></div><script>window.onload = function() {
     let cirsim = new Cirsim(null);
     let instance = cirsim.start();
 
@@ -48,8 +36,4 @@ window.onload = function() {
         document.getElementById('result').innerHTML = msg;
 
     });
-}
-</script>
-</body>
-
-</html>
+}</script></body></html>
