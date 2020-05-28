@@ -37,7 +37,6 @@ export const OpenDialog = function(name, options, toast) {
 			        this.close();
 		        },
 		        error: (xhr, status, error) => {
-			        console.log(xhr.responseText);
 			        toast.message('Unable to communicate with server: ' + error);
 			        this.close();
 		        }

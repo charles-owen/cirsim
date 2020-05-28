@@ -137,17 +137,6 @@ export const Cirsim = function(sel, options) {
      */
     this.addTest = function(test) {
         tests.push(test);
-
-/*        if(test === Object(test)) {
-            tests.push(test);
-        }
-        else if(test.substr(0, 1) === '{') {
-            tests.push(JSON.parse(test));
-        } else {
-            // Not JSON, must be base64 encoded
-            test = atob(test);
-            tests.push(JSON.parse(test));
-        } */
     }
 
     /**

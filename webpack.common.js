@@ -49,6 +49,12 @@ module.exports = {
             template: 'src/html/test.html',
             inject: 'head'
         }),
+        new HtmlWebpackPlugin({
+            title: 'Cirsim DOM install test page',
+            filename: 'dom-install.html',
+            template: 'src/html/dom-install.html',
+            inject: 'head'
+        }),
         new webpack.HotModuleReplacementPlugin(),
         new CopyWebpackPlugin({
             patterns: [
