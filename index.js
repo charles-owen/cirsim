@@ -17,6 +17,7 @@ Ready.go(() => {
     const elements = document.querySelectorAll('div.cirsim-install');
     for(let i=0; i<elements.length; i++) {
         let element = elements[i];
+        element.classList.remove('cirsim-install');
         const json = JSON.parse(element.textContent);
         element.innerHTML = '';
         const cirsim = new Cirsim(element, json);
