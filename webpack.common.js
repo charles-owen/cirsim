@@ -112,21 +112,7 @@ module.exports = {
                     'style-loader',
                     'css-loader'
                 ]
-            },
-            // {
-            //     test: /\.(png|svg|jpg|gif)$/,
-            //     use: [
-            //         'file-loader'
-            //     ]
-            // }
+            }
         ]
-    } /*,
-    externals: {
-        jquery : {
-            commonjs: "jquery",
-            commonjs2: "jquery",
-            amd: "jquery",
-            root: "$" // indicates global variable
-        }
-    } */
+    }
 };
