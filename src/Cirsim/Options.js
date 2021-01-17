@@ -93,6 +93,7 @@ export const Options = function(options) {
     /// open - Object with open-specific resources (url, extra)
     /// import - Object with import-specific resources (url, name,
     /// files - Object with directory query-specific resources
+    /// test - Object with test-specific resources
     ///
     this.api = null;
 

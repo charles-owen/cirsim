@@ -2,6 +2,8 @@
 import {Value} from '../Value';
 import {MessageDialog} from '../Dlg/MessageDialog';
 import {TestException} from './TestException';
+import {Ajax} from "../Utility/Ajax";
+import {JsonAPI} from "../Utility/JsonAPI";
 
 /**
  * Constructor
@@ -69,8 +71,7 @@ export const Test = function(main) {
             var dlg = new MessageDialog("Success", html);
             dlg.open();
 
-	        setResult(test, test.success !== undefined ? test.success : 'success');
-	        setCircuit(test, main.model.toJSON());
+	        setResult(test, test.success !== undefined ? test.success : 'success', main.model.toJSON());
 
         }, (msg) => {
             // Failure
@@ -80,28 +81,58 @@ export const Test = function(main) {
             var dlg = new MessageDialog("Test Failure", html, 450);
             dlg.open();
 
-            setResult(test, 'fail');
-            setCircuit(test, main.model.toJSON());
+            setResult(test, 'fail', main.model.toJSON());
         });
     }
 
-    function setResult(test, result) {
+    function setResult(test, result, circuit) {
 	    if(test.result !== undefined) {
 		    const elements = document.querySelectorAll(test.result);
 		    for(const element of elements) {
 			    element.value = result;
 		    }
 	    }
+
+        if(test.circuit !== undefined) {
+            const elements = document.querySelectorAll(test.circuit);
+            for(const element of elements) {
+                element.value = circuit;
+            }
+        }
+
+        const api = main.options.getAPI('test');
+
+        if(api === null) {
+            // Test API is not supported
+            return;
+        }
+
+        let data = Object.assign({cmd: "test",
+            name: api.name,
+            result: result,
+            data: circuit,
+            type: 'application/json'
+        }, api.extra);
+
+        Ajax.do({
+            url: api.url,
+            data: data,
+            method: "POST",
+            dataType: 'json',
+            contentType: api.contentType,
+            success: (data) => {
+                var json = new JsonAPI(data);
+                if(!main.toast.jsonErrors(json)) {
+                    main.toast.message('Test result successfully saved to server');
+                }
+            },
+            error: (xhr, status, error) => {
+               // console.log(xhr.responseText);
+                main.toast.message('Unable to communicate with server: ' + error);
+            }
+        });
     }
 
-    function setCircuit(test, circuit) {
-        if(test.circuit !== undefined) {
-	        const elements = document.querySelectorAll(test.circuit);
-	        for(const element of elements) {
-		        element.value = circuit;
-	        }
-        }
-    }
 
     this.runTest = function(test) {
         return new Promise((success, failure) => {
