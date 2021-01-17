@@ -36,8 +36,7 @@ export const Cirsim = function(sel, options) {
     // This is the directory containing cirsim.js or
     // cirsim.min.js
     //
-    this.root = __webpack_public_path__.substr(0,
-        __webpack_public_path__.length-1);
+    this.root = __webpack_public_path__;
 
     // Record the selector
     this.sel = sel;

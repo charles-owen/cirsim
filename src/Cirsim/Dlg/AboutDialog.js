@@ -13,7 +13,7 @@ export const AboutDialog = function(main) {
         let root = main.cirsim.root;
 
         // Dialog box contents
-        let content = `<figure><img src="${root}/cirsim/img/logo-icon.png" alt="Cirsim Logo"></figure>
+        let content = `<figure><img src="${root}cirsim/img/logo-icon.png" alt="Cirsim Logo"></figure>
 <h1>Cirsim Circuit Simulator</h1>
 <p>Version: ${main.cirsim.version}</p>
 <p>Written by: Charles B. Owen</p>`;

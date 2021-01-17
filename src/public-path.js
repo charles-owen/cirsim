@@ -5,29 +5,30 @@
  */
 
 function getScriptDir() {
-    const re = /^.*\/\/[^\/]+(\/.*\/)[^\/]+.js$/;
-    const result = document.currentScript.src.match(re);
+    let re = /^http.*\/\/[^\/]+(\/.*\/)[^\/]+.js$/;
+    let result = document.currentScript.src.match(re);
     if(result !== null) {
         return result[1];
     }
 
-    return '';
+    // If this fails we are likely running on a local
+    // file system, so find the path from that.
+    re = /^.*\/([^\/]+.js)$/;
+    result = document.currentScript.src.match(re);
+    if(result !== null) {
+        const javascriptFile = result[1];
 
-    // var scriptElements = document.getElementsByTagName('script');
-    // for (var i = 0; i < scriptElements.length; i++) {
-    //     var source = scriptElements[i].src;
-    //     var ndx = source.indexOf('/cirsim.js');
-    //     if (ndx > -1) {
-    //         return source.substring(0, ndx);
-    //     }
-    //
-    //     var ndx = source.indexOf('/cirsim.min.js');
-    //     if (ndx > -1) {
-    //         return source.substring(0, ndx);
-    //     }
-    // }
-    //
-    // return '/';
+        var scriptElements = document.getElementsByTagName('script');
+        for (var i = 0; i < scriptElements.length; i++) {
+            var source = scriptElements[i].getAttribute("src");
+            var ndx = source.indexOf(javascriptFile);
+            if (ndx > -1) {
+                return source.substring(0, ndx);
+            }
+        }
+    }
+
+    return '';
 }
 
 __webpack_public_path__ = getScriptDir();

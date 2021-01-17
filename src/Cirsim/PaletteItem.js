@@ -51,7 +51,7 @@ PaletteItem.prototype.paletteImage = function() {
         let root = this.palette.cirsim.root;
 
         const element = document.createElement('img');
-        element.setAttribute('src', root + '/cirsim/img/' + obj.img);
+        element.setAttribute('src', root + 'cirsim/img/' + obj.img);
         element.setAttribute('alt', obj.desc);
         element.setAttribute('title', obj.desc);
 	    element.setAttribute('draggable', 'false');
