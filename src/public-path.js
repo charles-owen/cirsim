@@ -5,7 +5,7 @@
  */
 
 function getScriptDir() {
-    let re = /^http.*\/\/[^\/]+(\/.*\/)[^\/]+.js$/;
+    let re = /^(http.*\/.*\/)[^\/]+.js$/;
     let result = document.currentScript.src.match(re);
     if(result !== null) {
         return result[1];
