@@ -18,10 +18,6 @@
     "Circuits",
     "Computer Architecture"
   ],
-  "files": [
-    "dist/cirsim/**/*",
-    "dist/img/*"
-  ],
   "author": "Charles B. Owen",
   "license": "MIT",
   "devDependencies": {
