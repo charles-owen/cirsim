@@ -1,6 +1,6 @@
 {
   "name": "cirsim",
-  "version": "2.1.13",
+  "version": "2.1.14",
   "description": "Cirsim Circuit Simulator",
   "main": "dist/cirsim.min.js",
   "module": "index.js",
