@@ -1,4 +1,4 @@
-const merge = require('webpack-merge');
+const {merge} = require('webpack-merge');
 const common = require('./webpack.common.js');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const path = require('path');
@@ -10,9 +10,7 @@ module.exports = merge(common, {
     optimization: {
         minimizer: [
             new TerserPlugin({
-                cache: true,
-                parallel: true,
-                sourceMap: true  // Must be set to true if using source-maps in production
+                parallel: true
             }),
             new OptimizeCSSAssetsPlugin({})
         ]
@@ -23,10 +21,6 @@ module.exports = merge(common, {
     },
     output: {
         filename: 'cirsim.min.js',
-        path: path.resolve(__dirname, 'dist'),
-        library: 'Cirsim',
-        libraryTarget: 'umd',
-        libraryExport: "default",
-        publicPath: ''
+        path: path.resolve(__dirname, 'dist')
     },
 });
