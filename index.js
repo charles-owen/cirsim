@@ -26,6 +26,6 @@ Ready.go(() => {
     }
 });
 
-//export {Cirsim};
+export {Cirsim};
 export {Cirsim as default};
 global.Cirsim = Cirsim;
