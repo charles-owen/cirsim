@@ -7,7 +7,14 @@ yarn-error.log*
 packages
 
 doc/js
-dist/
+
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
 
 # Runtime data
 pids
