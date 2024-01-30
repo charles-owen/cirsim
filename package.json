@@ -9,7 +9,7 @@
     "build:prod": "webpack --config webpack.prod.js",
     "build:all": "$npm_execpath run build:dev && $npm_execpath run build:prod",
     "test": "karma start karma.conf.js",
-    "serve": "webpack serve --config webpack.dev.js --open",
+    "serve": "webpack-dev-server  --config webpack.serve.js --open",
     "build:docs": "documentation build src/Cirsim/**/*.js --sort-order source -f html -o doc/js"
   },
   "keywords": [
@@ -56,5 +56,6 @@
     "icons-cl": "~1.1.3",
     "promise-polyfill": "^8.3.0",
     "resizer-cl": "^2.4.4"
-  }
+  },
+  "packageManager": "yarn@3.3.1"
 }

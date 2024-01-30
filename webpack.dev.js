@@ -8,18 +8,5 @@ module.exports = merge(common, {
     output: {
         filename: 'cirsim.js',
         path: path.resolve(__dirname, 'dist')
-    },
-    devServer: {
-        host: 'localhost'
-        /*,
-        proxy: [{
-                context: ['/api-demo/'],
-                target: 'http://cirsim.localhost',
-                secure: false,
-                changeOrigin: false,
-                cookieDomainRewrite: "http://cirsim.localhost",
-                headers: {origin: 'http://cirsim.localhost'}
-        }]
-        */
     }
 });
