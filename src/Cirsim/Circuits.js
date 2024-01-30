@@ -274,6 +274,10 @@ Circuits.prototype.save = function() {
  * @param obj
  */
 Circuits.prototype.load = function(obj) {
+    // Some tests for an invalid file
+    if(obj.grid === undefined || obj.circuits === undefined) {
+      obj = JSON.parse("{\"grid\":8,\"circuits\":[{\"name\":\"main\",\"width\":1920,\"height\":1080,\"components\":[],\"connections\":[]}],\"snap\":true}");
+    }
 
     this.grid = +obj["grid"];
     this.snap = Sanitize.boolean(obj["snap"]);
